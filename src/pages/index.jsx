@@ -17,7 +17,7 @@ import { useGSAP } from '@gsap/react';
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText, ScrambleTextPlugin);
 
-import '../styles/globals.css';
+// import '../styles/globals.css';
 
 
 import logo from '../../public/logo.png';
@@ -387,7 +387,7 @@ export default function Home() {
 
 
 
-    console.log(scrollYProgress.get());
+    // console.log(scrollYProgress.get());
         return (
         <motion.div ref={scrollRef}>
             <motion.div id="smooth-wrapper"  ref={main} animate={true} className="smoothWrap" >
@@ -477,7 +477,7 @@ export default function Home() {
                                     }}
                                 >
 
-                                    <path id="textcircle" fill="none" stroke="#FF9800" stroke-width="0"
+                                    <path id="textcircle" fill="none" stroke="#FF9800" strokeWidth="0"
                                           data-duration="5"
                                           d="M50,250c0-110.5,89.5-200,200-200s200,89.5,200,200s-89.5,200-200,200S50,360.5,50,250">
                                     </path>
