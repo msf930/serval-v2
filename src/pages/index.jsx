@@ -38,7 +38,7 @@ export default function Home() {
                 // collect scroll progress from gsap and pass it to the shader
                 onUpdate: (progress) => {setScroll(progress.progress)},
             });
-            ScrollTrigger.normalizeScroll({ target: ".smoothContent", allowNestedScroll: true })
+            ScrollTrigger.normalizeScroll({ target: ".smoothWrap", allowNestedScroll: true })
             //create a scroll trigger for the sticky divs
             ScrollTrigger.create({
                 trigger: '#stickyContent',
