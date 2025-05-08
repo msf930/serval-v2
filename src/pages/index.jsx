@@ -18,7 +18,7 @@ import { useGSAP } from '@gsap/react';
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText, ScrambleTextPlugin);
 
 import '../styles/globals.css';
-import './styles.css';
+
 
 import logo from '../../public/logo.png';
 import styles from "@/components/WebsiteSection/styles.module.css";
