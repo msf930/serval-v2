@@ -60,7 +60,7 @@ export default function Home() {
                 end: '+=2000',
                 markers: true,
             });
-            ScrollTrigger.normalizeScroll({ target: ".smoothWrap", allowNestedScroll: true, type: "touch,scroll,pointer" });
+            ScrollTrigger.normalizeScroll({ target: ".mainCont", allowNestedScroll: true, type: "touch,scroll,pointer" });
             // ScrollTrigger.addEventListener("scrollStart", () => gsap.ticker.add(ScrollTrigger.update));
             // ScrollTrigger.addEventListener("scrollEnd", () => gsap.ticker.remove(ScrollTrigger.update));
 
@@ -392,7 +392,7 @@ export default function Home() {
 
     // console.log(scrollYProgress.get());
         return (
-        <motion.div ref={scrollRef}>
+        <motion.div ref={scrollRef} className="mainCont">
             <motion.div id="smooth-wrapper"  ref={main} animate={true} className="smoothWrap" >
                 <motion.div id="smooth-content"  animate={true} className="smoothContent" >
 
