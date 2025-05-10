@@ -35,7 +35,8 @@ export default function Home() {
 
     useGSAP(
         () => {
-            ScrollTrigger.normalizeScroll({ ignoreMobileResize: true, allowNestedScroll: true, type: "touch, scroll, pointer" });
+            ScrollTrigger.normalizeScroll(true);
+            // ScrollTrigger.normalizeScroll({ ignoreMobileResize: true, allowNestedScroll: true, type: "touch, scroll, pointer" });
             // ScrollTrigger.addEventListener("scrollStart", () => gsap.ticker.add(ScrollTrigger.update));
             // ScrollTrigger.addEventListener("scrollEnd", () => gsap.ticker.remove(ScrollTrigger.update));
 
