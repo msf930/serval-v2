@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import React, { useEffect, useRef, useState } from 'react';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { Suspense } from 'react';
 
 import Image from "next/image";
 
@@ -12,12 +13,13 @@ import gsap from 'gsap/dist/gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { ScrollSmoother } from 'gsap/dist/ScrollSmoother';
 import { SplitText } from 'gsap/dist/SplitText';
+import { Observer } from 'gsap/dist/Observer';
 import { ScrambleTextPlugin } from 'gsap/dist/ScrambleTextPlugin';
 import { useGSAP } from '@gsap/react';
 
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText, ScrambleTextPlugin);
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText, ScrambleTextPlugin, Observer);
 
-// import '../styles/globals.css';
+
 
 
 import logo from '../../public/logo.png';
@@ -30,8 +32,13 @@ export default function Home() {
     const main = useRef();
     const smoother = useRef();
 
+
     useGSAP(
         () => {
+            ScrollTrigger.normalizeScroll({ target: ".mainCont", allowNestedScroll: true, type: "touch, scroll, pointer" });
+            // ScrollTrigger.addEventListener("scrollStart", () => gsap.ticker.add(ScrollTrigger.update));
+            // ScrollTrigger.addEventListener("scrollEnd", () => gsap.ticker.remove(ScrollTrigger.update));
+
             smoother.current = ScrollSmoother.create({
                 smooth: 2,
                 effects: true,
@@ -58,17 +65,15 @@ export default function Home() {
                 pin: true,
                 start: 'center center',
                 end: '+=2000',
-                markers: true,
+                markers: false,
             });
-            ScrollTrigger.normalizeScroll({ target: ".mainCont", allowNestedScroll: true, type: "touch,scroll,pointer" });
-            // ScrollTrigger.addEventListener("scrollStart", () => gsap.ticker.add(ScrollTrigger.update));
-            // ScrollTrigger.addEventListener("scrollEnd", () => gsap.ticker.remove(ScrollTrigger.update));
 
         },
         {
             scope: main,
         }
     );
+
 
     //Text split for the logo bottom text
     useEffect(() => {
@@ -163,7 +168,7 @@ export default function Home() {
 
     //useEffect for the canvas to update the shader with the scroll progress
     useEffect(() => {
-        const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, antialias: true });
+        const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, antialias: false });
         const width = window.innerWidth;
         const height = window.innerHeight;
         renderer.setSize(width, height);
@@ -387,10 +392,213 @@ export default function Home() {
     const seoTextFlipSpring = useSpring(seoTextFlip, { stiffness: 70, damping: 15 });
 
 
+    //__________________________________________BOX____________________________________
 
+    // BOX1
+    const box1X = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["45%", "0%", "0%", "0%", "0%", "0%", "0%"]
+    )
+    const box1XSpring = useSpring(box1X, { stiffness: 70, damping: 15 });
+    const box1Y = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["45%", "0%", "0%", "0%", "0%", "0%", "0%"]
+    )
+    const box1YSpring = useSpring(box1Y, { stiffness: 70, damping: 15 });
+    const box1Width = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["10%" , "100%", "100%", "100%", "100%", "100%", "100%"]
+    )
+    const box1WidthSpring = useSpring(box1Width, { stiffness: 70, damping: 15 });
+    const box1Height = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["10%" , "44%", "44%" , "24%", "24%", "20%", "20%"]
+    )
+    const box1HeightSpring = useSpring(box1Height, { stiffness: 70, damping: 15 });
+    const box1BG = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6]
+    )
+    const box1BGSpring = useSpring(box1BG, { stiffness: 70, damping: 15 });
+
+    // BOX2
+    const box2X = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["45%", "0%", "0%", "0%", "0%", "0%", "0%"]
+    )
+    const box2XSpring = useSpring(box2X, { stiffness: 70, damping: 15 });
+    const box2Y = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["45%", "45%", "45%", "25%", "25%", "73%", "73%"]
+    )
+    const box2YSpring = useSpring(box2Y, { stiffness: 70, damping: 15 });
+    const box2Width = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["10%" , "100%", "100%", "25%", "25%", "100%", "100%"]
+    )
+    const box2WidthSpring = useSpring(box2Width, { stiffness: 70, damping: 15 });
+    const box2Height = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["10%" , "55%", "55%" , "75%", "75%", "27%", "27%"]
+    )
+    const box2HeightSpring = useSpring(box2Height, { stiffness: 70, damping: 15 });
+    const box2BG = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6]
+    )
+    const box2BGSpring = useSpring(box2BG, { stiffness: 70, damping: 15 });
+
+// BOX3
+    const box3X = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["45%", "9%", "9%", "27%", "27%", "0%", "0%"]
+    )
+    const box3XSpring = useSpring(box3X, { stiffness: 70, damping: 15 });
+    const box3Y = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["45%", "60%", "60%", "25%", "25%", "21%", "21%"]
+    )
+    const box3YSpring = useSpring(box3Y, { stiffness: 70, damping: 15 });
+    const box3Width = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["10%" , "23%", "23%", "73%", "73%", "100%", "100%"]
+    )
+    const box3WidthSpring = useSpring(box3Width, { stiffness: 70, damping: 15 });
+    const box3Height = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["10%" , "26%", "26%" , "75%", "75%", "51%", "51%"]
+    )
+    const box3HeightSpring = useSpring(box3Height, { stiffness: 70, damping: 15 });
+    const box3BG = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.6, 0.0, 0.0, 0.6, 0.6, 0.6, 0.6]
+    )
+    const box3BGSpring = useSpring(box3BG, { stiffness: 70, damping: 15 });
+
+
+// BOX4
+    const box4X = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["45%", "39%", "39%", "35%", "35%", "44%", "44%"]
+    )
+    const box4XSpring = useSpring(box4X, { stiffness: 70, damping: 15 });
+    const box4Y = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["45%", "60%", "60%", "54%", "54%", "31%", "31%"]
+    )
+    const box4YSpring = useSpring(box4Y, { stiffness: 70, damping: 15 });
+    const box4Width = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["10%" , "23%", "23%", "56%", "56%", "51%", "51%"]
+    )
+    const box4WidthSpring = useSpring(box4Width, { stiffness: 70, damping: 15 });
+    const box4Height = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["10%" , "26%", "26%" , "38%", "38%", "25%", "25%"]
+    )
+    const box4HeightSpring = useSpring(box4Height, { stiffness: 70, damping: 15 });
+    const box4BG = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.6, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    )
+    const box4BGSpring = useSpring(box4BG, { stiffness: 70, damping: 15 });
+
+    // BOX5
+    const box5X = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["45%", "68%", "68%", "35%", "35%", "11%", "11%"]
+    )
+    const box5XSpring = useSpring(box5X, { stiffness: 70, damping: 15 });
+    const box5Y = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["45%", "60%", "60%", "34%", "34%", "50%", "50%"]
+    )
+    const box5YSpring = useSpring(box5Y, { stiffness: 70, damping: 15 });
+    const box5Width = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["10%" , "23%", "23%", "56%", "56%", "23%", "23%"]
+    )
+    const box5WidthSpring = useSpring(box5Width, { stiffness: 70, damping: 15 });
+    const box5Height = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["10%" , "26%", "26%" , "19%", "19%", "6%", "6%"]
+    )
+    const box5HeightSpring = useSpring(box5Height, { stiffness: 70, damping: 15 });
+    const box5BG = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.6, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    )
+    const box5BGSpring = useSpring(box5BG, { stiffness: 70, damping: 15 });
+
+
+    //----------------------------------BOX TEXT-----------------------------------
+    const boxTextOpacity = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.71, 0.73, 0.75, 0.78, 0.79, 0.81, 0.83, 0.86, 0.87, 0.89, 0.90],
+        [0.0, 0.00, 1.00, 1.00, 0.00, 0.00, 1.00, 1.00, 0.00, 0.00, 1.00, 1.00, 1.00]
+    )
+    const boxTextH1Padding = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.71, 0.73, 0.75, 0.78, 0.79, 0.81, 0.83, 0.86, 0.87, 0.89, 0.90],
+        ["60px", "60px", "0px", "0px", "0px", "60px", "0px", "0px", "0px", "60px", "0px", "0px", "0px"]
+    )
+
+
+    //-----------------------------------BOX TEXT-----------------------------------
+    const box1Text = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["", "", "User Experience ", "", "Visual Design", "", "Functionality"]
+    )
+    const box2Text = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["", "", "", "", "layout", "", "reliability"]
+    )
+    const box3Text = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["", "", "intuitive", "", "", "", ""]
+    )
+    const box4Text = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["", "", "accessible", "", "typography", "", "responsiveness"]
+    )
+    const box5Text = useTransform(
+        scrollYProgress,
+        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        ["", "", "enjoyable", "", "color", "", "Speed"]
+    )
 
 
     // console.log(scrollYProgress.get());
+
         return (
         <motion.div ref={scrollRef} className="mainCont">
             <motion.div id="smooth-wrapper"  ref={main} animate={true} className="smoothWrap" >
@@ -534,9 +742,9 @@ export default function Home() {
 
                                         <motion.div className="seoBackCont">
                                             <p className="seoTextBody">
-                                                Data driven content campaigns<br/><br/>
-                                                site optimized technical seo<br/><br/>
-                                                Analytics based updates
+                                                content campaigns<br/><br/>
+                                                technical seo<br/><br/>
+                                                strategic updates
                                             </p>
 
                                             <a className="seoBackButton">Contact</a>
@@ -546,21 +754,123 @@ export default function Home() {
                             </div>
                         </motion.div>
                     </div>
-                    <div className="section">
+                    <motion.div className="section">
                         <motion.div id="stickyContent3" data-speed="1.5" className="sticky-div">
-                            <h1 className="text-white ">SERVAL DESIGNS</h1>
-                            <h1 className="text-white">WEB SEO DESIGN</h1>
+                            <motion.div className="boxContainer">
+                                <motion.div
+                                    className="box"
+                                    style={{
+                                        left: box1XSpring,
+                                        top: box1YSpring,
+                                        height: box1HeightSpring,
+                                        width: box1WidthSpring,
+                                        backgroundColor: `rgba(0, 0, 0, ${box1BGSpring.get()})`,
+                                    }}
+                                >
+                                    <motion.h1
+                                        className="boxTextH1"
+                                        style={{
+                                            opacity: boxTextOpacity,
+                                            paddingTop: boxTextH1Padding,
+                                        }}
+                                    >
+                                        {box1Text}
+                                    </motion.h1>
+                                </motion.div>
+                                <motion.div
+                                    className="box"
+                                    style={{
+                                        left: box2XSpring,
+                                        top: box2YSpring,
+                                        height: box2HeightSpring,
+                                        width: box2WidthSpring,
+                                        backgroundColor: `rgba(0, 0, 0, ${box2BGSpring.get()})`,
+                                    }}
+                                >
+                                    <motion.h3
+                                    className="boxTextH3"
+                                    style={{
+                                        opacity: boxTextOpacity,
+                                        paddingTop: boxTextH1Padding,
+                                    }}
+                                >
+                                    {box2Text}
+                                </motion.h3>
+                                </motion.div>
+                                <motion.div
+                                    className="box"
+                                    style={{
+                                        left: box3XSpring,
+                                        top: box3YSpring,
+                                        height: box3HeightSpring,
+                                        width: box3WidthSpring,
+                                        backgroundColor: `rgba(0, 0, 0, ${box3BGSpring.get()})`,
+                                    }}
+                                >
+                                    <motion.h3
+                                        className="boxTextH3"
+                                        style={{
+                                            opacity: boxTextOpacity,
+                                            paddingTop: boxTextH1Padding,
+                                        }}
+                                    >
+                                        {box3Text}
+                                    </motion.h3>
+                                </motion.div>
+                                <motion.div
+                                    className="box"
+                                    style={{
+                                        left: box4XSpring,
+                                        top: box4YSpring,
+                                        height: box4HeightSpring,
+                                        width: box4WidthSpring,
+                                        backgroundColor: `rgba(0, 0, 0, ${box4BGSpring.get()})`,
+                                    }}
+                                    >
+                                    <motion.h3
+                                        className="boxTextH3"
+                                        style={{
+                                            opacity: boxTextOpacity,
+                                            paddingTop: boxTextH1Padding,
+                                        }}
+                                    >
+                                        {box4Text}
+                                    </motion.h3>
+                                </motion.div>
+                                <motion.div
+                                    className="box"
+                                    style={{
+                                        left: box5XSpring,
+                                        top: box5YSpring,
+                                        height: box5HeightSpring,
+                                        width: box5WidthSpring,
+                                        backgroundColor: `rgba(0, 0, 0, ${box5BGSpring.get()})`,
+                                    }}
+                                >
+                                    <motion.h3
+                                        className="boxTextH3"
+                                        style={{
+                                            opacity: boxTextOpacity,
+                                            paddingTop: boxTextH1Padding,
+                                        }}
+                                    >
+                                        {box5Text}
+                                    </motion.h3>
+                                </motion.div>
+                            </motion.div>
                         </motion.div>
-                    </div>
+                    </motion.div>
                     <div className="sectionBottom">
-                            <motion.div initial={{ y: 0 }} animate={{ y: 0 }} whileInView={{ y: 0 }} viewport={{ once: true }} className="sticky-div">
-                                <h1 className="text-white ">SERVAL DESIGNS</h1>
+                        <motion.div initial={{y: 0}} animate={{y: 0}} whileInView={{y: 0}} viewport={{once: true}}
+                                    className="sticky-div">
+                            <h1 className="text-white ">SERVAL DESIGNS</h1>
                                 <h1 className="text-white">WEB SEO DESIGN</h1>
                             </motion.div>
                         </div>
 
                 </motion.div>
             </motion.div>
+            <div className="canvasCont"></div>
                 <div className="canvasCont">
                     <canvas ref={canvasRef} style={{ width: '100%', height: '100vh' }} />;
                 </div>

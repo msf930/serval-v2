@@ -6,12 +6,12 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head />
-        <ReactLenis root>
+        {/*<ReactLenis root>*/}
           <body>
             <Main />
             <NextScript />
           </body>
-        </ReactLenis>
+        {/*</ReactLenis>*/}
     </Html>
   );
 }
