@@ -51,7 +51,7 @@ body,
 /*structure of home page*/
 .section{
     position: relative;
-    height: 300vh;
+    height: 2800px;
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -171,13 +171,19 @@ body,
 .websiteTitle2{
     width: auto;
 }
-
+.webCardCont{
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
 .webCard1{
     position: absolute;
-    left: 100%;
-    top: 25%;
-    height: 10vh;
-    width: 10vw;
+    right: -400px;
+    top: 15%;
+    height: 23vh;
+    width: 30vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -187,15 +193,17 @@ body,
     backdrop-filter: blur(10px);
     border-radius: 1rem;
     overflow: hidden;
-
     border: 2px solid transparent;
+    z-index: 10;
+    backface-visibility: hidden;
+    transform: translateZ(50px);
 }
 .webCard2{
     position: absolute;
-    left: 100%;
-    top: 45%;
-    height: 10vh;
-    width: 10vw;
+    right: -400px;
+    top: 40%;
+    height: 23vh;
+    width: 30vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -205,15 +213,16 @@ body,
     backdrop-filter: blur(10px);
     border-radius: 1rem;
     overflow: hidden;
-
     border: 2px solid transparent;
+    z-index: 10;
+    backface-visibility: hidden;
 }
 .webCard3{
     position: absolute;
-    left: 100%;
+    right: -400px;
     top: 65%;
-    height: 10vh;
-    width: 10vw;
+    height: 23vh;
+    width: 30vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -223,8 +232,9 @@ body,
     backdrop-filter: blur(10px);
     border-radius: 1rem;
     overflow: hidden;
-
     border: 2px solid transparent;
+    z-index: 10;
+    backface-visibility: hidden;
 }
 .webCardButton{
     position: relative;

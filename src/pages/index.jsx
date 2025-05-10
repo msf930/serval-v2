@@ -313,6 +313,7 @@ export default function Home() {
     }, [backgroundTimeStep, backgroundColor1, backgroundColor2, backgroundColor3, backgroundColor1B, backgroundColor2B, backgroundColor3B]);
 
 
+    //-----------------------------------WEBCARD MAIN-----------------------------------
     const webCardMain = useTransform(
         scrollYProgress,
         [0.12,0.14],
@@ -325,52 +326,58 @@ export default function Home() {
         ["200%", "100%"]
     )
     const webCardMainScaleSpring = useSpring(webCardMainScale, { stiffness: 80, damping: 20 });
+
+
+    //-----------------------------------WEBCARDS-----------------------------------
     const webCard1 = useTransform(
         scrollYProgress,
         [0.14,0.17],
-        ["0%", "-400%"]
+        ["-30vw", "10vw"]
     )
     const webCard1Spring = useSpring(webCard1, { stiffness: 80, damping: 20 });
+    const webCard1Rotate = useTransform(
+        scrollYProgress,
+        [0.16,0.17],
+        [0, -20]
+    )
+    const webCard1RotateSpring = useSpring(webCard1Rotate, { stiffness: 80, damping: 20 });
+
     const webCard2 = useTransform(
         scrollYProgress,
-        [0.17,0.22],
-        ["0%", "-400%"]
+        [0.16,0.19],
+        ["-30vw", "10vw"]
     )
     const webCard2Spring = useSpring(webCard2, { stiffness: 80, damping: 20 });
+    const webCard2Rotate = useTransform(
+        scrollYProgress,
+        [0.18,0.19],
+        [0, -20]
+    )
+    const webCard2RotateSpring = useSpring(webCard2Rotate, { stiffness: 80, damping: 20 });
+
     const webCard3 = useTransform(
         scrollYProgress,
-        [0.22,0.27],
-        ["0%", "-400%"]
+        [0.18,0.21],
+        ["-30vw", "10vw"]
     )
     const webCard3Spring = useSpring(webCard3, { stiffness: 80, damping: 20 });
-
-
-    const webCard1B = useTransform(
+    const webCard3Rotate = useTransform(
         scrollYProgress,
-        [0.15,0.20],
-        ["0%", "-250%"]
+        [0.20,0.21],
+        [0, -20]
     )
-    const webCard1Spring2 = useSpring(webCard1B, { stiffness: 80, damping: 20 });
-    const webCard2B = useTransform(
-        scrollYProgress,
-        [0.20,0.25],
-        ["0%", "-250%"]
-    )
-    const webCard2Spring2 = useSpring(webCard2B, { stiffness: 80, damping: 20 });
-    const webCard3B = useTransform(
-        scrollYProgress,
-        [0.25,0.30],
-        ["0%", "-250%"]
-    )
-    const webCard3Spring2 = useSpring(webCard3B, { stiffness: 80, damping: 20 });
+    const webCard3RotateSpring = useSpring(webCard3Rotate, { stiffness: 80, damping: 20 });
 
+    //------------------------------------WEBCARD BUTTON-----------------------------------
     const webCardButton = useTransform(
         scrollYProgress,
-        [0.25,0.30],
+        [0.21,0.24],
         ["0%", "100%"]
     )
     const webCardButtonSpring = useSpring(webCardButton, { stiffness: 80, damping: 20 });
 
+
+    //-----------------------------------SEO-----------------------------------
     const seoCircRadius = useTransform(
         scrollYProgress,
         [0.40,0.63],
@@ -643,23 +650,26 @@ export default function Home() {
                                         </div>
                                         <motion.a className="webCardButton" style={{opacity: webCardButtonSpring }}>SEE MORE</motion.a>
                                     </motion.div>
-                                    <div>
-                                        <motion.div className="webCard1" style={{x: webCard1Spring}}>
+                                    <div className="webCardCont">
+                                        <motion.div className="webCard1"
+                                                    style={{
+                                                        right: webCard1Spring,
+                                                        rotateY: webCard1RotateSpring,
+                                        }}>
                                             <h1>Test</h1>
                                         </motion.div>
-                                        <motion.div className="webCard2" style={{x: webCard2Spring}}>
+                                        <motion.div className="webCard2"
+                                                    style={{
+                                                        right: webCard2Spring,
+                                                        rotateY: webCard2RotateSpring,
+                                                    }}>
                                             <h1>Test</h1>
                                         </motion.div>
-                                        <motion.div className="webCard3" style={{x: webCard3Spring}}>
-                                            <h1>Test</h1>
-                                        </motion.div>
-                                        <motion.div className="webCard1" style={{x: webCard1Spring2}}>
-                                            <h1>Test</h1>
-                                        </motion.div>
-                                        <motion.div className="webCard2" style={{x: webCard2Spring2}}>
-                                            <h1>Test</h1>
-                                        </motion.div>
-                                        <motion.div className="webCard3" style={{x: webCard3Spring2}}>
+                                        <motion.div className="webCard3"
+                                                    style={{
+                                                        right: webCard3Spring,
+                                                        rotateY: webCard3RotateSpring,
+                                        }}>
                                             <h1>Test</h1>
                                         </motion.div>
                                     </div>
