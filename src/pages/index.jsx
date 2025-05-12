@@ -25,12 +25,15 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText, ScrambleTextPlugin
 import logo from '../../public/logo.png';
 import styles from "@/components/WebsiteSection/styles.module.css";
 import {scale} from "motion";
+import Carousel from "@/components/Carousel";
 
 export default function Home() {
     //GSAP stuff
     const [scroll, setScroll] = useState(0.0);
     const main = useRef();
     const smoother = useRef();
+
+
 
 
     useGSAP(
@@ -41,7 +44,7 @@ export default function Home() {
             //     momentum: self => Math.min(3, self.velocityY / 1000), // dynamically control the duration of the momentum when flick-scrolling
             //     type: "touch,wheel,pointer", // now the page will be drag-scrollable on desktop because "pointer" is in the list
             // });
-            // ScrollTrigger.normalizeScroll(true);
+            ScrollTrigger.normalizeScroll(true);
             // ScrollTrigger.normalizeScroll({ ignoreMobileResize: true, allowNestedScroll: true, type: "touch, scroll, pointer" });
             // ScrollTrigger.addEventListener("scrollStart", () => gsap.ticker.add(ScrollTrigger.update));
             // ScrollTrigger.addEventListener("scrollEnd", () => gsap.ticker.remove(ScrollTrigger.update));
@@ -59,6 +62,35 @@ export default function Home() {
                 start: 'center center',
                 end: '+=2000',
                 markers: false,
+
+            });
+            const splitWeb = SplitText.create(".websiteTitle2", {
+                type: "words",
+            });
+            let hasAnimated = false;
+            ScrollTrigger.create({
+                trigger: '#stickyContent',
+
+                start: 'top top',
+                end: 'center center',
+                markers: true,
+                onToggle:( self ) => {
+                    if(self.isActive && !hasAnimated) {
+                        gsap.to(splitWeb.words, {
+                            stagger: {
+                                amount: 0.5,
+                                from: "random",
+                            },
+                            scrambleText: {
+                                text: "WEBSITES",
+                                speed: 0.5,
+                                revealDelay: 0.5,
+                                chars: "01",
+                            }
+                        });
+                        hasAnimated = true;
+                    }
+                }
             });
             ScrollTrigger.create({
                 trigger: '#stickyContent2',
@@ -74,17 +106,6 @@ export default function Home() {
                 end: '+=2000',
                 markers: false,
             });
-
-        },
-        {
-            scope: main,
-        }
-    );
-
-
-    //Text split for the logo bottom text
-    useEffect(() => {
-        if (typeof window !== "undefined") {
             const split = SplitText.create(".logoText", {
                 type: "words",
             });
@@ -93,32 +114,39 @@ export default function Home() {
                 autoAlpha: 0,
                 stagger: 0.2,
             });
+
+        },
+        {
+            scope: main,
         }
-    }, []);
+    );
+
+
+
 
     //Text split Website section
-    const [inView, setInView] = useState(false);
-    useEffect(() => {
-        if (inView) {
-            const split = SplitText.create(".websiteTitle2", {
-                type: "chars",
-            });
-            gsap.from(split.chars, {
-                y: 0,
-                autoAlpha: 0,
-                stagger: {
-                    amount: 0.5,
-                    from: "random",
-                },
-                scrambleText: {
-                    text: "WEBSITES",
-                    speed: 0.3,
-                    revealDelay: 0.5,
-                    chars: "01",
-                }
-            });
-        }
-    }, [inView]);
+    // const [inView, setInView] = useState(false);
+    // useEffect(() => {
+    //     if (inView) {
+    //         const split = SplitText.create(".websiteTitle2", {
+    //             type: "chars",
+    //         });
+    //         gsap.from(split.chars, {
+    //             y: 0,
+    //             autoAlpha: 0,
+    //             stagger: {
+    //                 amount: 0.5,
+    //                 from: "random",
+    //             },
+    //             scrambleText: {
+    //                 text: "WEBSITES",
+    //                 speed: 0.3,
+    //                 revealDelay: 0.5,
+    //                 chars: "01",
+    //             }
+    //         });
+    //     }
+    // }, [inView]);
 
 
 
@@ -338,8 +366,8 @@ export default function Home() {
     //-----------------------------------WEBCARDS-----------------------------------
     const webCard1 = useTransform(
         scrollYProgress,
-        [0.14,0.17],
-        ["-30vw", "10vw"]
+        [0.12, 0.14, 0.28, 0.3],
+        ["-100%", "0%", "0%", "-100%"]
     )
     const webCard1Spring = useSpring(webCard1, { stiffness: 80, damping: 20 });
     const webCard1Rotate = useTransform(
@@ -411,31 +439,31 @@ export default function Home() {
     // BOX1
     const box1X = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["45%", "0%", "0%", "0%", "0%", "0%", "0%"]
     )
     const box1XSpring = useSpring(box1X, { stiffness: 70, damping: 15 });
     const box1Y = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["45%", "0%", "0%", "0%", "0%", "0%", "0%"]
     )
     const box1YSpring = useSpring(box1Y, { stiffness: 70, damping: 15 });
     const box1Width = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["10%" , "100%", "100%", "100%", "100%", "100%", "100%"]
     )
     const box1WidthSpring = useSpring(box1Width, { stiffness: 70, damping: 15 });
     const box1Height = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["10%" , "44%", "44%" , "24%", "24%", "20%", "20%"]
     )
     const box1HeightSpring = useSpring(box1Height, { stiffness: 70, damping: 15 });
     const box1BG = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         [0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6]
     )
     const box1BGSpring = useSpring(box1BG, { stiffness: 70, damping: 15 });
@@ -443,31 +471,31 @@ export default function Home() {
     // BOX2
     const box2X = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["45%", "0%", "0%", "0%", "0%", "0%", "0%"]
     )
     const box2XSpring = useSpring(box2X, { stiffness: 70, damping: 15 });
     const box2Y = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["45%", "45%", "45%", "25%", "25%", "73%", "73%"]
     )
     const box2YSpring = useSpring(box2Y, { stiffness: 70, damping: 15 });
     const box2Width = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["10%" , "100%", "100%", "25%", "25%", "100%", "100%"]
     )
     const box2WidthSpring = useSpring(box2Width, { stiffness: 70, damping: 15 });
     const box2Height = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["10%" , "55%", "55%" , "75%", "75%", "27%", "27%"]
     )
     const box2HeightSpring = useSpring(box2Height, { stiffness: 70, damping: 15 });
     const box2BG = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         [0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6]
     )
     const box2BGSpring = useSpring(box2BG, { stiffness: 70, damping: 15 });
@@ -475,31 +503,31 @@ export default function Home() {
 // BOX3
     const box3X = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["45%", "9%", "9%", "27%", "27%", "0%", "0%"]
     )
     const box3XSpring = useSpring(box3X, { stiffness: 70, damping: 15 });
     const box3Y = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["45%", "60%", "60%", "25%", "25%", "21%", "21%"]
     )
     const box3YSpring = useSpring(box3Y, { stiffness: 70, damping: 15 });
     const box3Width = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["10%" , "23%", "23%", "73%", "73%", "100%", "100%"]
     )
     const box3WidthSpring = useSpring(box3Width, { stiffness: 70, damping: 15 });
     const box3Height = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["10%" , "26%", "26%" , "75%", "75%", "51%", "51%"]
     )
     const box3HeightSpring = useSpring(box3Height, { stiffness: 70, damping: 15 });
     const box3BG = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         [0.6, 0.0, 0.0, 0.6, 0.6, 0.6, 0.6]
     )
     const box3BGSpring = useSpring(box3BG, { stiffness: 70, damping: 15 });
@@ -508,31 +536,31 @@ export default function Home() {
 // BOX4
     const box4X = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["45%", "39%", "39%", "35%", "35%", "44%", "44%"]
     )
     const box4XSpring = useSpring(box4X, { stiffness: 70, damping: 15 });
     const box4Y = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["45%", "60%", "60%", "54%", "54%", "31%", "31%"]
     )
     const box4YSpring = useSpring(box4Y, { stiffness: 70, damping: 15 });
     const box4Width = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["10%" , "23%", "23%", "56%", "56%", "51%", "51%"]
     )
     const box4WidthSpring = useSpring(box4Width, { stiffness: 70, damping: 15 });
     const box4Height = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["10%" , "26%", "26%" , "38%", "38%", "25%", "25%"]
     )
     const box4HeightSpring = useSpring(box4Height, { stiffness: 70, damping: 15 });
     const box4BG = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         [0.6, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     )
     const box4BGSpring = useSpring(box4BG, { stiffness: 70, damping: 15 });
@@ -540,31 +568,31 @@ export default function Home() {
     // BOX5
     const box5X = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["45%", "68%", "68%", "35%", "35%", "11%", "11%"]
     )
     const box5XSpring = useSpring(box5X, { stiffness: 70, damping: 15 });
     const box5Y = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["45%", "60%", "60%", "34%", "34%", "50%", "50%"]
     )
     const box5YSpring = useSpring(box5Y, { stiffness: 70, damping: 15 });
     const box5Width = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["10%" , "23%", "23%", "56%", "56%", "23%", "23%"]
     )
     const box5WidthSpring = useSpring(box5Width, { stiffness: 70, damping: 15 });
     const box5Height = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["10%" , "26%", "26%" , "19%", "19%", "6%", "6%"]
     )
     const box5HeightSpring = useSpring(box5Height, { stiffness: 70, damping: 15 });
     const box5BG = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         [0.6, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     )
     const box5BGSpring = useSpring(box5BG, { stiffness: 70, damping: 15 });
@@ -586,31 +614,42 @@ export default function Home() {
     //-----------------------------------BOX TEXT-----------------------------------
     const box1Text = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["", "", "User Experience ", "", "Visual Design", "", "Functionality"]
     )
     const box2Text = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["", "", "", "", "layout", "", "reliability"]
     )
     const box3Text = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["", "", "intuitive", "", "", "", ""]
     )
     const box4Text = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["", "", "accessible", "", "typography", "", "responsiveness"]
     )
     const box5Text = useTransform(
         scrollYProgress,
-        [0.67, 0.70, 0.75, 0.78, 0.83, 0.86, 0.9],
+        [0.67, 0.68, 0.75, 0.76, 0.83, 0.84, 0.9],
         ["", "", "enjoyable", "", "color", "", "Speed"]
     )
 
+    const [webInView, setWebInView] = useState(false);
+    useEffect(() => {
+        const unsubscribe = scrollYProgress.onChange((progress) => {
+            if (progress > 0.14 && !webInView) {
+                setWebInView(true);
+            }
+        });
 
+        return () => unsubscribe(); // Cleanup listener on unmount
+    }, [scrollYProgress, webInView]);
+
+    //0.12, 0.14, 0.28, 0.3
     // console.log(scrollYProgress.get());
 
         return (
@@ -644,42 +683,50 @@ export default function Home() {
                                                 initial={{ opacity: 0 }}
                                                 whileInView={{ opacity: 1, scramble: true }}
                                                 viewport={{ once: true }}
-                                                onViewportEnter={() => setInView(true)}
+                                                // onViewportEnter={() => setInView(true)}
                                             >Custom Built</motion.div>
                                             <motion.div
                                                 style={{scale: webCardMainScaleSpring}}
                                                 className="websiteTitle2"
-                                                initial={{ opacity: 0 }}
-                                                whileInView={{ opacity: 1, scramble: true }}
-                                                viewport={{ once: true }}
-                                                onViewportEnter={() => setInView(true)}
-                                            >Websites</motion.div>
+                                                // initial={{ opacity: 0 }}
+                                                // whileInView={{ opacity: 1, scramble: true, animationDelay: 0.5 }}
+                                                // viewport={{ once: true }}
+                                                // onViewportEnter={() => setInView(true)}
+                                            >0000000</motion.div>
                                         </div>
                                         <motion.a className="webCardButton" style={{opacity: webCardButtonSpring }}>SEE MORE</motion.a>
                                     </motion.div>
-                                    <div className="webCardCont">
-                                        <motion.div className="webCard1"
-                                                    style={{
-                                                        right: webCard1Spring,
-                                                        rotateY: webCard1RotateSpring,
-                                        }}>
-                                            <h1>Test</h1>
-                                        </motion.div>
-                                        <motion.div className="webCard2"
-                                                    style={{
-                                                        right: webCard2Spring,
-                                                        rotateY: webCard2RotateSpring,
-                                                    }}>
-                                            <h1>Test</h1>
-                                        </motion.div>
-                                        <motion.div className="webCard3"
-                                                    style={{
-                                                        right: webCard3Spring,
-                                                        rotateY: webCard3RotateSpring,
-                                        }}>
-                                            <h1>Test</h1>
-                                        </motion.div>
-                                    </div>
+                                    {/*<div className="webCardCont">*/}
+                                    {/*    <motion.div className="webCard1"*/}
+                                    {/*                style={{*/}
+                                    {/*                    right: webCard1Spring,*/}
+                                    {/*                    rotateY: webCard1RotateSpring,*/}
+                                    {/*    }}>*/}
+                                    {/*        <h1>Test</h1>*/}
+                                    {/*    </motion.div>*/}
+                                    {/*    <motion.div className="webCard2"*/}
+                                    {/*                style={{*/}
+                                    {/*                    right: webCard2Spring,*/}
+                                    {/*                    rotateY: webCard2RotateSpring,*/}
+                                    {/*                }}>*/}
+                                    {/*        <h1>Test</h1>*/}
+                                    {/*    </motion.div>*/}
+                                    {/*    <motion.div className="webCard3"*/}
+                                    {/*                style={{*/}
+                                    {/*                    right: webCard3Spring,*/}
+                                    {/*                    rotateY: webCard3RotateSpring,*/}
+                                    {/*    }}>*/}
+                                    {/*        <h1>Test</h1>*/}
+                                    {/*    </motion.div>*/}
+                                    {/*</div>*/}
+                                    <motion.div
+                                        className="carouselParent"
+                                        style={{
+                                            right: webCard1Spring,
+                                        }}
+                                    >
+                                        <Carousel webInView={webInView}/>
+                                    </motion.div>
                                 </div>
                             </div>
                         </motion.div>
@@ -887,7 +934,7 @@ export default function Home() {
 
                 </motion.div>
             </motion.div>
-            <div className="canvasCont"></div>
+
                 <div className="canvasCont">
                     <canvas ref={canvasRef} style={{ width: '100%', height: '100vh' }} />;
                 </div>
