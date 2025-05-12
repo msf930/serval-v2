@@ -13,9 +13,9 @@ export default function Carousel({webInView}) {
     const hasRunOnce = useRef(false);
     const webInViewRef = useRef(false);
 
-    useEffect(() => {
-        webInViewRef.current = webInView;
-    }, [webInView]);
+    // useEffect(() => {
+    //     webInViewRef.current = webInView;
+    // }, [webInView]);
     useGSAP(() => {
         const wrapper = document.querySelector(".wrapper");
 
@@ -36,18 +36,18 @@ export default function Carousel({webInView}) {
         });
         // console.log(webInViewRef.current);
 
-        if (webInView && !hasRunOnce.current) {
-            hasRunOnce.current = true;
-            loop.toIndex(3, {duration: 2.0, ease: "power1.inOut"})
-
-
-        }
+        // if (webInView && !hasRunOnce.current) {
+        //     hasRunOnce.current = true;
+        //     loop.toIndex(3, {duration: 2.0, ease: "power1.inOut"})
+        //
+        //
+        // }
 
         boxes.forEach((box, i) => box.addEventListener("click", () => loop.toIndex(i, {duration: 0.8, ease: "power1.inOut"})));
 
-        document.querySelector(".toggle").addEventListener("click", () => wrapper.classList.toggle("show-overflow"));
-        document.querySelector(".next").addEventListener("click", () => loop.next({duration: 0.4, ease: "power1.inOut"}));
-        document.querySelector(".prev").addEventListener("click", () => loop.previous({duration: 0.4, ease: "power1.inOut"}));
+        // document.querySelector(".toggle").addEventListener("click", () => wrapper.classList.toggle("show-overflow"));
+        // document.querySelector(".next").addEventListener("click", () => loop.next({duration: 0.4, ease: "power1.inOut"}));
+        // document.querySelector(".prev").addEventListener("click", () => loop.previous({duration: 0.4, ease: "power1.inOut"}));
 
 
 
@@ -254,7 +254,7 @@ export default function Carousel({webInView}) {
             });
             return timeline;
         }
-    }, [webInView]);
+    }, []);
     return (
         <div className="carouselCont">
             <div className="button-cont">
