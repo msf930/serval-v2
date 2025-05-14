@@ -61,7 +61,7 @@ export default function Home() {
                 trigger: '#stickyContent',
                 pin: true,
                 start: 'center center',
-                end: '+=2000',
+                end: '+=3000',
                 // markers: true,
                 scrub: 1,
 
@@ -99,14 +99,14 @@ export default function Home() {
                 trigger: '#stickyContent2',
                 pin: true,
                 start: 'center center',
-                end: '+=2000',
+                end: '+=3000',
                 markers: false,
             });
             ScrollTrigger.create({
                 trigger: '#stickyContent3',
                 pin: true,
                 start: 'center center',
-                end: '+=2000',
+                end: '+=2600',
                 markers: false,
             });
             const split = SplitText.create(".logoText", {
@@ -126,30 +126,6 @@ export default function Home() {
 
 
 
-
-    //Text split Website section
-    // const [inView, setInView] = useState(false);
-    // useEffect(() => {
-    //     if (inView) {
-    //         const split = SplitText.create(".websiteTitle2", {
-    //             type: "chars",
-    //         });
-    //         gsap.from(split.chars, {
-    //             y: 0,
-    //             autoAlpha: 0,
-    //             stagger: {
-    //                 amount: 0.5,
-    //                 from: "random",
-    //             },
-    //             scrambleText: {
-    //                 text: "WEBSITES",
-    //                 speed: 0.3,
-    //                 revealDelay: 0.5,
-    //                 chars: "01",
-    //             }
-    //         });
-    //     }
-    // }, [inView]);
 
 
 
@@ -354,8 +330,8 @@ export default function Home() {
     //-----------------------------------WEBCARD MAIN-----------------------------------
     const webCardMain = useTransform(
         scrollYProgress,
-        [0.12,0.14],
-        ["-50%", "-100%"]
+        [0.12,0.14, 0.32, 0.34],
+        ["-50%", "-120%", "-120%", "-250%"]
     )
     const webCardMainSpring = useSpring(webCardMain, { stiffness: 80, damping: 20 });
     const webCardMainScale = useTransform(
@@ -369,7 +345,7 @@ export default function Home() {
     //-----------------------------------WEBCARDS-----------------------------------
     const webCard1 = useTransform(
         scrollYProgress,
-        [0.12, 0.14, 0.28, 0.3],
+        [0.12, 0.14, 0.32, 0.34],
         ["-100%", "0%", "0%", "-100%"]
     )
     const webCard1Spring = useSpring(webCard1, { stiffness: 80, damping: 20 });

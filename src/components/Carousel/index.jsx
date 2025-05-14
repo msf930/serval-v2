@@ -16,19 +16,26 @@ import Image from "next/image";
 import { FaArrowUp, FaArrowDown, FaTimes } from 'react-icons/fa';
 
 import test from "@/../public/test.jpg";
+import arapahoe from "@/../public/arapahoe.png";
+import asb from "@/../public/asb.png";
+import envision from "@/../public/envision.png";
+import floworks from "@/../public/floworks.png";
+import mtc from "@/../public/mtc.png";
+import realm from "@/../public/realm.png";
+import recess from "@/../public/recess.png";
+import rizzazzle from "@/../public/rizzazzle.png";
+import rmr from "@/../public/rmr.png";
+import savvyb from "@/../public/savvyb.png";
+import vpa from "@/../public/vpa.png";
+import yusha from "@/../public/yusha.png";
+
+
 gsap.registerPlugin(Draggable, InertiaPlugin, Flip, ScrollTrigger);
 
 export default function Carousel() {
-    const hasRunOnce = useRef(false);
-    const webInViewRef = useRef(false);
 
-    const boxContentRef = useRef(null);
-    // useEffect(() => {
-    //     webInViewRef.current = webInView;
-    // }, [webInView]);
+
     useGSAP(() => {
-
-        // const boxContentElement = boxContentRef.current;
 
         const
             flipItems = gsap.utils.toArray(".boxContent1"),
@@ -39,9 +46,6 @@ export default function Carousel() {
             detailTitle = document.querySelector('.detailCont .title'),
             detailSecondary = document.querySelector('.detailCont .secondary'),
             detailDescription = document.querySelector('.detailCont .description');
-
-        // console.log(flipItems);
-        // console.log(details);
 
 
         let activeItem;
@@ -183,14 +187,7 @@ export default function Carousel() {
                 activeElement = element;
             }
         });
-        // console.log(webInViewRef.current);
 
-        // if (webInView && !hasRunOnce.current) {
-        //     hasRunOnce.current = true;
-        //     loop.toIndex(3, {duration: 2.0, ease: "power1.inOut"})
-        //
-        //
-        // }
 
         // boxes.forEach((box, i) => box.addEventListener("click", () => loop.toIndex(i, {duration: 0.8, ease: "power1.inOut"})));
 
@@ -400,26 +397,26 @@ export default function Carousel() {
                 if(reverse) {
                     ScrollTrigger.create({
                         trigger: ".carouselCont",
-                        start: "top top",
-                        end: '+=4000',
+                        start: "center center",
+                        end: '+=8000',
                         // end: "bottom top",
                         markers: false,
                         scrub: config.scrub || 1,
                         onUpdate: (self) => {
-                            tl.progress(self.progress * -1.5 + 1);
+                            tl.progress(self.progress * -1.8 + 1);
                             // console.log(self.progress);
                         },
                     });
                 } else {
                     ScrollTrigger.create({
                         trigger: ".carouselCont",
-                        start: "top top",
-                        end: '+=4000',
+                        start: "center center",
+                        end: '+=8000',
                         // end: "bottom top",
                         markers: false,
                         scrub: config.scrub || 1,
                         onUpdate: (self) => {
-                            tl.progress(self.progress * 1.5);
+                            tl.progress(self.progress * 1.8);
                             // console.log(self.progress);
                         },
                     });
@@ -463,7 +460,7 @@ export default function Carousel() {
                 <div className="box1">
                     <div className="boxInner">
                         <div className="boxContent1"
-                             ref={boxContentRef}
+
                              data-title="Owl"
                              data-secondary="Hoo are you?"
                              data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
@@ -475,24 +472,14 @@ export default function Carousel() {
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.">
-                            <img
-                                src="/test.jpg"
-                                alt="test"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div className="box1">
-                    <div className="boxInner">
-                        <div className="boxContent1" data-title="Owl" data-secondary="Hoo are you?" data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus, blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio, fugit, quas ipsa impedit.">
                             <Image
-                                src={test}
+                                src={arapahoe}
                                 alt="test"
                                 fill
                                 objectFit="cover"
                             />
                             <img
-                                src="/test.jpg"
+                                src="/arapahoe.png"
                                 alt="test"
                             />
                         </div>
@@ -500,26 +487,143 @@ export default function Carousel() {
                 </div>
                 <div className="box1">
                     <div className="boxInner">
-                        <div className="boxContent"><h3>Test2</h3></div>
-                        <Image
-                            src={test}
-                            alt="test"
-                            fill
-                            objectFit="cover"
-                        />
+                        <div className="boxContent1"
+
+                             data-title="Owl"
+                             data-secondary="Hoo are you?"
+                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.">
+                            <Image
+                                src={asb}
+                                alt="test"
+                                fill
+                                objectFit="cover"
+                            />
+                            <img
+                                src="/asb.png"
+                                alt="test"
+                            />
+                        </div>
                     </div>
                 </div>
                 <div className="box1">
-                    <div className="boxInner">3</div>
+                    <div className="boxInner">
+                        <div className="boxContent1"
+
+                             data-title="Owl"
+                             data-secondary="Hoo are you?"
+                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.">
+                            <Image
+                                src={envision}
+                                alt="test"
+                                fill
+                                objectFit="cover"
+                            />
+                            <img
+                                src="/envision.png"
+                                alt="test"
+                            />
+                        </div>
+                    </div>
                 </div>
                 <div className="box1">
-                    <div className="boxInner">4</div>
+                    <div className="boxInner">
+                        <div className="boxContent1"
+
+                             data-title="Owl"
+                             data-secondary="Hoo are you?"
+                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.">
+                            <Image
+                                src={floworks}
+                                alt="test"
+                                fill
+                                objectFit="cover"
+                            />
+                            <img
+                                src="/floworks.png"
+                                alt="test"
+                            />
+                        </div>
+                    </div>
                 </div>
                 <div className="box1">
-                    <div className="boxInner">5</div>
+                    <div className="boxInner">
+                        <div className="boxContent1"
+
+                             data-title="Owl"
+                             data-secondary="Hoo are you?"
+                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.">
+                            <Image
+                                src={mtc}
+                                alt="test"
+                                fill
+                                objectFit="cover"
+                            />
+                            <img
+                                src="/mtc.png"
+                                alt="test"
+                            />
+                        </div>
+                    </div>
                 </div>
                 <div className="box1">
-                    <div className="boxInner">6</div>
+                    <div className="boxInner">
+                        <div className="boxContent1"
+
+                             data-title="Owl"
+                             data-secondary="Hoo are you?"
+                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.">
+                            <Image
+                                src={realm}
+                                alt="test"
+                                fill
+                                objectFit="cover"
+                            />
+                            <img
+                                src="/realm.png"
+                                alt="test"
+                            />
+                        </div>
+                    </div>
                 </div>
 
 
@@ -528,7 +632,7 @@ export default function Carousel() {
                 <div className="box2">
                     <div className="boxInner">
                         <div className="boxContent1"
-                             ref={boxContentRef}
+
                              data-title="Owl"
                              data-secondary="Hoo are you?"
                              data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
@@ -541,13 +645,13 @@ export default function Carousel() {
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.">
                             <Image
-                                src={test}
+                                src={recess}
                                 alt="test"
                                 fill
                                 objectFit="cover"
                             />
                             <img
-                                src="/test.jpg"
+                                src="/recess.png"
                                 alt="test"
 
                             />
@@ -556,9 +660,27 @@ export default function Carousel() {
                 </div>
                 <div className="box2">
                     <div className="boxInner">
-                        <div className="boxContent1" data-title="Owl" data-secondary="Hoo are you?" data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus, blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio, fugit, quas ipsa impedit.">
+                        <div className="boxContent1"
+
+                             data-title="Owl"
+                             data-secondary="Hoo are you?"
+                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.">
+                            <Image
+                                src={rizzazzle}
+                                alt="test"
+                                fill
+                                objectFit="cover"
+                            />
                             <img
-                                src="/test.jpg"
+                                src="/rizzazzle.png"
                                 alt="test"
 
                             />
@@ -567,28 +689,120 @@ export default function Carousel() {
                 </div>
                 <div className="box2">
                     <div className="boxInner">
-                        <div className="boxContent"><h3>Test2</h3></div>
-                        <Image
-                            src={test}
-                            alt="test"
-                            fill
-                            objectFit="cover"
-                        />
+                        <div className="boxContent1"
+
+                             data-title="Owl"
+                             data-secondary="Hoo are you?"
+                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.">
+                            <Image
+                                src={rmr}
+                                alt="test"
+                                fill
+                                objectFit="cover"
+                            />
+                            <img
+                                src="/rmr.png"
+                                alt="test"
+
+                            />
+                        </div>
                     </div>
                 </div>
                 <div className="box2">
-                    <div className="boxInner">3</div>
-                </div>
-                <div className="box2">
-                    <div className="boxInner">4</div>
-                </div>
-                <div className="box2">
-                    <div className="boxInner">5</div>
-                </div>
-                <div className="box2">
-                    <div className="boxInner">6</div>
-                </div>
+                    <div className="boxInner">
+                        <div className="boxContent1"
 
+                             data-title="Owl"
+                             data-secondary="Hoo are you?"
+                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.">
+                            <Image
+                                src={savvyb}
+                                alt="test"
+                                fill
+                                objectFit="cover"
+                            />
+                            <img
+                                src="/savvyb.png"
+                                alt="test"
+
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="box2">
+                    <div className="boxInner">
+                        <div className="boxContent1"
+
+                             data-title="Owl"
+                             data-secondary="Hoo are you?"
+                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.">
+                            <Image
+                                src={vpa}
+                                alt="test"
+                                fill
+                                objectFit="cover"
+                            />
+                            <img
+                                src="/vpa.png"
+                                alt="test"
+
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="box2">
+                    <div className="boxInner">
+                        <div className="boxContent1"
+
+                             data-title="Owl"
+                             data-secondary="Hoo are you?"
+                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
+                             fugit, quas ipsa impedit.">
+                            <Image
+                                src={yusha}
+                                alt="test"
+                                fill
+                                objectFit="cover"
+                            />
+                            <img
+                                src="/yusha.png"
+                                alt="test"
+
+                            />
+                        </div>
+                    </div>
+                </div>
 
             </div>
 

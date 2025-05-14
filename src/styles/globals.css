@@ -51,7 +51,7 @@ body,
 /*structure of home page*/
 .section{
     position: relative;
-    height: 2800px;
+    height: 3500px;
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -443,6 +443,8 @@ body,
     height: 50px;
     padding-top: 30px;
 }
+
+
 .boxContainer{
     position: relative;
     height: 80vh;
@@ -482,11 +484,11 @@ body,
     top: 0;
     right: -100%;
     height: 100vh;
-    width: 50vw;
+    width: 60vw;
 }
 .carouselCont{
     height: 100vh;
-    width: 50vw;
+    width: 60vw;
     position: absolute;
     right: 0;
     display: flex;
@@ -521,9 +523,9 @@ body,
 }
 .wrapper {
     position: absolute;
-    right: 5vw;
+    right: 3vw;
     height: 100%;
-    width: 20vw;
+    width: 25vw;
     transform: rotateY(-20deg);
     /*overflow-y:  scroll;*/
     /*border: black solid 1px;*/
@@ -531,9 +533,9 @@ body,
 }
  .wrapper2 {
     position: absolute;
-    right: 25vw;
+    right: 30vw;
     height: 100%;
-    width: 20vw;
+    width: 25vw;
     transform: rotateY(-10deg);
     /*overflow-y:  scroll;*/
     /*border: black solid 1px;*/
@@ -542,8 +544,8 @@ body,
 
 
 .box1, .box2{
-    height: 350px;
-    width: 20vw;
+    height: 250px;
+    width: 25vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -551,9 +553,9 @@ body,
     cursor: pointer;
 }
 .boxInner{
-    margin: 20px;
-    width: 80%;
-    height: 80%;
+    margin: 10px;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -567,29 +569,36 @@ body,
     border: 2px solid transparent;
     z-index: 10;
     backface-visibility: hidden;
-    transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+    scale: 1.0;
+    transition: margin 0.3s ease-in-out, scale 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 .show-overflow {
     overflow: hidden;
 }
-.active .boxInner{
-    margin: 20px;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background-color: #00000010;
-    box-shadow: 0 0 20px 0 #00000060;
+/*.active .boxInner{*/
+/*    margin: 10px;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    text-align: center;*/
+/*    background-color: #00000010;*/
+/*    box-shadow: 0 0 20px 0 #00000060;*/
 
-    border-radius: 1rem;
-    overflow: hidden;
-    border: 2px solid transparent;
-    z-index: 10;
-    backface-visibility: hidden;
-    transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+/*    border-radius: 1rem;*/
+/*    overflow: hidden;*/
+/*    border: 2px solid transparent;*/
+/*    z-index: 10;*/
+/*    backface-visibility: hidden;*/
+/*    transition: width 0.3s ease-in-out, height 0.3s ease-in-out, margin 0.3s ease-in-out;;*/
+/*}*/
+.boxInner:hover{
+    margin: 10px;
+    scale: 1.05;
+    box-shadow: 0 0 30px 0 #00000060;
+   transition:  margin 0.3s ease-in-out, scale 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 .boxContent1{
     width:  100%;
@@ -664,6 +673,7 @@ body,
     transform-style: preserve-3d;
     perspective: 1000px;
 
+
 }
 .detailCont{
     position:  absolute;
@@ -680,6 +690,7 @@ body,
     transform: rotateY(-20deg);
     opacity: 0;
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    border-radius: 10px;
 }
 .detailBG{
     position: absolute;
@@ -724,7 +735,9 @@ body,
     position: absolute;
     top: 10px;
     right: 10px;
-    background: none;
+    background: black;
+    padding: 5px;
+    border-radius: 50%;
     border: none;
     cursor: pointer;
     z-index: 100;
