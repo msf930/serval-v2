@@ -30,6 +30,7 @@ import Carousel from "@/components/Carousel";
 export default function Home() {
     //GSAP stuff
     const [scroll, setScroll] = useState(0.0);
+
     const main = useRef();
     const smoother = useRef();
 
@@ -61,7 +62,9 @@ export default function Home() {
                 pin: true,
                 start: 'center center',
                 end: '+=2000',
-                markers: false,
+                // markers: true,
+                scrub: 1,
+
 
             });
             const splitWeb = SplitText.create(".websiteTitle2", {
@@ -73,7 +76,7 @@ export default function Home() {
 
                 start: 'top top',
                 end: 'center center',
-                markers: true,
+                markers: false,
                 onToggle:( self ) => {
                     if(self.isActive && !hasAnimated) {
                         gsap.to(splitWeb.words, {
@@ -406,7 +409,7 @@ export default function Home() {
     //------------------------------------WEBCARD BUTTON-----------------------------------
     const webCardButton = useTransform(
         scrollYProgress,
-        [0.21,0.24],
+        [0.12,0.14],
         ["0%", "100%"]
     )
     const webCardButtonSpring = useSpring(webCardButton, { stiffness: 80, damping: 20 });
@@ -725,7 +728,7 @@ export default function Home() {
                                             right: webCard1Spring,
                                         }}
                                     >
-                                        <Carousel webInView={webInView}/>
+                                        <Carousel />
                                     </motion.div>
                                 </div>
                             </div>
