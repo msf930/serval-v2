@@ -15,9 +15,12 @@ import { ScrollSmoother } from 'gsap/dist/ScrollSmoother';
 import { SplitText } from 'gsap/dist/SplitText';
 import { Observer } from 'gsap/dist/Observer';
 import { ScrambleTextPlugin } from 'gsap/dist/ScrambleTextPlugin';
+import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin';
 import { useGSAP } from '@gsap/react';
 
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText, ScrambleTextPlugin, Observer);
+import { FaCircle } from "react-icons/fa";
+
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText, ScrambleTextPlugin, Observer, ScrollToPlugin);
 
 
 
@@ -33,6 +36,7 @@ export default function Home() {
     const hasAnimated = useRef(false);
     const [isLoading, setIsLoading] = useState(true);
     const [loadProgress, setLoadProgress] = useState("0%");
+    const [loadTransition, setLoadTransition] = useState(false);
 
     const main = useRef();
     const smoother = useRef();
@@ -65,6 +69,13 @@ export default function Home() {
         damping: 30,
         restDelta: 0.001,
     })
+    useEffect(() => {
+      if(!isLoading) {
+            setTimeout(() => {
+                setLoadTransition(true);
+            }, 1600);
+      }
+    },[isLoading])
     useGSAP(
         () => {
             // ScrollTrigger.normalizeScroll({
@@ -123,20 +134,34 @@ export default function Home() {
                     }
                 }
             });
+            // SplitText.create('.loadingTextH1',{
+            //     type: "words",
+            //     onSplit: (split) => {
+            //         gsap.to(split.words, {
+            //             stagger: {
+            //                 amount: 0.5,
+            //                 from: "random",
+            //             },
+            //             scrambleText: {
+            //                 text: "LOADING",
+            //                 speed: 0.5,
+            //                 revealDelay: 0.5,
+            //                 chars: "LOADING",
+            //             }
+            //         })
+            //     }
+            // })
             SplitText.create('.loadingTextH1',{
-                type: "words",
+                type: "chars",
                 onSplit: (split) => {
-                    gsap.to(split.words, {
+                    gsap.from(split.chars, {
+                        y: 20,
+                        autoAlpha: 0,
                         stagger: {
-                            amount: 0.5,
-                            from: "random",
+                            amount: 0.4,
+                            // from: "random",
                         },
-                        scrambleText: {
-                            text: "LOADING",
-                            speed: 0.5,
-                            revealDelay: 0.5,
-                            chars: "LOADING",
-                        }
+
                     })
                 }
             })
@@ -154,14 +179,17 @@ export default function Home() {
                 end: '+=2600',
                 markers: false,
             });
-            const split = SplitText.create(".logoText", {
-                type: "words",
-            });
-            gsap.from(split.words, {
-                y: 10,
-                autoAlpha: 0,
-                stagger: 0.2,
-            });
+
+            // const split = SplitText.create(".logoText", {
+            //     type: "words",
+            // });
+            //
+            //     gsap.from(split.words, {
+            //         y: 10,
+            //         autoAlpha: 0,
+            //         stagger: 0.2,
+            //     });
+
 
         },
         {
@@ -169,7 +197,16 @@ export default function Home() {
         }
     );
 
+    useEffect(() => {
+        const split = SplitText.create(".logoText", {
+            type: "words",
+        });
+        gsap.from(
+            split.words,
+            { y: 10, opacity: 0, stagger: 0.2, delay: 1.8 }
+        );
 
+    }, [isLoading]);
 
 
 
@@ -684,7 +721,7 @@ export default function Home() {
         return (
                     <motion.div ref={scrollRef} className="mainCont">
                         <motion.div id="smooth-wrapper" ref={main} animate={true} className="smoothWrap">
-                            <motion.div id="smooth-content" animate={true} className={isLoading ? "smoothContent1" : "smoothContent"}>
+                            <motion.div id="smooth-content" animate={true} className={!loadTransition ? "smoothContent1" : "smoothContent"}>
                                 <AnimatePresence>
                                 {
                                     isLoading
@@ -692,7 +729,7 @@ export default function Home() {
                                     && (
                                         <motion.div className="loadingCont">
                                             <motion.div className="loadingText" transition={{delay: 1.0}} initial={{opacity: 1}} exit={{opacity: 0}}>
-                                                <h1 className="loadingTextH1">GOALDIN</h1>
+                                                <h1 className="loadingTextH1">LOADING</h1>
                                                 <div className="loadProgressCont">
                                                     <motion.div className="loadingBar" style={{ width: scaleX }}></motion.div>
                                                 </div>
@@ -716,19 +753,33 @@ export default function Home() {
                                 }
                                 </AnimatePresence>
                                 <div className="sectionTop">
-                                    <motion.div
-                                        initial={{opacity: 0}}
-                                        animate={{opacity: 1}}
-                                        transition={{duration: 0.5, ease: 'easeInOut'}}
-                                        className="logoCont">
-                                        <Image src="/logo.png" alt="logo" fill objectFit="contain"
-                                               className="logoLogo" priority={true}/>
+                                    <AnimatePresence>
+                                        {loadTransition &&
+                                            <motion.div
+                                            initial={{opacity: 0}}
+                                            animate={{opacity: 1}}
+                                            transition={{duration: 0.5, ease: 'easeInOut'}}
+                                            className="logoCont">
+                                            <Image src="/logo.png"
+                                                   alt="logo"
+                                                   fill
+                                                   className="logoLogo"
+                                                   priority={true}
+                                            />
 
-                                    </motion.div>
-                                    <div className="logoText">
-                                        <h3 className=" mt-[-20px]">WEB SEO DESIGN</h3>
+                                            </motion.div>
+                                        }
+                                    </AnimatePresence>
+                                    <motion.div className="logoText" >
+                                        <div className=" mt-[-20px] flex flex-row justify-center items-center gap-1 cursor-pointer">
+                                            <a onClick={() => {gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent" }, ease: "power2" });}}>WEB</a>
+                                            <h3>&#8226;</h3>
+                                            <a onClick={() => {gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent2" }, ease: "power2" });}}>SEO</a>
+                                            <h3>&#8226;</h3>
+                                            <a onClick={() => {gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent3" }, ease: "power2" });}}>DESIGN</a>
+                                        </div>
                                         <h3 className="">info@servaldesigns.com</h3>
-                                    </div>
+                                    </motion.div>
                                 </div>
 
                                 <motion.div className="section">

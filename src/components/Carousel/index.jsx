@@ -478,7 +478,8 @@ export default function Carousel() {
                                 src={arapahoe}
                                 alt="test"
                                 fill
-                                objectFit="cover"
+                                className="boxContentImage"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
                             <img
                                 src="/arapahoe.png"
@@ -507,7 +508,8 @@ export default function Carousel() {
                                 src={asb}
                                 alt="test"
                                 fill
-                                objectFit="cover"
+                                className="boxContentImage"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
                             <img
                                 src="/asb.png"
@@ -536,7 +538,8 @@ export default function Carousel() {
                                 src={envision}
                                 alt="test"
                                 fill
-                                objectFit="cover"
+                                className="boxContentImage"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
                             <img
                                 src="/envision.png"
@@ -565,7 +568,8 @@ export default function Carousel() {
                                 src={floworks}
                                 alt="test"
                                 fill
-                                objectFit="cover"
+                                className="boxContentImage"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
                             <img
                                 src="/floworks.png"
@@ -594,7 +598,8 @@ export default function Carousel() {
                                 src={mtc}
                                 alt="test"
                                 fill
-                                objectFit="cover"
+                                className="boxContentImage"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
                             <img
                                 src="/mtc.png"
@@ -623,7 +628,8 @@ export default function Carousel() {
                                 src={realm}
                                 alt="test"
                                 fill
-                                objectFit="cover"
+                                className="boxContentImage"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
                             <img
                                 src="/realm.png"
@@ -656,7 +662,8 @@ export default function Carousel() {
                                 src={recess}
                                 alt="test"
                                 fill
-                                objectFit="cover"
+                                className="boxContentImage"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
                             <img
                                 src="/recess.png"
@@ -686,7 +693,8 @@ export default function Carousel() {
                                 src={rizzazzle}
                                 alt="test"
                                 fill
-                                objectFit="cover"
+                                className="boxContentImage"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
                             <img
                                 src="/rizzazzle.png"
@@ -716,7 +724,8 @@ export default function Carousel() {
                                 src={rmr}
                                 alt="test"
                                 fill
-                                objectFit="cover"
+                                className="boxContentImage"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
                             <img
                                 src="/rmr.png"
@@ -746,7 +755,8 @@ export default function Carousel() {
                                 src={savvyb}
                                 alt="test"
                                 fill
-                                objectFit="cover"
+                                className="boxContentImage"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
                             <img
                                 src="/savvyb.png"
@@ -776,7 +786,8 @@ export default function Carousel() {
                                 src={vpa}
                                 alt="test"
                                 fill
-                                objectFit="cover"
+                                className="boxContentImage"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
                             <img
                                 src="/vpa.png"
@@ -806,7 +817,8 @@ export default function Carousel() {
                                 src={yusha}
                                 alt="test"
                                 fill
-                                objectFit="cover"
+                                className="boxContentImage"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
                             <img
                                 src="/yusha.png"
