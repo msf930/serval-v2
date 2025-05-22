@@ -668,13 +668,13 @@ export default function Home() {
         return (
                     <motion.div ref={scrollRef} className="mainCont">
                         <motion.div id="smooth-wrapper" ref={main} animate={true} className="smoothWrap">
-                            <motion.div id="smooth-content" animate={true} className="smoothContent">
+                            <motion.div id="smooth-content" animate={true} className={isLoading ? "smoothContent1" : "smoothContent"}>
                                 <AnimatePresence>
                                 {
                                     isLoading && (
                                         <motion.div className="loadingCont">
                                             <motion.div className="loadingText" transition={{delay: 1.0}} initial={{opacity: 1}} exit={{opacity: 0}}>
-                                                <h1 className="loadingTextH1">Loading</h1>
+                                                <h1 className="loadingTextH1">GOALDIN</h1>
                                             </motion.div>
                                             <motion.div className="loadingGridTop">
                                                 <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "-50vh"}} transition={{delay: 1.2, duration: 0.5, ease: 'easeInOut'}}></motion.div>
