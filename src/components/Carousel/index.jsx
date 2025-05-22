@@ -13,7 +13,7 @@ import {Flip} from "gsap/dist/Flip";
 import {ScrollTrigger} from "gsap/dist/ScrollTrigger";
 import Image from "next/image";
 
-import { FaArrowUp, FaArrowDown, FaTimes } from 'react-icons/fa';
+import { FaArrowRight, FaArrowDown, FaTimes } from 'react-icons/fa';
 
 import test from "@/../public/test.jpg";
 import arapahoe from "@/../public/arapahoe.png";
@@ -192,8 +192,8 @@ export default function Carousel() {
         // boxes.forEach((box, i) => box.addEventListener("click", () => loop.toIndex(i, {duration: 0.8, ease: "power1.inOut"})));
 
         // document.querySelector(".toggle").addEventListener("click", () => wrapper.classList.toggle("show-overflow"));
-        document.querySelector(".next").addEventListener("click", () => loop.next({duration: 0.4, ease: "power1.inOut"}));
-        document.querySelector(".prev").addEventListener("click", () => loop.previous({duration: 0.4, ease: "power1.inOut"}));
+        // document.querySelector(".next").addEventListener("click", () => loop.next({duration: 0.4, ease: "power1.inOut"}));
+        // document.querySelector(".prev").addEventListener("click", () => loop.previous({duration: 0.4, ease: "power1.inOut"}));
 
 
 
@@ -397,7 +397,7 @@ export default function Carousel() {
                 if(reverse) {
                     ScrollTrigger.create({
                         trigger: ".carouselCont",
-                        start: "center center",
+                        start: "top top",
                         end: '+=8000',
                         // end: "bottom top",
                         markers: false,
@@ -410,7 +410,7 @@ export default function Carousel() {
                 } else {
                     ScrollTrigger.create({
                         trigger: ".carouselCont",
-                        start: "center center",
+                        start: "top top",
                         end: '+=8000',
                         // end: "bottom top",
                         markers: false,
@@ -425,16 +425,16 @@ export default function Carousel() {
                     // tl.progress(webScroll)
                     // console.log(webScroll);
 
-                document.querySelector(".carouselCont").addEventListener("wheel", (event) => {
-                    // event.preventDefault();
-                    // event.stopPropagation();
-                    // const delta = Math.sign(event.deltaY);
-                    // if (delta > 0) {
-                    //     tl.next({duration: 0.4, ease: "power1.inOut"});
-                    // } else {
-                    //     tl.previous({duration: 0.4, ease: "power1.inOut"});
-                    // }
-                });
+                // document.querySelector(".carouselCont").addEventListener("wheel", (event) => {
+                //     // event.preventDefault();
+                //     // event.stopPropagation();
+                //     // const delta = Math.sign(event.deltaY);
+                //     // if (delta > 0) {
+                //     //     tl.next({duration: 0.4, ease: "power1.inOut"});
+                //     // } else {
+                //     //     tl.previous({duration: 0.4, ease: "power1.inOut"});
+                //     // }
+                // });
 
                 tl.closestIndex(true);
                 lastIndex = curIndex;
@@ -450,14 +450,15 @@ export default function Carousel() {
 
 
         <div id="carouselCont" className="carouselCont">
-            <div className="button-cont">
-                <button className="prev"><FaArrowUp size={24} color="black" /></button>
-                {/*<button className="toggle">toggle overflow</button>*/}
-                <button className="next"><FaArrowDown size={24} color="black" /></button>
-            </div>
+            {/*<div className="button-cont">*/}
+            {/*    <button className="prev"><FaArrowUp size={24} color="black" /></button>*/}
+            {/*    /!*<button className="toggle">toggle overflow</button>*!/*/}
+            {/*    <button className="next"><FaArrowDown size={24} color="black" /></button>*/}
+            {/*</div>*/}
 
             <div className="wrapper">
                 <div className="box1">
+                        <FaArrowRight/>
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -472,6 +473,7 @@ export default function Carousel() {
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.">
+
                             <Image
                                 src={arapahoe}
                                 alt="test"
@@ -486,6 +488,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box1">
+                    <FaArrowRight/>
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -514,6 +517,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box1">
+                    <FaArrowRight/>
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -542,6 +546,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box1">
+                    <FaArrowRight/>
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -570,6 +575,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box1">
+                    <FaArrowRight/>
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -598,6 +604,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box1">
+                    <FaArrowRight/>
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -630,6 +637,7 @@ export default function Carousel() {
             </div>
             <div className="wrapper2">
                 <div className="box2">
+                    <FaArrowRight/>
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -659,6 +667,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box2">
+                    <FaArrowRight/>
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -688,6 +697,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box2">
+                    <FaArrowRight/>
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -717,6 +727,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box2">
+                    <FaArrowRight/>
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -746,6 +757,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box2">
+                    <FaArrowRight/>
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -775,6 +787,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box2">
+                    <FaArrowRight/>
                     <div className="boxInner">
                         <div className="boxContent1"
 

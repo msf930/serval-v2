@@ -34,11 +34,11 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
-        {/*{loading && (*/}
-        {/*    <div className="inset-0 flex items-center justify-center bg-white z-[10000] h-[100vh] w-full">*/}
-        {/*    <Loading />*/}
-        {/*    </div>*/}
-        {/*)}*/}
+        {loading && (
+            <div className="inset-0 flex items-center justify-center bg-white z-[10000] h-[100vh] w-full">
+            <Loading />
+            </div>
+        )}
       <Component {...pageProps} />;
     </>
   )

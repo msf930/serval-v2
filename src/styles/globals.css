@@ -48,6 +48,60 @@ body,
     /*background-color: #0000ff;*/
 
 }
+.loadingCont{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #00000000;
+    z-index: 1000;
+}
+.loadingText{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+    z-index: 11;
+}
+.loadingGridTop{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 50vh;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    z-index: 9;
+}
+.loadingGridBottom{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 50vh;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    z-index: 9;
+}
+.loadingBox{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 10;
+}
 /*structure of home page*/
 .section{
     position: relative;
@@ -276,6 +330,7 @@ body,
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    z-index: 5;
 }
 
 .circleText {
@@ -525,7 +580,7 @@ body,
     position: absolute;
     right: 3vw;
     height: 100%;
-    width: 25vw;
+    width: 24vw;
     transform: rotateY(-20deg);
     /*overflow-y:  scroll;*/
     /*border: black solid 1px;*/
@@ -535,7 +590,7 @@ body,
     position: absolute;
     right: 30vw;
     height: 100%;
-    width: 25vw;
+    width: 24vw;
     transform: rotateY(-10deg);
     /*overflow-y:  scroll;*/
     /*border: black solid 1px;*/
@@ -544,10 +599,10 @@ body,
 
 
 .box1, .box2{
-    height: 250px;
-    width: 25vw;
+    height: calc(24vw * 0.6);
+    width: 24vw;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     cursor: pointer;
@@ -555,7 +610,7 @@ body,
 .boxInner{
     margin: 10px;
     width: 100%;
-    height: 100%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     justify-content: center;

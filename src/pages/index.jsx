@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 
 import Image from "next/image";
 
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'motion/react';
+import { motion, useScroll, useTransform, useSpring, useMotionValue, AnimatePresence } from 'motion/react';
 
 import gsap from 'gsap/dist/gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
@@ -30,10 +30,22 @@ import Carousel from "@/components/Carousel";
 export default function Home() {
     //GSAP stuff
     const [scroll, setScroll] = useState(0.0);
+    const hasAnimated = useRef(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const main = useRef();
     const smoother = useRef();
 
+    useEffect(() => {
+        const checkAnimation = setInterval(() => {
+            if (hasAnimated.current) {
+                setIsLoading(false);
+                clearInterval(checkAnimation);
+            }
+        }, 100); // Check every 100ms
+
+        return () => clearInterval(checkAnimation);
+    }, []);
 
 
 
@@ -95,6 +107,23 @@ export default function Home() {
                     }
                 }
             });
+            SplitText.create('.loadingTextH1',{
+                type: "words",
+                onSplit: (split) => {
+                    gsap.to(split.words, {
+                        stagger: {
+                            amount: 0.5,
+                            from: "random",
+                        },
+                        scrambleText: {
+                            text: "LOADING",
+                            speed: 0.5,
+                            revealDelay: 0.5,
+                            chars: "LOADING",
+                        }
+                    })
+                }
+            })
             ScrollTrigger.create({
                 trigger: '#stickyContent2',
                 pin: true,
@@ -304,6 +333,11 @@ export default function Home() {
             uniforms.blueVal2.value = backgroundColor3B.get();
             composer.render();
             requestAnimationFrame(animate);
+            if (!hasAnimated.current) {
+
+                hasAnimated.current = true;
+            }
+
 
 
         };
@@ -324,7 +358,7 @@ export default function Home() {
             composer.dispose();
             window.removeEventListener('resize', handleResize);
         };
-    }, [backgroundTimeStep, backgroundColor1, backgroundColor2, backgroundColor3, backgroundColor1B, backgroundColor2B, backgroundColor3B]);
+    }, [ backgroundTimeStep, backgroundColor1, backgroundColor2, backgroundColor3, backgroundColor1B, backgroundColor2B, backgroundColor3B]);
 
 
     //-----------------------------------WEBCARD MAIN-----------------------------------
@@ -632,291 +666,327 @@ export default function Home() {
     // console.log(scrollYProgress.get());
 
         return (
-        <motion.div ref={scrollRef} className="mainCont">
-            <motion.div id="smooth-wrapper"  ref={main} animate={true} className="smoothWrap" >
-                <motion.div id="smooth-content"  animate={true} className="smoothContent" >
-
-                        <div className="sectionTop">
-                                <motion.div
-                                    initial={{ opacity:0 }}
-                                     animate={{ opacity:1}}
-                                     transition={{ duration:0.5, ease: 'easeInOut' }}
-                                    className="logoCont">
-                                    <Image src="/logo.png" alt="logo" fill objectFit="contain" className="logoLogo"/>
-                                    {/*<div className="logoBg"></div>*/}
-                                </motion.div>
-                                <div className="logoText">
-                                    <h3 className=" mt-[-20px]">WEB SEO DESIGN</h3>
-                                    <h3 className="">info@servaldesigns.com</h3>
-                                </div>
-                        </div>
-
-                        <motion.div  className="section">
-                            <div className="sticky-div" id="stickyContent" data-speed="1.5">
-                                <div className="infoCont" >
-                                    <motion.div  className="infoCard" style={{x: webCardMainSpring}}>
-                                        <div className="webTitleCont">
-                                            <motion.div
-                                                style={{scale: webCardMainScaleSpring}}
-                                                className="websiteTitle"
-                                                initial={{ opacity: 0 }}
-                                                whileInView={{ opacity: 1, scramble: true }}
-                                                viewport={{ once: true }}
-                                                // onViewportEnter={() => setInView(true)}
-                                            >Custom Built</motion.div>
-                                            <motion.div
-                                                style={{scale: webCardMainScaleSpring}}
-                                                className="websiteTitle2"
-                                                // initial={{ opacity: 0 }}
-                                                // whileInView={{ opacity: 1, scramble: true, animationDelay: 0.5 }}
-                                                // viewport={{ once: true }}
-                                                // onViewportEnter={() => setInView(true)}
-                                            >0000000</motion.div>
-                                        </div>
-                                        <motion.a className="webCardButton" style={{opacity: webCardButtonSpring }}>SEE MORE</motion.a>
-                                    </motion.div>
-                                    {/*<div className="webCardCont">*/}
-                                    {/*    <motion.div className="webCard1"*/}
-                                    {/*                style={{*/}
-                                    {/*                    right: webCard1Spring,*/}
-                                    {/*                    rotateY: webCard1RotateSpring,*/}
-                                    {/*    }}>*/}
-                                    {/*        <h1>Test</h1>*/}
-                                    {/*    </motion.div>*/}
-                                    {/*    <motion.div className="webCard2"*/}
-                                    {/*                style={{*/}
-                                    {/*                    right: webCard2Spring,*/}
-                                    {/*                    rotateY: webCard2RotateSpring,*/}
-                                    {/*                }}>*/}
-                                    {/*        <h1>Test</h1>*/}
-                                    {/*    </motion.div>*/}
-                                    {/*    <motion.div className="webCard3"*/}
-                                    {/*                style={{*/}
-                                    {/*                    right: webCard3Spring,*/}
-                                    {/*                    rotateY: webCard3RotateSpring,*/}
-                                    {/*    }}>*/}
-                                    {/*        <h1>Test</h1>*/}
-                                    {/*    </motion.div>*/}
-                                    {/*</div>*/}
-                                    <motion.div
-                                        className="carouselParent"
-                                        style={{
-                                            right: webCard1Spring,
-                                        }}
-                                    >
-                                        <Carousel />
-                                    </motion.div>
-                                </div>
-                            </div>
-                        </motion.div>
-
-                    <div className="section">
-                        <motion.div className="sticky-div" id="stickyContent2" data-speed="1.5">
-                            <div className="circContainer">
-                                <motion.svg
-                                    className="circleText"
-                                    viewBox="0 0 500 500"
-                                    data-duration="5"
-                                    animate={{ rotate: 360 }}
-                                    transition={{ repeat: Infinity, duration: 50, ease: "linear" }}
-                                    style={{
-                                        scale: useSpring(useTransform(scrollYProgress, [0.4, 0.63], [1, 2.0]), {
-                                            stiffness: 80,
-                                            damping: 20,
-                                        }),
-                                        opacity: useSpring(useTransform(scrollYProgress, [0.4, 0.5], [.7, 0]), {
-                                            stiffness: 80,
-                                            damping: 20,
-                                        }),
-                                    }}
-                                >
-
-                                    <path id="textcircle" fill="none" stroke="#FF9800" strokeWidth="0"
-                                          data-duration="5"
-                                          d="M50,250c0-110.5,89.5-200,200-200s200,89.5,200,200s-89.5,200-200,200S50,360.5,50,250">
-                                    </path>
-
-                                    <text dy="-25">
-                                        <textPath className="pathText" xlinkHref="#textcircle" textLength="1250" lengthAdjust="spacingAndGlyphs">Keywords Backlinks Meta Tags Content Crawling Indexing Ranking Traffic Optimization SERP</textPath>
-                                    </text>
-
-                                </motion.svg>
-                            </div>
-
-                            <div
-                                className="seoTextContWrapper"
-                                 style={{perspective: '1500px'}}
-
-                            >
-                                <motion.div
-                                    className="seoTextCont"
-                                    style={{
-                                        transformStyle: 'preserve-3d',
-                                        rotateY: seoTextFlipSpring
-                                    }}
-                                >
-                                    <div
-                                        className="seoTextFront"
-                                        style={{
-                                            backfaceVisibility: 'hidden',
-
-                                    }}
-                                    >
-                                        <h1>SEO</h1>
-                                        <h3>SOLUTIONS</h3>
-
-                                    </div>
-                                    <div
-                                        className="seoTextBack"
-                                        style={{
-                                            backfaceVisibility: 'hidden',
-                                            transform: 'rotateY(180deg)',
-                                            position: 'absolute',
-                                            top: 0,
-                                            left: 0,
-                                            width: '100%',
-                                            height: '100%',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-
-                                        }}
-                                    >
-
-                                        <motion.div className="seoBackCont">
-                                            <p className="seoTextBody">
-                                                content campaigns<br/><br/>
-                                                technical seo<br/><br/>
-                                                strategic updates
-                                            </p>
-
-                                            <a className="seoBackButton">Contact</a>
+                    <motion.div ref={scrollRef} className="mainCont">
+                        <motion.div id="smooth-wrapper" ref={main} animate={true} className="smoothWrap">
+                            <motion.div id="smooth-content" animate={true} className="smoothContent">
+                                <AnimatePresence>
+                                {
+                                    isLoading && (
+                                        <motion.div className="loadingCont">
+                                            <motion.div className="loadingText" transition={{delay: 1.0}} initial={{opacity: 1}} exit={{opacity: 0}}>
+                                                <h1 className="loadingTextH1">Loading</h1>
+                                            </motion.div>
+                                            <motion.div className="loadingGridTop">
+                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "-50vh"}} transition={{delay: 1.2, duration: 0.5, ease: 'easeInOut'}}></motion.div>
+                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "-50vh"}} transition={{delay: 1.3, duration: 0.5, ease: 'easeInOut'}}></motion.div>
+                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "-50vh"}} transition={{delay: 1.4, duration: 0.5, ease: 'easeInOut'}}></motion.div>
+                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "-50vh"}} transition={{delay: 1.5, duration: 0.5, ease: 'easeInOut'}}></motion.div>
+                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "-50vh"}} transition={{delay: 1.6, duration: 0.5, ease: 'easeInOut'}}></motion.div>
+                                            </motion.div>
+                                            <motion.div className="loadingGridBottom">
+                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "50vh"}} transition={{delay: 1.2, duration: 0.5, ease: 'easeInOut'}}></motion.div>
+                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "50vh"}} transition={{delay: 1.3, duration: 0.5, ease: 'easeInOut'}}></motion.div>
+                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "50vh"}} transition={{delay: 1.4, duration: 0.5, ease: 'easeInOut'}}></motion.div>
+                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "50vh"}} transition={{delay: 1.5, duration: 0.5, ease: 'easeInOut'}}></motion.div>
+                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "50vh"}} transition={{delay: 1.6, duration: 0.5, ease: 'easeInOut'}}></motion.div>
+                                            </motion.div>
                                         </motion.div>
+                                    )
+                                }
+                                </AnimatePresence>
+                                <div className="sectionTop">
+                                    <motion.div
+                                        initial={{opacity: 0}}
+                                        animate={{opacity: 1}}
+                                        transition={{duration: 0.5, ease: 'easeInOut'}}
+                                        className="logoCont">
+                                        <Image src="/logo.png" alt="logo" fill objectFit="contain"
+                                               className="logoLogo" priority={true}/>
+
+                                    </motion.div>
+                                    <div className="logoText">
+                                        <h3 className=" mt-[-20px]">WEB SEO DESIGN</h3>
+                                        <h3 className="">info@servaldesigns.com</h3>
+                                    </div>
+                                </div>
+
+                                <motion.div className="section">
+                                    <div className="sticky-div" id="stickyContent" data-speed="1.5">
+                                        <div className="infoCont">
+                                            <motion.div className="infoCard" style={{x: webCardMainSpring}}>
+                                                <div className="webTitleCont">
+                                                    <motion.div
+                                                        style={{scale: webCardMainScaleSpring}}
+                                                        className="websiteTitle"
+                                                        initial={{opacity: 0}}
+                                                        whileInView={{opacity: 1, scramble: true}}
+                                                        viewport={{once: true}}
+                                                        // onViewportEnter={() => setInView(true)}
+                                                    >Custom Built
+                                                    </motion.div>
+                                                    <motion.div
+                                                        style={{scale: webCardMainScaleSpring}}
+                                                        className="websiteTitle2"
+                                                        // initial={{ opacity: 0 }}
+                                                        // whileInView={{ opacity: 1, scramble: true, animationDelay: 0.5 }}
+                                                        // viewport={{ once: true }}
+                                                        // onViewportEnter={() => setInView(true)}
+                                                    >0000000
+                                                    </motion.div>
+                                                </div>
+                                                <motion.a className="webCardButton"
+                                                          style={{opacity: webCardButtonSpring}}>SEE MORE
+                                                </motion.a>
+                                            </motion.div>
+                                            {/*<div className="webCardCont">*/}
+                                            {/*    <motion.div className="webCard1"*/}
+                                            {/*                style={{*/}
+                                            {/*                    right: webCard1Spring,*/}
+                                            {/*                    rotateY: webCard1RotateSpring,*/}
+                                            {/*    }}>*/}
+                                            {/*        <h1>Test</h1>*/}
+                                            {/*    </motion.div>*/}
+                                            {/*    <motion.div className="webCard2"*/}
+                                            {/*                style={{*/}
+                                            {/*                    right: webCard2Spring,*/}
+                                            {/*                    rotateY: webCard2RotateSpring,*/}
+                                            {/*                }}>*/}
+                                            {/*        <h1>Test</h1>*/}
+                                            {/*    </motion.div>*/}
+                                            {/*    <motion.div className="webCard3"*/}
+                                            {/*                style={{*/}
+                                            {/*                    right: webCard3Spring,*/}
+                                            {/*                    rotateY: webCard3RotateSpring,*/}
+                                            {/*    }}>*/}
+                                            {/*        <h1>Test</h1>*/}
+                                            {/*    </motion.div>*/}
+                                            {/*</div>*/}
+                                            <motion.div
+                                                className="carouselParent"
+                                                style={{
+                                                    right: webCard1Spring,
+                                                }}
+                                            >
+                                                <Carousel/>
+                                            </motion.div>
+                                        </div>
                                     </div>
                                 </motion.div>
-                            </div>
-                        </motion.div>
-                    </div>
-                    <motion.div className="section">
-                        <motion.div id="stickyContent3" data-speed="1.5" className="sticky-div">
-                            <motion.div className="boxContainer">
-                                <motion.div
-                                    className="box"
-                                    style={{
-                                        left: box1XSpring,
-                                        top: box1YSpring,
-                                        height: box1HeightSpring,
-                                        width: box1WidthSpring,
-                                        backgroundColor: `rgba(0, 0, 0, ${box1BGSpring.get()})`,
-                                    }}
-                                >
-                                    <motion.h1
-                                        className="boxTextH1"
-                                        style={{
-                                            opacity: boxTextOpacity,
-                                            paddingTop: boxTextH1Padding,
-                                        }}
-                                    >
-                                        {box1Text}
-                                    </motion.h1>
+
+                                <div className="section">
+                                    <motion.div className="sticky-div" id="stickyContent2" data-speed="1.5">
+                                        <div className="circContainer">
+                                            <motion.svg
+                                                className="circleText"
+                                                viewBox="0 0 500 500"
+                                                data-duration="5"
+                                                animate={{rotate: 360}}
+                                                transition={{repeat: Infinity, duration: 50, ease: "linear"}}
+                                                style={{
+                                                    scale: useSpring(useTransform(scrollYProgress, [0.4, 0.63], [1, 2.0]), {
+                                                        stiffness: 80,
+                                                        damping: 20,
+                                                    }),
+                                                    opacity: useSpring(useTransform(scrollYProgress, [0.4, 0.5], [.7, 0]), {
+                                                        stiffness: 80,
+                                                        damping: 20,
+                                                    }),
+                                                }}
+                                            >
+
+                                                <path id="textcircle" fill="none" stroke="#FF9800" strokeWidth="0"
+                                                      data-duration="5"
+                                                      d="M50,250c0-110.5,89.5-200,200-200s200,89.5,200,200s-89.5,200-200,200S50,360.5,50,250">
+                                                </path>
+
+                                                <text dy="-25">
+                                                    <textPath className="pathText" xlinkHref="#textcircle"
+                                                              textLength="1250" lengthAdjust="spacingAndGlyphs">Keywords
+                                                        Backlinks Meta Tags Content Crawling Indexing Ranking Traffic
+                                                        Optimization SERP
+                                                    </textPath>
+                                                </text>
+
+                                            </motion.svg>
+                                        </div>
+
+                                        <div
+                                            className="seoTextContWrapper"
+                                            style={{perspective: '1500px'}}
+
+                                        >
+                                            <motion.div
+                                                className="seoTextCont"
+                                                style={{
+                                                    transformStyle: 'preserve-3d',
+                                                    rotateY: seoTextFlipSpring
+                                                }}
+                                            >
+                                                <div
+                                                    className="seoTextFront"
+                                                    style={{
+                                                        backfaceVisibility: 'hidden',
+
+                                                    }}
+                                                >
+                                                    <h1>SEO</h1>
+                                                    <h3>SOLUTIONS</h3>
+
+                                                </div>
+                                                <div
+                                                    className="seoTextBack"
+                                                    style={{
+                                                        backfaceVisibility: 'hidden',
+                                                        transform: 'rotateY(180deg)',
+                                                        position: 'absolute',
+                                                        top: 0,
+                                                        left: 0,
+                                                        width: '100%',
+                                                        height: '100%',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+
+                                                    }}
+                                                >
+
+                                                    <motion.div className="seoBackCont">
+                                                        <p className="seoTextBody">
+                                                            content campaigns<br/><br/>
+                                                            technical seo<br/><br/>
+                                                            strategic updates
+                                                        </p>
+
+                                                        <a className="seoBackButton">Contact</a>
+                                                    </motion.div>
+                                                </div>
+                                            </motion.div>
+                                        </div>
+                                    </motion.div>
+                                </div>
+                                <motion.div className="section">
+                                    <motion.div id="stickyContent3" data-speed="1.5" className="sticky-div">
+                                        <motion.div className="boxContainer">
+                                            <motion.div
+                                                className="box"
+                                                style={{
+                                                    left: box1XSpring,
+                                                    top: box1YSpring,
+                                                    height: box1HeightSpring,
+                                                    width: box1WidthSpring,
+                                                    backgroundColor: `rgba(0, 0, 0, ${box1BGSpring.get()})`,
+                                                }}
+                                            >
+                                                <motion.h1
+                                                    className="boxTextH1"
+                                                    style={{
+                                                        opacity: boxTextOpacity,
+                                                        paddingTop: boxTextH1Padding,
+                                                    }}
+                                                >
+                                                    {box1Text}
+                                                </motion.h1>
+                                            </motion.div>
+                                            <motion.div
+                                                className="box"
+                                                style={{
+                                                    left: box2XSpring,
+                                                    top: box2YSpring,
+                                                    height: box2HeightSpring,
+                                                    width: box2WidthSpring,
+                                                    backgroundColor: `rgba(0, 0, 0, ${box2BGSpring.get()})`,
+                                                }}
+                                            >
+                                                <motion.h3
+                                                    className="boxTextH3"
+                                                    style={{
+                                                        opacity: boxTextOpacity,
+                                                        paddingTop: boxTextH1Padding,
+                                                    }}
+                                                >
+                                                    {box2Text}
+                                                </motion.h3>
+                                            </motion.div>
+                                            <motion.div
+                                                className="box"
+                                                style={{
+                                                    left: box3XSpring,
+                                                    top: box3YSpring,
+                                                    height: box3HeightSpring,
+                                                    width: box3WidthSpring,
+                                                    backgroundColor: `rgba(0, 0, 0, ${box3BGSpring.get()})`,
+                                                }}
+                                            >
+                                                <motion.h3
+                                                    className="boxTextH3"
+                                                    style={{
+                                                        opacity: boxTextOpacity,
+                                                        paddingTop: boxTextH1Padding,
+                                                    }}
+                                                >
+                                                    {box3Text}
+                                                </motion.h3>
+                                            </motion.div>
+                                            <motion.div
+                                                className="box"
+                                                style={{
+                                                    left: box4XSpring,
+                                                    top: box4YSpring,
+                                                    height: box4HeightSpring,
+                                                    width: box4WidthSpring,
+                                                    backgroundColor: `rgba(0, 0, 0, ${box4BGSpring.get()})`,
+                                                }}
+                                            >
+                                                <motion.h3
+                                                    className="boxTextH3"
+                                                    style={{
+                                                        opacity: boxTextOpacity,
+                                                        paddingTop: boxTextH1Padding,
+                                                    }}
+                                                >
+                                                    {box4Text}
+                                                </motion.h3>
+                                            </motion.div>
+                                            <motion.div
+                                                className="box"
+                                                style={{
+                                                    left: box5XSpring,
+                                                    top: box5YSpring,
+                                                    height: box5HeightSpring,
+                                                    width: box5WidthSpring,
+                                                    backgroundColor: `rgba(0, 0, 0, ${box5BGSpring.get()})`,
+                                                }}
+                                            >
+                                                <motion.h3
+                                                    className="boxTextH3"
+                                                    style={{
+                                                        opacity: boxTextOpacity,
+                                                        paddingTop: boxTextH1Padding,
+                                                    }}
+                                                >
+                                                    {box5Text}
+                                                </motion.h3>
+                                            </motion.div>
+                                        </motion.div>
+                                    </motion.div>
                                 </motion.div>
-                                <motion.div
-                                    className="box"
-                                    style={{
-                                        left: box2XSpring,
-                                        top: box2YSpring,
-                                        height: box2HeightSpring,
-                                        width: box2WidthSpring,
-                                        backgroundColor: `rgba(0, 0, 0, ${box2BGSpring.get()})`,
-                                    }}
-                                >
-                                    <motion.h3
-                                    className="boxTextH3"
-                                    style={{
-                                        opacity: boxTextOpacity,
-                                        paddingTop: boxTextH1Padding,
-                                    }}
-                                >
-                                    {box2Text}
-                                </motion.h3>
-                                </motion.div>
-                                <motion.div
-                                    className="box"
-                                    style={{
-                                        left: box3XSpring,
-                                        top: box3YSpring,
-                                        height: box3HeightSpring,
-                                        width: box3WidthSpring,
-                                        backgroundColor: `rgba(0, 0, 0, ${box3BGSpring.get()})`,
-                                    }}
-                                >
-                                    <motion.h3
-                                        className="boxTextH3"
-                                        style={{
-                                            opacity: boxTextOpacity,
-                                            paddingTop: boxTextH1Padding,
-                                        }}
-                                    >
-                                        {box3Text}
-                                    </motion.h3>
-                                </motion.div>
-                                <motion.div
-                                    className="box"
-                                    style={{
-                                        left: box4XSpring,
-                                        top: box4YSpring,
-                                        height: box4HeightSpring,
-                                        width: box4WidthSpring,
-                                        backgroundColor: `rgba(0, 0, 0, ${box4BGSpring.get()})`,
-                                    }}
-                                    >
-                                    <motion.h3
-                                        className="boxTextH3"
-                                        style={{
-                                            opacity: boxTextOpacity,
-                                            paddingTop: boxTextH1Padding,
-                                        }}
-                                    >
-                                        {box4Text}
-                                    </motion.h3>
-                                </motion.div>
-                                <motion.div
-                                    className="box"
-                                    style={{
-                                        left: box5XSpring,
-                                        top: box5YSpring,
-                                        height: box5HeightSpring,
-                                        width: box5WidthSpring,
-                                        backgroundColor: `rgba(0, 0, 0, ${box5BGSpring.get()})`,
-                                    }}
-                                >
-                                    <motion.h3
-                                        className="boxTextH3"
-                                        style={{
-                                            opacity: boxTextOpacity,
-                                            paddingTop: boxTextH1Padding,
-                                        }}
-                                    >
-                                        {box5Text}
-                                    </motion.h3>
-                                </motion.div>
+                                <div className="sectionBottom">
+                                    <motion.div initial={{y: 0}} animate={{y: 0}} whileInView={{y: 0}}
+                                                viewport={{once: true}}
+                                                className="sticky-div">
+                                        <h1 className="text-white ">SERVAL DESIGNS</h1>
+                                        <h1 className="text-white">WEB SEO DESIGN</h1>
+                                    </motion.div>
+                                </div>
+
                             </motion.div>
                         </motion.div>
-                    </motion.div>
-                    <div className="sectionBottom">
-                        <motion.div initial={{y: 0}} animate={{y: 0}} whileInView={{y: 0}} viewport={{once: true}}
-                                    className="sticky-div">
-                            <h1 className="text-white ">SERVAL DESIGNS</h1>
-                                <h1 className="text-white">WEB SEO DESIGN</h1>
-                            </motion.div>
+
+                        <div className="canvasCont">
+                            <canvas ref={canvasRef} style={{width: '100%', height: '100vh'}}/>
+
                         </div>
+                    </motion.div>
 
-                </motion.div>
-            </motion.div>
-
-                <div className="canvasCont">
-                    <canvas ref={canvasRef} style={{ width: '100%', height: '100vh' }} />;
-                </div>
-        </motion.div>
     )
 }
