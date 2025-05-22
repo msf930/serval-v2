@@ -32,6 +32,7 @@ export default function Home() {
     const [scroll, setScroll] = useState(0.0);
     const hasAnimated = useRef(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [loadProgress, setLoadProgress] = useState("0%");
 
     const main = useRef();
     const smoother = useRef();
@@ -47,8 +48,23 @@ export default function Home() {
         return () => clearInterval(checkAnimation);
     }, []);
 
+    useEffect(() => {
+        if (isLoading) {
+            setLoadProgress("30%"); // Set intermediate progress
+        } else {
+            setLoadProgress("100%"); // Set final progress
+        }
+    }, [isLoading]);
 
-
+    const loadProgressMotion  = useMotionValue(loadProgress);
+    useEffect(() => {
+        loadProgressMotion.set(loadProgress);
+    }, [loadProgressMotion, loadProgress]);
+    const scaleX = useSpring(loadProgressMotion, {
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001,
+    })
     useGSAP(
         () => {
             // ScrollTrigger.normalizeScroll({
@@ -664,17 +680,22 @@ export default function Home() {
 
     //0.12, 0.14, 0.28, 0.3
     // console.log(scrollYProgress.get());
-
+    //console.log(scaleX);
         return (
                     <motion.div ref={scrollRef} className="mainCont">
                         <motion.div id="smooth-wrapper" ref={main} animate={true} className="smoothWrap">
                             <motion.div id="smooth-content" animate={true} className={isLoading ? "smoothContent1" : "smoothContent"}>
                                 <AnimatePresence>
                                 {
-                                    isLoading && (
+                                    isLoading
+                                    // true
+                                    && (
                                         <motion.div className="loadingCont">
                                             <motion.div className="loadingText" transition={{delay: 1.0}} initial={{opacity: 1}} exit={{opacity: 0}}>
                                                 <h1 className="loadingTextH1">GOALDIN</h1>
+                                                <div className="loadProgressCont">
+                                                    <motion.div className="loadingBar" style={{ width: scaleX }}></motion.div>
+                                                </div>
                                             </motion.div>
                                             <motion.div className="loadingGridTop">
                                                 <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "-50vh"}} transition={{delay: 1.2, duration: 0.5, ease: 'easeInOut'}}></motion.div>
