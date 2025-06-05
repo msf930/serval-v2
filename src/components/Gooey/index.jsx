@@ -1,6 +1,6 @@
 "use client"
 
-import styles from './styles.sass'
+import './styles.sass'
 export default function Gooey() {
     return(
     <div>
