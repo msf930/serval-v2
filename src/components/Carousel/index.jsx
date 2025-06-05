@@ -398,7 +398,7 @@ export default function Carousel() {
                     ScrollTrigger.create({
                         trigger: ".carouselCont",
                         start: "top top",
-                        end: '+=8000',
+                        end: `${window.innerHeight * 10}`,
                         // end: "bottom top",
                         markers: false,
                         scrub: config.scrub || 1,
@@ -411,7 +411,7 @@ export default function Carousel() {
                     ScrollTrigger.create({
                         trigger: ".carouselCont",
                         start: "top top",
-                        end: '+=8000',
+                        end: `${window.innerHeight * 10}`,
                         // end: "bottom top",
                         markers: false,
                         scrub: config.scrub || 1,
@@ -485,6 +485,7 @@ export default function Carousel() {
                                 src="/arapahoe.png"
                                 alt="test"
                             />
+
                         </div>
                     </div>
                 </div>
