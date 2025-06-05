@@ -1,8 +1,9 @@
 //---------------------------------------------------
 // CHANGE THESE
-$series: 'We', 'Design', 'Clean', 'Modern','Websites'
-$duration: 0.5
-$transition: 0.4
+$series: 'DESIGN', 'DESIGN', 'DESIGN', 'DESIGN', 'DESIGN', 'DESIGN','DESIGN', 'DESIGN',
+$fonts: 'Arial', 'Helvetica', 'Times New Roman', 'Courier New', 'Verdana', 'Georgia', 'Comic Sans MS', 'Lucida Console'
+$duration: 0.1
+$transition: 0.7
 
 //---------------------------------------------------
 // APPEND EXTRA ITEM - An extra item is needed if the series is of odd length
@@ -30,6 +31,7 @@ $totalDuration: $itemDuration * $seriesLength
   font-size: 200px
   filter: url(#gooey)
 
+
   &::before, &::after
     position: absolute
     opacity: 0
@@ -37,16 +39,18 @@ $totalDuration: $itemDuration * $seriesLength
     animation-duration: $totalDuration + s
     animation-timing-function: ease
     animation-iteration-count: infinite
-    filter: blur(4px)
+    filter: blur(3px)
 
   &::before
     content: nth($series, $seriesLength - 1)
     animation-name: items-odd
+    font-family: nth($fonts, $seriesLength - 1)
 
   &::after
     content: nth($series, $seriesLength)
     animation-name: items-even
     animation-delay: $itemDuration + s
+    font-family: nth($fonts, $seriesLength)
 
 //---------------------------------------------------
 // TRANSITION ANIMATIONS
@@ -61,8 +65,10 @@ $totalDuration: $itemDuration * $seriesLength
     $item: $i * 2 - $index
     #{percentage(($i - 1) * (1 / $seriesSplitLength))}
       content: nth($series, $item)
+      font-family: nth($fonts, $item)
     #{percentage($i * (1 / $seriesSplitLength) - 0.000001)}
       content: nth($series, $item)
+      font-family: nth($fonts, $item)
 
 @keyframes items-odd
   +keyframes(1)

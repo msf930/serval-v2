@@ -634,7 +634,7 @@ export default function Home() {
     const box4Y = useTransform(
         scrollYProgress,
         [0.75, 0.81, 0.85, 0.91],
-        ["34%", "34%", "28%", "28%"]
+        ["34%", "34%", "26%", "26%"]
     )
     const box4YSpring = useSpring(box4Y, { stiffness: 70, damping: 15 });
     const box4Width = useTransform(
@@ -646,7 +646,7 @@ export default function Home() {
     const box4Height = useTransform(
         scrollYProgress,
         [0.75, 0.81, 0.85, 0.91],
-        ["11%", "11%", "20%", "20%"]
+        ["11%", "11%", "23%", "23%"]
     )
     const box4HeightSpring = useSpring(box4Height, { stiffness: 70, damping: 15 });
     const box4BG = useTransform(
@@ -667,7 +667,7 @@ export default function Home() {
     const box5Y = useTransform(
         scrollYProgress,
         [0.75, 0.81, 0.85, 0.91],
-        ["36%", "36%", "50%", "50%"]
+        ["36%", "36%", "49%", "49%"]
     )
     const box5YSpring = useSpring(box5Y, { stiffness: 70, damping: 15 });
     const box5Width = useTransform(
@@ -679,7 +679,7 @@ export default function Home() {
     const box5Height = useTransform(
         scrollYProgress,
         [0.75, 0.81, 0.85, 0.91],
-        ["7%", "7%", "7%", "7%"]
+        ["7%", "7%", "9%", "9%"]
     )
     const box5HeightSpring = useSpring(box5Height, { stiffness: 70, damping: 15 });
     const box5BG = useTransform(
@@ -1075,7 +1075,8 @@ export default function Home() {
                                         className="designTitleCont"
                                         style={{opacity: designTitleOpacity}}
                                         >
-                                            <h2>Website Redesigns</h2>
+                                            <Gooey/>
+
                                         </motion.div>
 
                                         <motion.div className="boxContainer">
@@ -1126,9 +1127,15 @@ export default function Home() {
                                                  </div>
                                                 <div className="postBodyCont">
                                                     <div className="postBodyTextCont">
-                                                        <h2>Transforming Houses Into Dream Homes</h2>
-                                                        <h3>Quality remodeling services with craftsmanship you can count on.</h3>
-                                                        <p>Get a Free Estimate</p>
+                                                        <div className="titleCont">
+                                                            <h2>Transforming Houses Into Dream Homes</h2>
+                                                        </div>
+                                                        <div className="subTitleCont">
+                                                            <h3>Quality remodeling services with craftsmanship you can count on.</h3>
+                                                        </div>
+                                                        <div className="ctaCont">
+                                                            <p>Get a Free Estimate</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div className="postValueCont">
@@ -1144,7 +1151,7 @@ export default function Home() {
                                                             <div className="postValueItemImgCont">
                                                                 <Image src={time} alt="value icon" fill={true} objectFit="contain" />
                                                             </div>
-                                                            <h3>On-Time, On-Budget</h3>
+                                                            <h3>Clear Timelines</h3>
                                                         </div>
                                                         <div className="postValueItem">
                                                             <div className="postValueItemImgCont">
@@ -1292,7 +1299,7 @@ export default function Home() {
                                                 className="sticky-div">
                                         <h1 className="text-white ">SERVAL DESIGNS</h1>
                                         <h1 className="text-white">WEB SEO DESIGN</h1>
-                                        <Gooey/>
+
                                     </motion.div>
                                 </div>
 
@@ -1301,7 +1308,6 @@ export default function Home() {
 
                         <div className="canvasCont">
                             <canvas ref={canvasRef} style={{width: '100%', height: '100vh'}}/>
-
                         </div>
                     </motion.div>
 

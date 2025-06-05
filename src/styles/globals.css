@@ -561,13 +561,7 @@ body,
     justify-content: center;
     align-items: center;
 }
-.designTitleCont h2{
-    font-size: 3rem;
-    text-align: center;
-    text-transform: uppercase;
-    color: white;
 
-}
 .boxContainer{
     position: absolute;
     height: 80vh;
@@ -727,7 +721,9 @@ body,
     filter: brightness(0.6);
 }
 .postHeader{
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 9%;
     width: 100%;
     display: flex;
@@ -754,8 +750,10 @@ body,
     align-items: center;
 }
 .postBodyCont{
-    position: relative;
-    height: 59%;
+    position: absolute;
+    top: 26%;
+    left: 0;
+    height: 37%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -763,31 +761,61 @@ body,
     align-items: flex-start;
 }
 .postBodyTextCont{
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
     width: 40%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    margin-top: 10%;
+
     margin-left: 12%;
-    gap: 10px;
+
 }
-.postBodyTextCont h2{
-    font-size: 40px;
+.titleCont{
+    position: relative;
+    height: 62%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.titleCont h2{
+    font-size: 3vw;
     color: white;
     opacity: 80%;
     line-height: 1.2;
     font-family: var(--font-instrument-sans);
 }
-.postBodyTextCont h3{
+.subTitleCont{
+    position: relative;
+    height: 24%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.subTitleCont h3{
     font-size: 16px;
     color: white;
     opacity: 80%;
     font-family: var(--font-instrument-sans);
 }
-.postBodyTextCont p{
+.ctaCont{
+    position: relative;
+    height: 14%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+.ctaCont p{
     font-size: 14px;
     color: black;
     background-color: white;
@@ -798,7 +826,9 @@ body,
     font-family: var(--font-instrument-sans);
 }
 .postValueCont{
-    position: relative;
+    position: absolute;
+    bottom: 0;
+    left: 0;
     height: 32%;
     width: 100%;
     display: flex;
@@ -811,8 +841,8 @@ body,
     position: relative;
     height: 100%;
     width: 70%;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     justify-content: center;
     align-items: center;
     color: white;
