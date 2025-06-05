@@ -1,10 +1,10 @@
 "use client"
 
-import './styles.sass'
+import styles from './styles.module.sass'
 export default function Gooey() {
     return(
     <div>
-        <div className="text"></div>
+        <div className={styles.text}></div>
 
         <svg>
             <filter id="gooey">
