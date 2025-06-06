@@ -150,7 +150,7 @@ export default function Home() {
                                 text: "WEBSITES",
                                 speed: 0.5,
                                 revealDelay: 0.5,
-                                chars: "01",
+                                chars: "!@#$%^&*()+",
                             }
                         });
                         hasAnimated = true;
@@ -416,7 +416,7 @@ export default function Home() {
     //-----------------------------------WEBCARD MAIN-----------------------------------
     const webCardMain = useTransform(
         scrollYProgress,
-        [0.12,0.14, 0.32, 0.34],
+        [0.12,0.14, 0.34, 0.36],
         ["-50%", "-120%", "-120%", "-250%"]
     )
     const webCardMainSpring = useSpring(webCardMain, { stiffness: 80, damping: 20 });
@@ -431,7 +431,7 @@ export default function Home() {
     //-----------------------------------WEBCARDS-----------------------------------
     const webCard1 = useTransform(
         scrollYProgress,
-        [0.12, 0.14, 0.32, 0.34],
+        [0.12, 0.14, 0.34, 0.36],
         ["-100%", "0%", "0%", "-100%"]
     )
     const webCard1Spring = useSpring(webCard1, { stiffness: 80, damping: 20 });
@@ -951,11 +951,11 @@ export default function Home() {
                                                     <motion.div
                                                         style={{scale: webCardMainScaleSpring}}
                                                         className="websiteTitle2"
-                                                    >0000000
+                                                    >^#*()&@$
                                                     </motion.div>
                                                 </div>
                                                 <motion.a className="webCardButton"
-                                                          style={{opacity: webCardButtonSpring}}>SEE MORE
+                                                          style={{opacity: webCardButtonSpring}}>CONTACT
                                                 </motion.a>
                                             </motion.div>
                                             <motion.div
@@ -1289,8 +1289,8 @@ export default function Home() {
                                     <motion.div initial={{y: 0}} animate={{y: 0}} whileInView={{y: 0}}
                                                 viewport={{once: true}}
                                                 className="sticky-div">
-                                        <h1 className="text-white ">SERVAL DESIGNS</h1>
-                                        <h1 className="text-white">WEB SEO DESIGN</h1>
+                                        <h1 className="text-white ">CONTACT</h1>
+                                        <h1 className="text-white">SECTION</h1>
 
                                     </motion.div>
                                 </div>

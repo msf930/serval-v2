@@ -445,6 +445,38 @@ export default function Carousel() {
             return timeline;
         }
     }, []);
+    useEffect(() => {
+        const boxes = document.querySelectorAll(".boxInner");
+
+        function handleMouseEnter(e) {
+            boxes.forEach(box => {
+                if (box !== e.currentTarget) {
+                    box.classList.add("dimmed");
+                } else {
+                    box.classList.add("highlighted");
+                }
+            });
+        }
+
+        function handleMouseLeave() {
+                boxes.forEach(box => box.classList.remove("highlighted"));
+                boxes.forEach(box => box.classList.remove("dimmed"));
+
+        }
+
+        boxes.forEach(box => {
+            box.addEventListener("mouseenter", handleMouseEnter);
+            box.addEventListener("mouseleave", handleMouseLeave);
+        });
+
+        // Cleanup
+        return () => {
+            boxes.forEach(box => {
+                box.removeEventListener("mouseenter", handleMouseEnter);
+                box.removeEventListener("mouseleave", handleMouseLeave);
+            });
+        };
+    }, []);
     return (
         <div>
 
@@ -457,9 +489,9 @@ export default function Carousel() {
             {/*</div>*/}
 
             <div className="wrapper">
-                <div className="box1">
-                        <FaArrowRight/>
-                    <div className="boxInner">
+                <div className="box1" id="box1">
+                    {/*<FaArrowRight/>*/}
+                    <div className="boxInner" id="boxInner">
                         <div className="boxContent1"
 
                              data-title="Owl"
@@ -489,9 +521,9 @@ export default function Carousel() {
                         </div>
                     </div>
                 </div>
-                <div className="box1">
-                    <FaArrowRight/>
-                    <div className="boxInner">
+                <div className="box1" id="box1">
+                     {/*<FaArrowRight/>*/}
+                    <div className="boxInner" id="boxInner">
                         <div className="boxContent1"
 
                              data-title="Owl"
@@ -520,7 +552,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box1">
-                    <FaArrowRight/>
+                     {/*<FaArrowRight/>*/}
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -550,7 +582,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box1">
-                    <FaArrowRight/>
+                     {/*<FaArrowRight/>*/}
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -580,7 +612,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box1">
-                    <FaArrowRight/>
+                     {/*<FaArrowRight/>*/}
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -610,7 +642,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box1">
-                    <FaArrowRight/>
+                     {/*<FaArrowRight/>*/}
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -644,7 +676,7 @@ export default function Carousel() {
             </div>
             <div className="wrapper2">
                 <div className="box2">
-                    <FaArrowRight/>
+                     {/*<FaArrowRight/>*/}
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -675,7 +707,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box2">
-                    <FaArrowRight/>
+                     {/*<FaArrowRight/>*/}
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -706,7 +738,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box2">
-                    <FaArrowRight/>
+                     {/*<FaArrowRight/>*/}
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -737,7 +769,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box2">
-                    <FaArrowRight/>
+                     {/*<FaArrowRight/>*/}
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -768,7 +800,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box2">
-                    <FaArrowRight/>
+                     {/*<FaArrowRight/>*/}
                     <div className="boxInner">
                         <div className="boxContent1"
 
@@ -799,7 +831,7 @@ export default function Carousel() {
                     </div>
                 </div>
                 <div className="box2">
-                    <FaArrowRight/>
+                     {/*<FaArrowRight/>*/}
                     <div className="boxInner">
                         <div className="boxContent1"
 
