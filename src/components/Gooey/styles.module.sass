@@ -2,8 +2,10 @@
 // CHANGE THESE
 $series: 'DESIGN', 'DESIGN', 'DESIGN', 'DESIGN', 'DESIGN', 'DESIGN','DESIGN', 'DESIGN',
 $fonts: 'Arial', 'Helvetica', 'Times New Roman', 'Courier New', 'Verdana', 'Georgia', 'Comic Sans MS', 'Lucida Console'
+$fonts1: 'Courier New', 'Verdana', 'Georgia', 'Comic Sans MS', 'Lucida Console', 'Arial', 'Helvetica', 'Times New Roman'
+$fonts2: 'Georgia', 'Comic Sans MS', 'Lucida Console', 'Arial', 'Helvetica', 'Times New Roman', 'Courier New', 'Verdana'
 $duration: 0.1
-$transition: 0.7
+$transition: 1.0
 
 //---------------------------------------------------
 // APPEND EXTRA ITEM - An extra item is needed if the series is of odd length
@@ -39,7 +41,7 @@ $totalDuration: $itemDuration * $seriesLength
     animation-duration: $totalDuration + s
     animation-timing-function: ease
     animation-iteration-count: infinite
-    filter: blur(3px)
+    filter: blur(5px)
 
   &::before
     content: nth($series, $seriesLength - 1)
@@ -49,6 +51,70 @@ $totalDuration: $itemDuration * $seriesLength
   &::after
     content: nth($series, $seriesLength)
     animation-name: items-even
+    animation-delay: $itemDuration + s
+    font-family: nth($fonts, $seriesLength)
+
+//---------------------------------------------------
+// STYLE STUFF FOR TEXT1
+
+.text1
+  position: absolute
+  left: 50%
+  top: 20%
+  color: white
+  font-size: 200px
+  filter: url(#gooey)
+
+
+  &::before, &::after
+    position: absolute
+    opacity: 0
+    transform: translate(-50%,-50%)
+    animation-duration: $totalDuration + s
+    animation-timing-function: ease
+    animation-iteration-count: infinite
+    filter: blur(5px)
+
+  &::before
+    content: nth($series, $seriesLength - 1)
+    animation-name: items-odd1
+    font-family: nth($fonts, $seriesLength - 1)
+
+  &::after
+    content: nth($series, $seriesLength)
+    animation-name: items-even1
+    animation-delay: $itemDuration + s
+    font-family: nth($fonts, $seriesLength)
+
+//---------------------------------------------------
+// STYLE STUFF FOR TEXT2
+
+.text2
+  position: absolute
+  left: 50%
+  top: 80%
+  color: white
+  font-size: 200px
+  filter: url(#gooey)
+
+
+  &::before, &::after
+    position: absolute
+    opacity: 0
+    transform: translate(-50%,-50%)
+    animation-duration: $totalDuration + s
+    animation-timing-function: ease
+    animation-iteration-count: infinite
+    filter: blur(5px)
+
+  &::before
+    content: nth($series, $seriesLength - 1)
+    animation-name: items-odd2
+    font-family: nth($fonts, $seriesLength - 1)
+
+  &::after
+    content: nth($series, $seriesLength)
+    animation-name: items-even2
     animation-delay: $itemDuration + s
     font-family: nth($fonts, $seriesLength)
 
@@ -75,3 +141,51 @@ $totalDuration: $itemDuration * $seriesLength
 
 @keyframes items-even
   +keyframes(0)
+
+//---------------------------------------------------
+// TRANSITION ANIMATIONS FOR TEXT1
+=keyframes1($index)
+  @for $i from 1 through $seriesLength
+    #{percentage((1 / $seriesLength) * $i - ($duration / $totalDuration))}
+      opacity: abs($i) % 2
+    #{percentage((1 / $seriesLength) * $i)}
+      opacity: abs($i) % 2
+  @for $i from 1 through $seriesSplitLength
+    $item: $i * 2 - $index
+    #{percentage(($i - 1) * (1 / $seriesSplitLength))}
+      content: nth($series, $item)
+      font-family: nth($fonts1, $item)
+    #{percentage($i * (1 / $seriesSplitLength) - 0.000001)}
+      content: nth($series, $item)
+      font-family: nth($fonts1, $item)
+
+
+@keyframes items-odd1
+  +keyframes1(1)
+
+@keyframes items-even1
+  +keyframes1(0)
+
+//---------------------------------------------------
+// TRANSITION ANIMATIONS FOR TEXT2
+=keyframes1($index)
+  @for $i from 1 through $seriesLength
+    #{percentage((1 / $seriesLength) * $i - ($duration / $totalDuration))}
+      opacity: abs($i) % 2
+    #{percentage((1 / $seriesLength) * $i)}
+      opacity: abs($i) % 2
+  @for $i from 1 through $seriesSplitLength
+    $item: $i * 2 - $index
+    #{percentage(($i - 1) * (1 / $seriesSplitLength))}
+      content: nth($series, $item)
+      font-family: nth($fonts2, $item)
+    #{percentage($i * (1 / $seriesSplitLength) - 0.000001)}
+      content: nth($series, $item)
+      font-family: nth($fonts2, $item)
+
+
+@keyframes items-odd2
+  +keyframes1(1)
+
+@keyframes items-even2
+  +keyframes1(0)

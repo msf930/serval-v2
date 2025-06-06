@@ -77,7 +77,7 @@ export default function Carousel() {
                 // set the final state
                 gsap.set(details, {clearProps: true}); // wipe out all inline stuff so it's in the native state (not scaled)
                 gsap.set(details, { visibility: "visible", overflow: "hidden"});
-                gsap.set(detailsCont, {x: "50%", top: "0%", rotateY: 0, opacity: 1});
+                gsap.set(detailsCont, {x: "50%", top: "50%", rotateY: 0, opacity: 1});
 
                 Flip.from(state, {
                     duration: 0.5,
@@ -398,7 +398,7 @@ export default function Carousel() {
                     ScrollTrigger.create({
                         trigger: ".carouselCont",
                         start: "top top",
-                        end: `${window.innerHeight * 10}`,
+                        end: `${window.innerHeight * 16}`,
                         // end: "bottom top",
                         markers: false,
                         scrub: config.scrub || 1,
@@ -411,7 +411,7 @@ export default function Carousel() {
                     ScrollTrigger.create({
                         trigger: ".carouselCont",
                         start: "top top",
-                        end: `${window.innerHeight * 10}`,
+                        end: `${window.innerHeight * 16}`,
                         // end: "bottom top",
                         markers: false,
                         scrub: config.scrub || 1,

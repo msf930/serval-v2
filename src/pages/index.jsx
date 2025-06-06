@@ -858,15 +858,6 @@ export default function Home() {
 
 
 
-
-
-
-
-
-
-
-
-
     const [webInView, setWebInView] = useState(false);
     useEffect(() => {
         const unsubscribe = scrollYProgress.onChange((progress) => {
@@ -1075,8 +1066,9 @@ export default function Home() {
                                         className="designTitleCont"
                                         style={{opacity: designTitleOpacity}}
                                         >
-                                            <Gooey/>
 
+                                            {/*<Gooey/>*/}
+                                            <h2>Custom Redesigns</h2>
                                         </motion.div>
 
                                         <motion.div className="boxContainer">

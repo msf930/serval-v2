@@ -345,6 +345,14 @@ body,
     cursor: pointer;
     z-index: 1000;
 }
+.sectionSEO{
+    position: relative;
+    height: 400vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+
+}
 
 .circleTextCont{
     position: absolute;
@@ -370,11 +378,9 @@ body,
 }
 
 .circleText {
-
     position: absolute;
-
-    width: 600px;
-    height: 600px;
+    width: 40vw;
+    height: 40vw;
     max-height: 75vh;
     max-width: 75vw;
     overflow: visible;
@@ -406,14 +412,7 @@ body,
 /*    transition: transform 0.8s;*/
 /*    transform-style: preserve-3*/
 /*}*/
-.sectionSEO{
-    position: relative;
-    height: 400vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
 
-}
 .tiltCont{
     position: absolute;
     top: 50%;
@@ -561,7 +560,10 @@ body,
     justify-content: center;
     align-items: center;
 }
-
+.designTitleCont h2{
+    color: white;
+    font-size: 5rem;
+}
 .boxContainer{
     position: absolute;
     height: 80vh;
