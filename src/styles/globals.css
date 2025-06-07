@@ -100,7 +100,6 @@ body,
 }
 .loadingBar{
     position: relative;
-
     height: 100%;
     background-color: white;
     z-index: 10;
@@ -256,6 +255,7 @@ body,
     text-transform: uppercase;
     width: 40vw;
 
+
 }
 .websiteTitle{
     width: auto;
@@ -333,20 +333,26 @@ body,
 }
 .webCardButton{
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+
     font-size: 1.2rem;
     text-align: center;
     text-transform: uppercase;
     color: white;
-    background-color: black;
-    height: 50px;
-    width: 160px;
-    margin-top: 20px;
+    height: 100px;
+    width: 200px;
     cursor: pointer;
-    z-index: 1000;
+    z-index: 1;
+    /*background-color: black;*/
+    border-radius: 10px;
+
+}
+.webCardButtonText{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: "#fff";
+    pointer-events: none;
     font-family: var(--font-protest-guerrilla);
 }
 .sectionSEO{

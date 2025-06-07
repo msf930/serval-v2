@@ -16,6 +16,8 @@ import tools from '../../public/tools.png';
 import handshake from '../../public/handshake.png';
 import house from '../../public/house.png';
 
+import RiveWebBtn from '@/components/RiveWebBtn';
+
 
 import { motion, useScroll, useTransform, useSpring, useMotionValue, AnimatePresence } from 'motion/react';
 
@@ -81,7 +83,7 @@ export default function Home() {
         loadProgressMotion.set(loadProgress);
     }, [loadProgressMotion, loadProgress]);
     const scaleX = useSpring(loadProgressMotion, {
-        stiffness: 100,
+        stiffness: 80,
         damping: 30,
         restDelta: 0.001,
     })
@@ -420,6 +422,14 @@ export default function Home() {
         ["-50%", "-120%", "-120%", "-250%"]
     )
     const webCardMainSpring = useSpring(webCardMain, { stiffness: 80, damping: 20 });
+
+    const webCardMainY = useTransform(
+        scrollYProgress,
+        [0.05,0.06],
+        ["-90%", "0%"]
+    )
+    const webCardMainYSpring = useSpring(webCardMainY, { stiffness: 100, damping: 20 });
+
     const webCardMainScale = useTransform(
         scrollYProgress,
         [0.09,0.14],
@@ -954,9 +964,15 @@ export default function Home() {
                                                     >^#*()&@$
                                                     </motion.div>
                                                 </div>
-                                                <motion.a className="webCardButton"
-                                                          style={{opacity: webCardButtonSpring}}>CONTACT
+                                                <motion.a
+                                                    className="webCardButton"
+                                                    style={{opacity: webCardButtonSpring}}
+                                                >
+                                                    <RiveWebBtn/>
+                                                    <div className="webCardButtonText">CONTACT</div>
                                                 </motion.a>
+
+
                                             </motion.div>
                                             <motion.div
                                                 className="carouselParent"
