@@ -39,7 +39,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText, ScrambleTextPlugin
 
 import logo from '../../public/logo.png';
 import styles from "@/components/WebsiteSection/styles.module.css";
-import {scale} from "motion";
+import { scale } from "motion";
 import Carousel from "@/components/Carousel";
 import Gooey from "@/components/Gooey";
 
@@ -50,6 +50,9 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(true);
     const [loadProgress, setLoadProgress] = useState("0%");
     const [loadTransition, setLoadTransition] = useState(false);
+    
+
+ 
 
 
     const main = useRef();
@@ -78,7 +81,7 @@ export default function Home() {
         }
     }, [isLoading]);
 
-    const loadProgressMotion  = useMotionValue(loadProgress);
+    const loadProgressMotion = useMotionValue(loadProgress);
     useEffect(() => {
         loadProgressMotion.set(loadProgress);
     }, [loadProgressMotion, loadProgress]);
@@ -88,12 +91,14 @@ export default function Home() {
         restDelta: 0.001,
     })
     useEffect(() => {
-      if(!isLoading) {
+        if (!isLoading) {
             setTimeout(() => {
                 setLoadTransition(true);
             }, 1600);
-      }
-    },[isLoading])
+        }
+    }, [isLoading])
+
+
     useGSAP(
         () => {
             // ScrollTrigger.normalizeScroll({
@@ -111,7 +116,7 @@ export default function Home() {
                 smooth: 2,
                 effects: true,
                 // collect scroll progress from gsap and pass it to the shader
-                onUpdate: (progress) => {setScroll(progress.progress)},
+                onUpdate: (progress) => { setScroll(progress.progress) },
             });
             //create a scroll trigger for the sticky divs
 
@@ -141,8 +146,8 @@ export default function Home() {
                 start: 'top top',
                 end: 'center center',
                 markers: false,
-                onToggle:( self ) => {
-                    if(self.isActive && !hasAnimated) {
+                onToggle: (self) => {
+                    if (self.isActive && !hasAnimated) {
                         gsap.to(splitWeb.words, {
                             stagger: {
                                 amount: 0.5,
@@ -160,17 +165,31 @@ export default function Home() {
                 }
             });
 
-            SplitText.create('.loadingTextH1',{
+            SplitText.create('.loadingTextH1', {
                 type: "chars",
                 onSplit: (split) => {
+                    // Set initial state to hidden
                     gsap.from(split.chars, {
                         y: 20,
-                        autoAlpha: 0,
+                        opacity: 0,
+                        stagger: {
+                            amount: 0.4,
+                        },
+                    })
+                    gsap.set(split.chars, {
+                        y: 20,
+                        opacity: 0,
+                    });
+
+                    // Animate in
+                    gsap.to(split.chars, {
+                        y: 0,
+                        opacity: 1,
                         stagger: {
                             amount: 0.4,
                             // from: "random",
                         },
-
+                        delay: 0.5, // Add a small delay before animation starts
                     })
                 }
             })
@@ -192,9 +211,7 @@ export default function Home() {
 
         },
         {
-
             scope: main,
-
         }
     );
 
@@ -212,12 +229,121 @@ export default function Home() {
 
 
 
+    useEffect(() => {
+        const scrollingText = gsap.utils.toArray('.designTitleWeb h2');
+
+        const tl = horizontalLoop(scrollingText, {
+            repeat: -1,
+            paddingRight: 0,
+        });
+
+        const scrollingText2 = gsap.utils.toArray('.designTitleRedesign h2');
+
+        const tl2 = horizontalLoop(scrollingText2, {
+            repeat: -1,
+            paddingRight: 0,
+        });
+
+        Observer.create({
+            onChangeY(self) {
+                let factor = 2.5;
+                if (self.deltaY < 0) {
+                    factor;
+                }
+                gsap.timeline({
+                    defaults: {
+                        ease: "none",
+                    }
+                })
+                    .to(tl, { timeScale: factor * 0.7, duration: 0.2, overwrite: true, })
+                    // .to(tl, { timeScale: factor / 0.5, duration: 1 }, "+=0.3")
+                    .to(tl2, { timeScale: factor * -0.7, duration: 0.2, overwrite: true, })
+                // .to(tl2, { timeScale: factor / -0.5, duration: 1 }, "+=0.3");
+            }
+        });
+
+
+        /*
+        This helper function makes a group of elements animate along the x-axis in a seamless, responsive loop.
+        
+        Features:
+         - Uses xPercent so that even if the widths change (like if the window gets resized), it should still work in most cases.
+         - When each item animates to the left or right enough, it will loop back to the other side
+         - Optionally pass in a config object with values like "speed" (default: 1, which travels at roughly 100 pixels per second), paused (boolean),  repeat, reversed, and paddingRight.
+         - The returned timeline will have the following methods added to it:
+           - next() - animates to the next element using a timeline.tweenTo() which it returns. You can pass in a vars object to control duration, easing, etc.
+           - previous() - animates to the previous element using a timeline.tweenTo() which it returns. You can pass in a vars object to control duration, easing, etc.
+           - toIndex() - pass in a zero-based index value of the element that it should animate to, and optionally pass in a vars object to control duration, easing, etc. Always goes in the shortest direction
+           - current() - returns the current index (if an animation is in-progress, it reflects the final index)
+           - times - an Array of the times on the timeline where each element hits the "starting" spot. There's also a label added accordingly, so "label1" is when the 2nd element reaches the start.
+         */
+        function horizontalLoop(items, config) {
+            items = gsap.utils.toArray(items);
+            config = config || {};
+            let tl = gsap.timeline({ repeat: config.repeat, paused: config.paused, defaults: { ease: "none" }, onReverseComplete: () => tl.totalTime(tl.rawTime() + tl.duration() * 100) }),
+                length = items.length,
+                startX = items[0].offsetLeft,
+                times = [],
+                widths = [],
+                xPercents = [],
+                curIndex = 0,
+                pixelsPerSecond = (config.speed || 1) * 50,
+                snap = config.snap === false ? v => v : gsap.utils.snap(config.snap || 1), // some browsers shift by a pixel to accommodate flex layouts, so for example if width is 20% the first element's width might be 242px, and the next 243px, alternating back and forth. So we snap to 5 percentage points to make things look more natural
+                totalWidth, curX, distanceToStart, distanceToLoop, item, i;
+            gsap.set(items, { // convert "x" to "xPercent" to make things responsive, and populate the widths/xPercents Arrays to make lookups faster.
+                xPercent: (i, el) => {
+                    let w = widths[i] = parseFloat(gsap.getProperty(el, "width", "px"));
+                    xPercents[i] = snap(parseFloat(gsap.getProperty(el, "x", "px")) / w * 100 + gsap.getProperty(el, "xPercent"));
+                    return xPercents[i];
+                }
+            });
+            gsap.set(items, { x: 0 });
+            totalWidth = items[length - 1].offsetLeft + xPercents[length - 1] / 100 * widths[length - 1] - startX + items[length - 1].offsetWidth * gsap.getProperty(items[length - 1], "scaleX") + (parseFloat(config.paddingRight) || 0);
+            for (i = 0; i < length; i++) {
+                item = items[i];
+                curX = xPercents[i] / 100 * widths[i];
+                distanceToStart = item.offsetLeft + curX - startX;
+                distanceToLoop = distanceToStart + widths[i] * gsap.getProperty(item, "scaleX");
+                tl.to(item, { xPercent: snap((curX - distanceToLoop) / widths[i] * 100), duration: distanceToLoop / pixelsPerSecond }, 0)
+                    .fromTo(item, { xPercent: snap((curX - distanceToLoop + totalWidth) / widths[i] * 100) }, { xPercent: xPercents[i], duration: (curX - distanceToLoop + totalWidth - curX) / pixelsPerSecond, immediateRender: false }, distanceToLoop / pixelsPerSecond)
+                    .add("label" + i, distanceToStart / pixelsPerSecond);
+                times[i] = distanceToStart / pixelsPerSecond;
+            }
+            function toIndex(index, vars) {
+                vars = vars || {};
+                (Math.abs(index - curIndex) > length / 2) && (index += index > curIndex ? -length : length); // always go in the shortest direction
+                let newIndex = gsap.utils.wrap(0, length, index),
+                    time = times[newIndex];
+                if (time > tl.time() !== index > curIndex) { // if we're wrapping the timeline's playhead, make the proper adjustments
+                    vars.modifiers = { time: gsap.utils.wrap(0, tl.duration()) };
+                    time += tl.duration() * (index > curIndex ? 1 : -1);
+                }
+                curIndex = newIndex;
+                vars.overwrite = true;
+                return tl.tweenTo(time, vars);
+            }
+            tl.next = vars => toIndex(curIndex + 1, vars);
+            tl.previous = vars => toIndex(curIndex - 1, vars);
+            tl.current = () => curIndex;
+            tl.toIndex = (index, vars) => toIndex(index, vars);
+            tl.times = times;
+            tl.progress(1, true).progress(0, true); // pre-render for performance
+            if (config.reversed) {
+                tl.vars.onReverseComplete();
+                tl.reverse();
+            }
+            return tl;
+        }
+
+
+    }, []);
+
 
 
     //Converting the GSAP scroll progress to a motion value
     const canvasRef = useRef();
     const scrollRef = useRef(null);
-    const scrollYProgress  = useMotionValue(scroll);
+    const scrollYProgress = useMotionValue(scroll);
     useEffect(() => {
         scrollYProgress.set(scroll);
     }, [scroll, scrollYProgress]);
@@ -226,7 +352,7 @@ export default function Home() {
     const backgroundColor1B = useTransform(
         scrollYProgress,
         [0.0, 0.05, 0.32, 0.38, 0.53, 0.59, 0.94, 0.98, 1.0],
-        [0.0, 0.0,  0.0,  0.2,  0.2,  0.2,  0.2,  0.1,  0.1]
+        [0.0, 0.0, 0.0, 0.2, 0.2, 0.2, 0.2, 0.1, 0.1]
     )
     const backgroundColor1 = useTransform(
         scrollYProgress,
@@ -242,7 +368,7 @@ export default function Home() {
     const backgroundColor2 = useTransform(
         scrollYProgress,
         [0.0, 0.05, 0.32, 0.38, 0.53, 0.59, 0.94, 0.98, 1.0],
-        [0.7, 0.7, 0.7, 0.5, 0.5, 0.6, 0.6, 0.7, 0.7] 
+        [0.7, 0.7, 0.7, 0.5, 0.5, 0.6, 0.6, 0.7, 0.7]
     )
 
     const backgroundColor3B = useTransform(
@@ -280,10 +406,10 @@ export default function Home() {
         const uniforms = {
             iTime: { value: 1 },
             iResolution: { value: new THREE.Vector2(width, height) },
-            redVal: { value: 0.9},
+            redVal: { value: 0.9 },
             greenVal: { value: 0.9 },
             blueVal: { value: 0.9 },
-            redVal2: { value: 0.0},
+            redVal2: { value: 0.0 },
             greenVal2: { value: 0.0 },
             blueVal2: { value: 0.0 },
         };
@@ -412,13 +538,13 @@ export default function Home() {
             composer.dispose();
             window.removeEventListener('resize', handleResize);
         };
-    }, [ backgroundTimeStep, backgroundColor1, backgroundColor2, backgroundColor3, backgroundColor1B, backgroundColor2B, backgroundColor3B]);
+    }, [backgroundTimeStep, backgroundColor1, backgroundColor2, backgroundColor3, backgroundColor1B, backgroundColor2B, backgroundColor3B]);
 
 
     //-----------------------------------WEBCARD MAIN-----------------------------------
     const webCardMain = useTransform(
         scrollYProgress,
-        [0.1,0.12, 0.32, 0.34],
+        [0.1, 0.12, 0.32, 0.34],
         // [0.12,0.14, 0.34, 0.36],
         ["-50%", "-120%", "-120%", "-250%"]
     )
@@ -426,7 +552,7 @@ export default function Home() {
 
     const webCardMainY = useTransform(
         scrollYProgress,
-        [0.04,0.055],
+        [0.04, 0.055],
         // [0.05,0.06],
         ["-90%", "0%"]
     )
@@ -434,7 +560,7 @@ export default function Home() {
 
     const webCardMainScale = useTransform(
         scrollYProgress,
-        [0.1,0.12],
+        [0.1, 0.12],
         // [0.09,0.14],
         ["200%", "100%"]
     )
@@ -444,13 +570,13 @@ export default function Home() {
     //-----------------------------------WEBCARDS-----------------------------------
     const webCard1 = useTransform(
         scrollYProgress,
-        [0.1,0.12, 0.32, 0.34],
+        [0.1, 0.12, 0.32, 0.34],
         ["-100%", "0%", "0%", "-100%"]
     )
     const webCard1Spring = useSpring(webCard1, { stiffness: 80, damping: 20 });
     const webCard1Rotate = useTransform(
         scrollYProgress,
-        [0.155,0.17],
+        [0.155, 0.17],
         // [0.16,0.17],
         [0, -20]
     )
@@ -458,26 +584,26 @@ export default function Home() {
 
     const webCard2 = useTransform(
         scrollYProgress,
-        [0.16,0.19],
+        [0.16, 0.19],
         ["-30vw", "10vw"]
     )
     const webCard2Spring = useSpring(webCard2, { stiffness: 80, damping: 20 });
     const webCard2Rotate = useTransform(
         scrollYProgress,
-        [0.18,0.19],
+        [0.18, 0.19],
         [0, -20]
     )
     const webCard2RotateSpring = useSpring(webCard2Rotate, { stiffness: 80, damping: 20 });
 
     const webCard3 = useTransform(
         scrollYProgress,
-        [0.18,0.21],
+        [0.18, 0.21],
         ["-30vw", "10vw"]
     )
     const webCard3Spring = useSpring(webCard3, { stiffness: 80, damping: 20 });
     const webCard3Rotate = useTransform(
         scrollYProgress,
-        [0.20,0.21],
+        [0.20, 0.21],
         [0, -20]
     )
     const webCard3RotateSpring = useSpring(webCard3Rotate, { stiffness: 80, damping: 20 });
@@ -485,7 +611,7 @@ export default function Home() {
     //------------------------------------WEBCARD BUTTON-----------------------------------
     const webCardButton = useTransform(
         scrollYProgress,
-        [0.1,0.12],
+        [0.1, 0.12],
         ["0%", "100%"]
     )
     const webCardButtonSpring = useSpring(webCardButton, { stiffness: 80, damping: 20 });
@@ -494,13 +620,13 @@ export default function Home() {
     //-----------------------------------SEO-----------------------------------
     const seoCircRadius = useTransform(
         scrollYProgress,
-        [0.40,0.63],
+        [0.40, 0.63],
         ["100%", "300%"]
     )
     const seoCircRadiusSpring = useSpring(seoCircRadius, { stiffness: 80, damping: 20 });
     const seoCircOpacity = useTransform(
         scrollYProgress,
-        [0.40,0.63],
+        [0.40, 0.63],
         [1.0, 0.0]
     )
     const seoCircOpacitySpring = useSpring(seoCircOpacity, { stiffness: 80, damping: 20 });
@@ -523,20 +649,20 @@ export default function Home() {
     //PRE DESIGN
     const preDesignOpacity = useTransform(
         scrollYProgress,
-        [ 0.63, 0.67, 0.72, 0.76],
-        [ 0.0, 1.0, 1.0, 0.0]
+        [0.63, 0.67, 0.72, 0.76],
+        [0.0, 1.0, 1.0, 0.0]
     )
 
     //BOX OPACITY
     const boxOpacity = useTransform(
         scrollYProgress,
-        [ 0.72, 0.76, 0.8, 0.84],
-        [ 0.0, 1.0, 1.0, 0.0 ]
+        [0.72, 0.76, 0.8, 0.84],
+        [0.0, 1.0, 1.0, 0.0]
     )
     const postDesignOpacity = useTransform(
         scrollYProgress,
-        [ 0.8, 0.84, 0.94],
-        [ 0.0, 1.0, 1.0]
+        [0.8, 0.84, 0.94],
+        [0.0, 1.0, 1.0]
     )
 
     // BOX1
@@ -638,7 +764,7 @@ export default function Home() {
     const box3BGSpring = useSpring(box3BG, { stiffness: 70, damping: 15 });
 
 
-     //box4
+    //box4
     const box4X = useTransform(
         scrollYProgress,
         [0.72, 0.76, 0.8, 0.84],
@@ -885,442 +1011,476 @@ export default function Home() {
 
 
 
-        return (
-                    <motion.div ref={scrollRef} className="mainCont">
-                        <motion.div id="smooth-wrapper" ref={main} animate={true} className="smoothWrap">
-                            <motion.div id="smooth-content" animate={true} className={!loadTransition ? "smoothContent1" : "smoothContent"}>
-                                <AnimatePresence>
-                                {
-                                    isLoading
-                                    // true
-                                    && (
-                                        <motion.div className="loadingCont">
-                                            <motion.div className="loadingText" transition={{delay: 1.0}} initial={{opacity: 1}} exit={{opacity: 0}}>
-                                                <h1 className="loadingTextH1">LOADING</h1>
-                                                <div className="loadProgressCont">
-                                                    <motion.div className="loadingBar" style={{ width: scaleX }}></motion.div>
-                                                </div>
-                                            </motion.div>
-                                            <motion.div className="loadingGridTop">
-                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "-50vh"}} transition={{delay: 1.2, duration: 0.5, ease: 'easeInOut'}}></motion.div>
-                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "-50vh"}} transition={{delay: 1.3, duration: 0.5, ease: 'easeInOut'}}></motion.div>
-                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "-50vh"}} transition={{delay: 1.4, duration: 0.5, ease: 'easeInOut'}}></motion.div>
-                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "-50vh"}} transition={{delay: 1.5, duration: 0.5, ease: 'easeInOut'}}></motion.div>
-                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "-50vh"}} transition={{delay: 1.6, duration: 0.5, ease: 'easeInOut'}}></motion.div>
-                                            </motion.div>
-                                            <motion.div className="loadingGridBottom">
-                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "50vh"}} transition={{delay: 1.2, duration: 0.5, ease: 'easeInOut'}}></motion.div>
-                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "50vh"}} transition={{delay: 1.3, duration: 0.5, ease: 'easeInOut'}}></motion.div>
-                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "50vh"}} transition={{delay: 1.4, duration: 0.5, ease: 'easeInOut'}}></motion.div>
-                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "50vh"}} transition={{delay: 1.5, duration: 0.5, ease: 'easeInOut'}}></motion.div>
-                                                <motion.div className="loadingBox" initial={{y: "0vh"}} exit={{y: "50vh"}} transition={{delay: 1.6, duration: 0.5, ease: 'easeInOut'}}></motion.div>
-                                            </motion.div>
-                                        </motion.div>
-                                    )
-                                }
-                                </AnimatePresence>
-                                <div className="sectionTop">
-                                    <AnimatePresence>
-                                        {loadTransition &&
-                                            <motion.div
-                                            initial={{opacity: 0}}
-                                            animate={{opacity: 1}}
-                                            transition={{duration: 0.5, ease: 'easeInOut'}}
-                                            className="logoCont">
-                                            <Image src="/logo.png"
-                                                   alt="logo"
-                                                   fill
-                                                   className="logoLogo"
-                                                   priority={true}
-                                            />
+    return (
+        <motion.div ref={scrollRef} className="mainCont">
+            <motion.div id="smooth-wrapper" ref={main} animate={true} className="smoothWrap">
+                <motion.div id="smooth-content" animate={true} className={!loadTransition ? "smoothContent1" : "smoothContent"}>
+                    <AnimatePresence>
+                        {
+                            isLoading
+                            // true
+                            && (
+                                <motion.div className="loadingCont">
 
-                                            </motion.div>
-                                        }
-                                    </AnimatePresence>
-                                    <motion.div className="logoText" >
-                                        <div className=" mt-[-20px] flex flex-row justify-center items-center gap-1 cursor-pointer">
-                                            <a onClick={() => {gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent" }, ease: "power2" });}}>WEB</a>
-                                            <h3>&#8226;</h3>
-                                            <a onClick={() => {gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent2" }, ease: "power2" });}}>SEO</a>
-                                            <h3>&#8226;</h3>
-                                            <a onClick={() => {gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent3" }, ease: "power2" });}}>DESIGN</a>
+                                    <motion.div className="loadingText" transition={{ delay: 1.0 }} initial={{ opacity: 1 }} exit={{ opacity: 0 }}>
+
+                                        <h1 className="loadingTextH1">LOADING</h1>
+
+                                        <div className="loadProgressCont">
+                                            <motion.div className="loadingBar" style={{ width: scaleX }}></motion.div>
                                         </div>
-                                        <h3 className="">info@servaldesigns.com</h3>
                                     </motion.div>
-                                </div>
+                                    <motion.div className="loadingGridTop">
+                                        <motion.div className="loadingBox" initial={{ y: "0vh" }} exit={{ y: "-50vh" }} transition={{ delay: 1.2, duration: 0.5, ease: 'easeInOut' }}></motion.div>
+                                        <motion.div className="loadingBox" initial={{ y: "0vh" }} exit={{ y: "-50vh" }} transition={{ delay: 1.3, duration: 0.5, ease: 'easeInOut' }}></motion.div>
+                                        <motion.div className="loadingBox" initial={{ y: "0vh" }} exit={{ y: "-50vh" }} transition={{ delay: 1.4, duration: 0.5, ease: 'easeInOut' }}></motion.div>
+                                        <motion.div className="loadingBox" initial={{ y: "0vh" }} exit={{ y: "-50vh" }} transition={{ delay: 1.5, duration: 0.5, ease: 'easeInOut' }}></motion.div>
+                                        <motion.div className="loadingBox" initial={{ y: "0vh" }} exit={{ y: "-50vh" }} transition={{ delay: 1.6, duration: 0.5, ease: 'easeInOut' }}></motion.div>
+                                    </motion.div>
+                                    <motion.div className="loadingGridBottom">
+                                        <motion.div className="loadingBox" initial={{ y: "0vh" }} exit={{ y: "50vh" }} transition={{ delay: 1.2, duration: 0.5, ease: 'easeInOut' }}></motion.div>
+                                        <motion.div className="loadingBox" initial={{ y: "0vh" }} exit={{ y: "50vh" }} transition={{ delay: 1.3, duration: 0.5, ease: 'easeInOut' }}></motion.div>
+                                        <motion.div className="loadingBox" initial={{ y: "0vh" }} exit={{ y: "50vh" }} transition={{ delay: 1.4, duration: 0.5, ease: 'easeInOut' }}></motion.div>
+                                        <motion.div className="loadingBox" initial={{ y: "0vh" }} exit={{ y: "50vh" }} transition={{ delay: 1.5, duration: 0.5, ease: 'easeInOut' }}></motion.div>
+                                        <motion.div className="loadingBox" initial={{ y: "0vh" }} exit={{ y: "50vh" }} transition={{ delay: 1.6, duration: 0.5, ease: 'easeInOut' }}></motion.div>
+                                    </motion.div>
+                                </motion.div>
+                            )
+                        }
+                    </AnimatePresence>
+                    <div className="sectionTop">
+                        <AnimatePresence>
+                            {loadTransition &&
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 0.5, ease: 'easeInOut' }}
+                                    className="logoCont">
+                                    <Image src="/logo.png"
+                                        alt="logo"
+                                        fill
+                                        className="logoLogo"
+                                        priority={true}
+                                    />
 
-                                <motion.div className="sectionWeb">
-                                    <div className="sticky-div" id="stickyContent" data-speed="1.5">
-                                        <div className="infoCont">
-                                            <motion.div className="infoCard" style={{x: webCardMainSpring}}>
-                                                <div className="webTitleCont">
-                                                    <motion.div
-                                                        style={{scale: webCardMainScaleSpring}}
-                                                        className="websiteTitle"
-                                                        initial={{opacity: 0}}
-                                                        whileInView={{opacity: 1, scramble: true}}
-                                                        viewport={{once: true}}
-                                                    >Custom Built
-                                                    </motion.div>
-                                                    <motion.div
-                                                        style={{scale: webCardMainScaleSpring}}
-                                                        className="websiteTitle2"
-                                                    >^#*()&@$
-                                                    </motion.div>
-                                                </div>
-                                                <motion.a
-                                                    className="webCardButton"
-                                                    style={{opacity: webCardButtonSpring}}
-                                                >
-                                                    <RiveWebBtn/>
-                                                    <div className="webCardButtonText">CONTACT</div>
-                                                </motion.a>
+                                </motion.div>
+                            }
+                        </AnimatePresence>
+                        <motion.div className="logoText" >
+                            <div className=" mt-[-20px] flex flex-row justify-center items-center gap-1 cursor-pointer">
+                                <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent" }, ease: "power2" }); }}>WEB</a>
+                                <h3>&#8226;</h3>
+                                <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent2" }, ease: "power2" }); }}>SEO</a>
+                                <h3>&#8226;</h3>
+                                <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent3" }, ease: "power2" }); }}>DESIGN</a>
+                            </div>
+                            <h3 className="">info@servaldesigns.com</h3>
+                        </motion.div>
+                    </div>
+
+                    <motion.div className="sectionWeb">
+                        <div className="sticky-div" id="stickyContent" data-speed="1.5">
+                            <div className="infoCont">
+                                <motion.div className="infoCard" style={{ x: webCardMainSpring }}>
+                                    <div className="webTitleCont">
+                                        <motion.div
+                                            style={{ scale: webCardMainScaleSpring }}
+                                            className="websiteTitle"
+                                            initial={{ opacity: 0 }}
+                                            whileInView={{ opacity: 1, scramble: true }}
+                                            viewport={{ once: true }}
+                                        >Custom Built
+                                        </motion.div>
+                                        <motion.div
+                                            style={{ scale: webCardMainScaleSpring }}
+                                            className="websiteTitle2"
+                                        >^#*()&@$
+                                        </motion.div>
+                                    </div>
+                                    <motion.a
+                                        className="webCardButton"
+                                        style={{ opacity: webCardButtonSpring }}
+                                    >
+                                        <RiveWebBtn />
+                                        <div className="webCardButtonText">CONTACT</div>
+                                    </motion.a>
 
 
-                                            </motion.div>
-                                            <motion.div
-                                                className="carouselParent"
-                                                style={{
-                                                    right: webCard1Spring,
-                                                }}
-                                            >
-                                                <Carousel/>
-                                            </motion.div>
-                                        </div>
+                                </motion.div>
+                                <motion.div
+                                    className="carouselParent"
+                                    style={{
+                                        right: webCard1Spring,
+                                    }}
+                                >
+                                    <Carousel />
+                                </motion.div>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    <div className="sectionSEO">
+                        <motion.div className="sticky-div" id="stickyContent2" data-speed="1.5">
+                            <div className="circContainer">
+                                <motion.svg
+                                    className="circleText"
+                                    viewBox="0 0 500 500"
+                                    data-duration="5"
+                                    animate={{ rotate: 360 }}
+                                    transition={{ repeat: Infinity, duration: 50, ease: "linear" }}
+                                    style={{
+                                        scale: useSpring(useTransform(scrollYProgress, [0.4, 0.49], [1, 1.2]), {
+                                            stiffness: 80,
+                                            damping: 20,
+                                        }),
+                                        opacity: useSpring(useTransform(scrollYProgress, [0.4, 0.5], [1, 0]), {
+                                            stiffness: 80,
+                                            damping: 20,
+                                        }),
+                                    }}
+                                >
+
+                                    <path id="textcircle" fill="none" stroke="#FF9800" strokeWidth="0"
+                                        data-duration="5"
+                                        d="M50,250c0-110.5,89.5-200,200-200s200,89.5,200,200s-89.5,200-200,200S50,360.5,50,250">
+                                    </path>
+
+                                    <text dy="-25">
+                                        <textPath className="pathText" xlinkHref="#textcircle"
+                                            textLength="1250" lengthAdjust="spacingAndGlyphs">Keywords
+                                            Backlinks Meta Tags Content Crawling Indexing Ranking Traffic
+                                            Optimization SERP
+                                        </textPath>
+                                    </text>
+
+                                </motion.svg>
+                            </div>
+
+                            <div
+                                className="seoTextContWrapper"
+                                style={{ perspective: '1500px' }}
+                            >
+                                <motion.div
+                                    className="seoTextCont"
+                                    style={{
+                                        transformStyle: 'preserve-3d',
+                                        rotateY: seoTextFlipSpring
+                                    }}
+                                >
+                                    <div
+                                        className="seoTextFront"
+                                        style={{
+                                            backfaceVisibility: 'hidden',
+
+                                        }}
+                                    >
+                                        <h1>SEO</h1>
+                                        <h3>SOLUTIONS</h3>
+
+                                    </div>
+                                    <div
+                                        className="seoTextBack"
+                                        style={{
+                                            backfaceVisibility: 'hidden',
+                                            transform: 'rotateY(180deg)',
+                                            position: 'absolute',
+                                            top: 0,
+                                            left: 0,
+                                            width: '100%',
+                                            height: '100%',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+
+                                        }}
+                                    >
+
+                                        <motion.div className="seoBackCont">
+                                            <p className="seoTextBody">
+                                                content campaigns<br /><br />
+                                                technical seo<br /><br />
+                                                strategic updates
+                                            </p>
+
+                                            <a className="seoBackButton">Contact</a>
+                                        </motion.div>
                                     </div>
                                 </motion.div>
-
-                                <div className="sectionSEO">
-                                    <motion.div className="sticky-div" id="stickyContent2" data-speed="1.5">
-                                        <div className="circContainer">
-                                            <motion.svg
-                                                className="circleText"
-                                                viewBox="0 0 500 500"
-                                                data-duration="5"
-                                                animate={{rotate: 360}}
-                                                transition={{repeat: Infinity, duration: 50, ease: "linear"}}
-                                                style={{
-                                                    scale: useSpring(useTransform(scrollYProgress, [0.4, 0.49], [1, 1.2]), {
-                                                        stiffness: 80,
-                                                        damping: 20,
-                                                    }),
-                                                    opacity: useSpring(useTransform(scrollYProgress, [0.4, 0.5], [1, 0]), {
-                                                        stiffness: 80,
-                                                        damping: 20,
-                                                    }),
-                                                }}
-                                            >
-
-                                                <path id="textcircle" fill="none" stroke="#FF9800" strokeWidth="0"
-                                                      data-duration="5"
-                                                      d="M50,250c0-110.5,89.5-200,200-200s200,89.5,200,200s-89.5,200-200,200S50,360.5,50,250">
-                                                </path>
-
-                                                <text dy="-25">
-                                                    <textPath className="pathText" xlinkHref="#textcircle"
-                                                              textLength="1250" lengthAdjust="spacingAndGlyphs">Keywords
-                                                        Backlinks Meta Tags Content Crawling Indexing Ranking Traffic
-                                                        Optimization SERP
-                                                    </textPath>
-                                                </text>
-
-                                            </motion.svg>
-                                        </div>
-
-                                        <div
-                                            className="seoTextContWrapper"
-                                            style={{perspective: '1500px'}}
-                                        >
-                                            <motion.div
-                                                className="seoTextCont"
-                                                style={{
-                                                    transformStyle: 'preserve-3d',
-                                                    rotateY: seoTextFlipSpring
-                                                }}
-                                            >
-                                                <div
-                                                    className="seoTextFront"
-                                                    style={{
-                                                        backfaceVisibility: 'hidden',
-
-                                                    }}
-                                                >
-                                                    <h1>SEO</h1>
-                                                    <h3>SOLUTIONS</h3>
-
-                                                </div>
-                                                <div
-                                                    className="seoTextBack"
-                                                    style={{
-                                                        backfaceVisibility: 'hidden',
-                                                        transform: 'rotateY(180deg)',
-                                                        position: 'absolute',
-                                                        top: 0,
-                                                        left: 0,
-                                                        width: '100%',
-                                                        height: '100%',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-
-                                                    }}
-                                                >
-
-                                                    <motion.div className="seoBackCont">
-                                                        <p className="seoTextBody">
-                                                            content campaigns<br/><br/>
-                                                            technical seo<br/><br/>
-                                                            strategic updates
-                                                        </p>
-
-                                                        <a className="seoBackButton">Contact</a>
-                                                    </motion.div>
-                                                </div>
-                                            </motion.div>
-                                        </div>
+                            </div>
+                        </motion.div>
+                    </div>
+                    <motion.div className="sectionDesign">
+                        <motion.div id="stickyContent3" data-speed="1.5" className="sticky-div">
+                            <motion.div className="progressTextCont">
+                                    <motion.div className="beforeText" style={{ opacity: preDesignOpacity }}>
+                                        <h1>BEFORE</h1>
                                     </motion.div>
+                                    <motion.div className="afterText" style={{ opacity: postDesignOpacity }}>
+                                        <h1>AFTER</h1>
+                                    </motion.div>
+                            </motion.div>
+                            <motion.div
+                                className="designTitleCont"
+                                style={{ opacity: designTitleOpacity }}
+                            >
+
+                                <div className="designTitleWeb">
+                                    <h2> WEBSITE </h2>
+                                    <h2> WEBSITE </h2>
+                                    <h2> WEBSITE </h2>
+                                    <h2> WEBSITE </h2>
+                                    <h2> WEBSITE </h2>
+                                    <h2> WEBSITE </h2>
+                                    <h2> WEBSITE </h2>
+                                    <h2> WEBSITE </h2>
+                                    <h2> WEBSITE </h2>
+                                    <h2> WEBSITE </h2>
                                 </div>
-                                <motion.div className="sectionDesign">
-                                    <motion.div id="stickyContent3" data-speed="1.5" className="sticky-div">
-                                        <motion.div
-                                        className="designTitleCont"
-                                        style={{opacity: designTitleOpacity}}
-                                        >
-
-                                            {/*<Gooey/>*/}
-                                            <h2>WEBSITE REDESIGNS</h2>
-                                        </motion.div>
-
-                                        <motion.div className="boxContainer">
-                                            <motion.div
-                                                className="designPreCont"
-                                                style={{opacity: preDesignOpacity}}
-                                            >
-                                                <div className="preHeader">
-                                                    <div className="preHeaderLinkCont">
-                                                        <p className="preLinkHome">HOME</p>
-                                                    </div>
-                                                    <div className="preHeaderLogoCont">
-                                                        <div className="preLogoCont">
-                                                            <Image src={designLogo1} alt="logo for general construction" fill={true} objectFit="contain" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="preBanner">
-                                                    <h3>Your Remodel & Restoration Pros</h3>
-                                                </div>
-                                                <div className="preBody">
-                                                    <div className="preBodyLinkCont">
-                                                        <p className="preLink">PROJECTS</p>
-                                                        <p className="preLink">SERVICES</p>
-                                                        <p className="preLink">GALLERY</p>
-                                                    </div>
-                                                    <div className="preBodyHeroCont">
-                                                        <div className="preHeroCont">
-                                                            <Image src={designPreHero} alt="hero image for general construction" fill={true} objectFit="contain"/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </motion.div>
-                                            <motion.div
-                                                className="designPostCont"
-                                                style={{opacity: postDesignOpacity}}
-                                            >
-                                                <div className="postImageCont">
-                                                    <Image src={designPostHero} alt="modern kitchen" fill={true} objectFit="cover"/>
-                                                </div>
-                                                 <div className="postHeader">
-                                                     <div className="postHeaderLogoCont">
-                                                         <Image src={designLogo2} alt="logo for general construction" fill={true} objectFit="contain" />
-                                                     </div>
-                                                     <div className="postHeaderHamCont">
-                                                         <Image src={hamburger} alt="menu icon" fill={true} objectFit="contain" />
-                                                     </div>
-                                                 </div>
-                                                <div className="postBodyCont">
-                                                    <div className="postBodyTextCont">
-                                                        <div className="titleCont">
-                                                            <h2>Transforming Houses Into Dream Homes</h2>
-                                                        </div>
-                                                        <div className="subTitleCont">
-                                                            <h3>Quality remodeling services with craftsmanship you can count on.</h3>
-                                                        </div>
-                                                        <div className="ctaCont">
-                                                            <p>Get a Free Estimate</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="postValueCont">
-
-                                                    <div className="postValueItemCont">
-                                                        <div className="postValueItem">
-                                                            <div className="postValueItemImgCont">
-                                                                <Image src={tools} alt="value icon" fill={true} objectFit="contain" />
-                                                            </div>
-                                                            <h3>Quality Craftsmanship</h3>
-                                                        </div>
-                                                        <div className="postValueItem">
-                                                            <div className="postValueItemImgCont">
-                                                                <Image src={time} alt="value icon" fill={true} objectFit="contain" />
-                                                            </div>
-                                                            <h3>Clear Timelines</h3>
-                                                        </div>
-                                                        <div className="postValueItem">
-                                                            <div className="postValueItemImgCont">
-                                                                <Image src={handshake} alt="value icon" fill={true} objectFit="contain" />
-                                                            </div>
-                                                            <h3>Personalized Service</h3>
-                                                        </div>
-                                                        <div className="postValueItem">
-                                                            <div className="postValueItemImgCont">
-                                                                <Image src={house} alt="value icon" fill={true} objectFit="contain" />
-                                                            </div>
-                                                            <h3>Full-Service Remodeling</h3>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </motion.div>
-                                            <motion.div
-                                                className="box"
-                                                style={{
-                                                    left: box1XSpring,
-                                                    top: box1YSpring,
-                                                    height: box1HeightSpring,
-                                                    width: box1WidthSpring,
-                                                    backgroundColor: `rgba(0, 0, 0, ${box1BGSpring.get()})`,
-                                                    opacity: boxOpacity.get(),
-                                                }}
-                                            >
-                                            </motion.div>
-                                            <motion.div
-                                                className="box"
-                                                style={{
-                                                    left: box2XSpring,
-                                                    top: box2YSpring,
-                                                    height: box2HeightSpring,
-                                                    width: box2WidthSpring,
-                                                    backgroundColor: `rgba(0, 0, 0, ${box2BGSpring.get()})`,
-                                                    opacity: boxOpacity.get(),
-                                                }}
-                                            >
-                                            </motion.div>
-                                            <motion.div
-                                                className="box"
-                                                style={{
-                                                    left: box3XSpring,
-                                                    top: box3YSpring,
-                                                    height: box3HeightSpring,
-                                                    width: box3WidthSpring,
-                                                    backgroundColor: `rgba(0, 0, 0, ${box3BGSpring.get()})`,
-                                                    opacity: boxOpacity.get(),
-                                                }}
-                                            >
-                                            </motion.div>
-                                            <motion.div
-                                                className="box"
-                                                style={{
-                                                    left: box4XSpring,
-                                                    top: box4YSpring,
-                                                    height: box4HeightSpring,
-                                                    width: box4WidthSpring,
-                                                    backgroundColor: `rgba(0, 0, 0, ${box4BGSpring.get()})`,
-                                                    opacity: boxOpacity.get(),
-                                                }}
-                                            >
-                                            </motion.div>
-
-                                            <motion.div
-                                                className="box"
-                                                style={{
-                                                    left: box5XSpring,
-                                                    top: box5YSpring,
-                                                    height: box5HeightSpring,
-                                                    width: box5WidthSpring,
-                                                    backgroundColor: `rgba(0, 0, 0, ${box5BGSpring.get()})`,
-                                                    opacity: boxOpacity.get(),
-                                                }}
-                                            >
-                                            </motion.div>
-                                            <motion.div
-                                                className="box"
-                                                style={{
-                                                    left: box6XSpring,
-                                                    top: box6YSpring,
-                                                    height: box6HeightSpring,
-                                                    width: box6WidthSpring,
-                                                    backgroundColor: `rgba(0, 0, 0, ${box6BGSpring.get()})`,
-                                                    opacity: boxOpacity.get(),
-                                                }}
-                                            >
-                                            </motion.div>
-                                            <motion.div
-                                                className="box"
-                                                style={{
-                                                    left: box7XSpring,
-                                                    top: box7YSpring,
-                                                    height: box7HeightSpring,
-                                                    width: box7WidthSpring,
-                                                    backgroundColor: `rgba(0, 0, 0, ${box7BGSpring.get()})`,
-                                                    opacity: boxOpacity.get(),
-                                                }}
-                                            >
-                                            </motion.div>
-                                            <motion.div
-                                                className="box"
-                                                style={{
-                                                    left: box8XSpring,
-                                                    top: box8YSpring,
-                                                    height: box8HeightSpring,
-                                                    width: box8WidthSpring,
-                                                    backgroundColor: `rgba(0, 0, 0, ${box8BGSpring.get()})`,
-                                                    opacity: boxOpacity.get(),
-                                                }}
-                                            >
-                                            </motion.div>
-                                            <motion.div
-                                                className="box"
-                                                style={{
-                                                    left: box9XSpring,
-                                                    top: box9YSpring,
-                                                    height: box9HeightSpring,
-                                                    width: box9WidthSpring,
-                                                    backgroundColor: `rgba(0, 0, 0, ${box9BGSpring.get()})`,
-                                                    opacity: boxOpacity.get(),
-                                                }}
-                                            >
-                                            </motion.div>
-                                            <motion.div
-                                                className="box"
-                                                style={{
-                                                    left: box10XSpring,
-                                                    top: box10YSpring,
-                                                    height: box10HeightSpring,
-                                                    width: box10WidthSpring,
-                                                    backgroundColor: `rgba(0, 0, 0, ${box10BGSpring.get()})`,
-                                                    opacity: boxOpacity.get(),
-                                                }}
-                                            >
-                                            </motion.div>
-
-                                        </motion.div>
-                                    </motion.div>
-                                </motion.div>
-                                <div className="sectionBottom">
-                                    <motion.div initial={{y: 0}} animate={{y: 0}} whileInView={{y: 0}}
-                                                viewport={{once: true}}
-                                                className="sticky-div">
-                                        <h1 className="text-white ">CONTACT</h1>
-                                        <h1 className="text-white">SECTION</h1>
-
-                                    </motion.div>
+                                <div className="designTitleRedesign">
+                                    <h2> REDESIGNS </h2>
+                                    <h2> REDESIGNS </h2>
+                                    <h2> REDESIGNS </h2>
+                                    <h2> REDESIGNS </h2>
+                                    <h2> REDESIGNS </h2>
+                                    <h2> REDESIGNS </h2>
+                                    <h2> REDESIGNS </h2>
+                                    <h2> REDESIGNS</h2>
+                                    <h2> REDESIGNS</h2>
+                                    <h2> REDESIGNS </h2>
                                 </div>
 
                             </motion.div>
+
+                            <motion.div className="boxContainer">
+                                <motion.div
+                                    className="designPreCont"
+                                    style={{ opacity: preDesignOpacity }}
+                                >
+                                    <div className="preHeader">
+                                        <div className="preHeaderLinkCont">
+                                            <p className="preLinkHome">HOME</p>
+                                        </div>
+                                        <div className="preHeaderLogoCont">
+                                            <div className="preLogoCont">
+                                                <Image src={designLogo1} alt="logo for general construction" fill={true} objectFit="contain" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="preBanner">
+                                        <h3>Your Remodel & Restoration Pros</h3>
+                                    </div>
+                                    <div className="preBody">
+                                        <div className="preBodyLinkCont">
+                                            <p className="preLink">PROJECTS</p>
+                                            <p className="preLink">SERVICES</p>
+                                            <p className="preLink">GALLERY</p>
+                                        </div>
+                                        <div className="preBodyHeroCont">
+                                            <div className="preHeroCont">
+                                                <Image src={designPreHero} alt="hero image for general construction" fill={true} objectFit="contain" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                                <motion.div
+                                    className="designPostCont"
+                                    style={{ opacity: postDesignOpacity }}
+                                >
+                                    <div className="postImageCont">
+                                        <Image src={designPostHero} alt="modern kitchen" fill={true} objectFit="cover" />
+                                    </div>
+                                    <div className="postHeader">
+                                        <div className="postHeaderLogoCont">
+                                            <Image src={designLogo2} alt="logo for general construction" fill={true} objectFit="contain" />
+                                        </div>
+                                        <div className="postHeaderHamCont">
+                                            <Image src={hamburger} alt="menu icon" fill={true} objectFit="contain" />
+                                        </div>
+                                    </div>
+                                    <div className="postBodyCont">
+                                        <div className="postBodyTextCont">
+                                            <div className="titleCont">
+                                                <h2>Transforming Houses Into Dream Homes</h2>
+                                            </div>
+                                            <div className="subTitleCont">
+                                                <h3>Quality remodeling services with craftsmanship you can count on.</h3>
+                                            </div>
+                                            <div className="ctaCont">
+                                                <p>Get a Free Estimate</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="postValueCont">
+
+                                        <div className="postValueItemCont">
+                                            <div className="postValueItem">
+                                                <div className="postValueItemImgCont">
+                                                    <Image src={tools} alt="value icon" fill={true} objectFit="contain" />
+                                                </div>
+                                                <h3>Quality Craftsmanship</h3>
+                                            </div>
+                                            <div className="postValueItem">
+                                                <div className="postValueItemImgCont">
+                                                    <Image src={time} alt="value icon" fill={true} objectFit="contain" />
+                                                </div>
+                                                <h3>Clear Timelines</h3>
+                                            </div>
+                                            <div className="postValueItem">
+                                                <div className="postValueItemImgCont">
+                                                    <Image src={handshake} alt="value icon" fill={true} objectFit="contain" />
+                                                </div>
+                                                <h3>Personalized Service</h3>
+                                            </div>
+                                            <div className="postValueItem">
+                                                <div className="postValueItemImgCont">
+                                                    <Image src={house} alt="value icon" fill={true} objectFit="contain" />
+                                                </div>
+                                                <h3>Full-Service Remodeling</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                                <motion.div
+                                    className="box"
+                                    style={{
+                                        left: box1XSpring,
+                                        top: box1YSpring,
+                                        height: box1HeightSpring,
+                                        width: box1WidthSpring,
+                                        backgroundColor: `rgba(0, 0, 0, ${box1BGSpring.get()})`,
+                                        opacity: boxOpacity.get(),
+                                    }}
+                                >
+                                </motion.div>
+                                <motion.div
+                                    className="box"
+                                    style={{
+                                        left: box2XSpring,
+                                        top: box2YSpring,
+                                        height: box2HeightSpring,
+                                        width: box2WidthSpring,
+                                        backgroundColor: `rgba(0, 0, 0, ${box2BGSpring.get()})`,
+                                        opacity: boxOpacity.get(),
+                                    }}
+                                >
+                                </motion.div>
+                                <motion.div
+                                    className="box"
+                                    style={{
+                                        left: box3XSpring,
+                                        top: box3YSpring,
+                                        height: box3HeightSpring,
+                                        width: box3WidthSpring,
+                                        backgroundColor: `rgba(0, 0, 0, ${box3BGSpring.get()})`,
+                                        opacity: boxOpacity.get(),
+                                    }}
+                                >
+                                </motion.div>
+                                <motion.div
+                                    className="box"
+                                    style={{
+                                        left: box4XSpring,
+                                        top: box4YSpring,
+                                        height: box4HeightSpring,
+                                        width: box4WidthSpring,
+                                        backgroundColor: `rgba(0, 0, 0, ${box4BGSpring.get()})`,
+                                        opacity: boxOpacity.get(),
+                                    }}
+                                >
+                                </motion.div>
+
+                                <motion.div
+                                    className="box"
+                                    style={{
+                                        left: box5XSpring,
+                                        top: box5YSpring,
+                                        height: box5HeightSpring,
+                                        width: box5WidthSpring,
+                                        backgroundColor: `rgba(0, 0, 0, ${box5BGSpring.get()})`,
+                                        opacity: boxOpacity.get(),
+                                    }}
+                                >
+                                </motion.div>
+                                <motion.div
+                                    className="box"
+                                    style={{
+                                        left: box6XSpring,
+                                        top: box6YSpring,
+                                        height: box6HeightSpring,
+                                        width: box6WidthSpring,
+                                        backgroundColor: `rgba(0, 0, 0, ${box6BGSpring.get()})`,
+                                        opacity: boxOpacity.get(),
+                                    }}
+                                >
+                                </motion.div>
+                                <motion.div
+                                    className="box"
+                                    style={{
+                                        left: box7XSpring,
+                                        top: box7YSpring,
+                                        height: box7HeightSpring,
+                                        width: box7WidthSpring,
+                                        backgroundColor: `rgba(0, 0, 0, ${box7BGSpring.get()})`,
+                                        opacity: boxOpacity.get(),
+                                    }}
+                                >
+                                </motion.div>
+                                <motion.div
+                                    className="box"
+                                    style={{
+                                        left: box8XSpring,
+                                        top: box8YSpring,
+                                        height: box8HeightSpring,
+                                        width: box8WidthSpring,
+                                        backgroundColor: `rgba(0, 0, 0, ${box8BGSpring.get()})`,
+                                        opacity: boxOpacity.get(),
+                                    }}
+                                >
+                                </motion.div>
+                                <motion.div
+                                    className="box"
+                                    style={{
+                                        left: box9XSpring,
+                                        top: box9YSpring,
+                                        height: box9HeightSpring,
+                                        width: box9WidthSpring,
+                                        backgroundColor: `rgba(0, 0, 0, ${box9BGSpring.get()})`,
+                                        opacity: boxOpacity.get(),
+                                    }}
+                                >
+                                </motion.div>
+                                <motion.div
+                                    className="box"
+                                    style={{
+                                        left: box10XSpring,
+                                        top: box10YSpring,
+                                        height: box10HeightSpring,
+                                        width: box10WidthSpring,
+                                        backgroundColor: `rgba(0, 0, 0, ${box10BGSpring.get()})`,
+                                        opacity: boxOpacity.get(),
+                                    }}
+                                >
+                                </motion.div>
+
+                            </motion.div>
                         </motion.div>
-                        <div className="canvasCont">
-                            <canvas ref={canvasRef} style={{width: '100%', height: '100vh'}}/>
-                        </div>
                     </motion.div>
+                    <div className="sectionBottom">
+                        <motion.div initial={{ y: 0 }} animate={{ y: 0 }} whileInView={{ y: 0 }}
+                            viewport={{ once: true }}
+                            className="sticky-div">
+                            <h1 className="text-white ">CONTACT</h1>
+                            <h1 className="text-white">SECTION</h1>
+
+                        </motion.div>
+                    </div>
+
+                </motion.div>
+            </motion.div>
+            <div className="canvasCont">
+                <canvas ref={canvasRef} style={{ width: '100%', height: '100vh' }} />
+            </div>
+        </motion.div>
 
     )
 }
