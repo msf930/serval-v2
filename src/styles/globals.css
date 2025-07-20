@@ -47,11 +47,13 @@ body,
     height: 100vh;
     width:  100vw;
     background: inherit;
+
 }
 .smoothContent{
     height: auto;
     width:  100vw;
     background: inherit;
+
 }
 .canvasCont{
     position: fixed;
@@ -146,6 +148,7 @@ body,
     justify-content: center;
     align-items: center;
 
+
 }
 .sectionBottom{
     position: relative;
@@ -189,7 +192,7 @@ body,
 }
 @keyframes blurToClear {
     0% {
-        filter: brightness(100) blur(10px);
+        filter: brightness(100) blur(10px) ;
     }
     100% {
         filter: brightness(100) blur(0px);
@@ -197,16 +200,20 @@ body,
 }
 
 .logoLogo{
+    z-index: 3;
     filter: brightness(100) blur(10px);
     animation: blurToClear 0.5s ease-in-out forwards;
     object-fit:  contain;
+    mix-blend-mode: difference;
+
 
 }
+
 
 /*The container within each section*/
 .sectionWeb{
     position: relative;
-    height: 500vh;
+    height: 600vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -357,7 +364,7 @@ body,
 }
 .sectionSEO{
     position: relative;
-    height: 400vh;
+    height: 300vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -559,7 +566,7 @@ body,
 }
 .sectionDesign{
     position: relative;
-    height: 500vh;
+    height: 700vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -598,6 +605,8 @@ body,
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .preHeader{
@@ -726,6 +735,8 @@ body,
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 10px;
+    overflow: hidden;
 }
 .postImageCont{
     position: absolute;

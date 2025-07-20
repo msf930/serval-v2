@@ -178,14 +178,14 @@ export default function Home() {
                 trigger: '#stickyContent2',
                 pin: true,
                 start: 'center center',
-                end: `${viewportHeight * 9}`,
+                end: `${viewportHeight * 9.5}`,
                 markers: false,
             });
             ScrollTrigger.create({
                 trigger: '#stickyContent3',
                 pin: true,
                 start: 'center center',
-                end: `${viewportHeight * 14}`,
+                end: `${viewportHeight * 16}`,
                 markers: false,
             });
 
@@ -225,34 +225,34 @@ export default function Home() {
     //useTransform for the shader colors
     const backgroundColor1B = useTransform(
         scrollYProgress,
-        [0.0, 0.06, 0.38, 0.42, 0.63, 0.67, 0.94, 0.98, 1.0],
-        [0.0, 0.0, 0.0, 0.2, 0.2, 0.2, 0.2, 0.1, 0.1]
+        [0.0, 0.05, 0.32, 0.38, 0.53, 0.59, 0.94, 0.98, 1.0],
+        [0.0, 0.0,  0.0,  0.2,  0.2,  0.2,  0.2,  0.1,  0.1]
     )
     const backgroundColor1 = useTransform(
         scrollYProgress,
-        [0.0, 0.06, 0.38, 0.42, 0.63, 0.67, 0.94, 0.98, 1.0],
+        [0.0, 0.05, 0.32, 0.38, 0.53, 0.59, 0.94, 0.98, 1.0],
         [0.9, 0.0, 0.0, 0.8, 0.8, 0.8, 0.8, 0.7, 0.7]
     )
 
     const backgroundColor2B = useTransform(
         scrollYProgress,
-        [0.0, 0.06, 0.38, 0.42, 0.63, 0.67, 0.94, 0.98, 1.0],
+        [0.0, 0.05, 0.32, 0.38, 0.53, 0.59, 0.94, 0.98, 1.0],
         [0.0, 0.0, 0.0, 0.2, 0.2, 0.4, 0.4, 0.1, 0.1]
     )
     const backgroundColor2 = useTransform(
         scrollYProgress,
-        [0.0, 0.06, 0.38, 0.42, 0.63, 0.67, 0.94, 0.98, 1.0],
-        [0.7, 0.7, 0.7, 0.5, 0.5, 0.6, 0.6, 0.7, 0.7]
+        [0.0, 0.05, 0.32, 0.38, 0.53, 0.59, 0.94, 0.98, 1.0],
+        [0.7, 0.7, 0.7, 0.5, 0.5, 0.6, 0.6, 0.7, 0.7] 
     )
 
     const backgroundColor3B = useTransform(
         scrollYProgress,
-        [0.0, 0.06, 0.38, 0.42, 0.63, 0.67, 0.94, 0.98, 1.0],
+        [0.0, 0.05, 0.32, 0.38, 0.53, 0.59, 0.94, 0.98, 1.0],
         [0.0, 0.3, 0.3, 0.0, 0.0, 0.1, 0.1, 0.1, 0.1]
     )
     const backgroundColor3 = useTransform(
         scrollYProgress,
-        [0.0, 0.06, 0.38, 0.42, 0.63, 0.67, 0.94, 0.98, 1.0],
+        [0.0, 0.05, 0.32, 0.38, 0.53, 0.59, 0.94, 0.98, 1.0],
         [0.4, 0.8, 0.8, 0.7, 0.7, 0.6, 0.6, 0.7, 0.7]
     )
 
@@ -418,21 +418,24 @@ export default function Home() {
     //-----------------------------------WEBCARD MAIN-----------------------------------
     const webCardMain = useTransform(
         scrollYProgress,
-        [0.12,0.14, 0.34, 0.36],
+        [0.1,0.12, 0.32, 0.34],
+        // [0.12,0.14, 0.34, 0.36],
         ["-50%", "-120%", "-120%", "-250%"]
     )
     const webCardMainSpring = useSpring(webCardMain, { stiffness: 80, damping: 20 });
 
     const webCardMainY = useTransform(
         scrollYProgress,
-        [0.05,0.06],
+        [0.04,0.055],
+        // [0.05,0.06],
         ["-90%", "0%"]
     )
     const webCardMainYSpring = useSpring(webCardMainY, { stiffness: 100, damping: 20 });
 
     const webCardMainScale = useTransform(
         scrollYProgress,
-        [0.09,0.14],
+        [0.1,0.12],
+        // [0.09,0.14],
         ["200%", "100%"]
     )
     const webCardMainScaleSpring = useSpring(webCardMainScale, { stiffness: 80, damping: 20 });
@@ -441,13 +444,14 @@ export default function Home() {
     //-----------------------------------WEBCARDS-----------------------------------
     const webCard1 = useTransform(
         scrollYProgress,
-        [0.12, 0.14, 0.34, 0.36],
+        [0.1,0.12, 0.32, 0.34],
         ["-100%", "0%", "0%", "-100%"]
     )
     const webCard1Spring = useSpring(webCard1, { stiffness: 80, damping: 20 });
     const webCard1Rotate = useTransform(
         scrollYProgress,
-        [0.16,0.17],
+        [0.155,0.17],
+        // [0.16,0.17],
         [0, -20]
     )
     const webCard1RotateSpring = useSpring(webCard1Rotate, { stiffness: 80, damping: 20 });
@@ -481,7 +485,7 @@ export default function Home() {
     //------------------------------------WEBCARD BUTTON-----------------------------------
     const webCardButton = useTransform(
         scrollYProgress,
-        [0.12,0.14],
+        [0.1,0.12],
         ["0%", "100%"]
     )
     const webCardButtonSpring = useSpring(webCardButton, { stiffness: 80, damping: 20 });
@@ -512,57 +516,57 @@ export default function Home() {
     //__________________________________________DESIGN____________________________________
     const designTitleOpacity = useTransform(
         scrollYProgress,
-        [0.63, 0.71, 0.75],
-        [1.0, 1.0, 0.0]
+        [0.63, 0.67],
+        [1.0, 0.0]
     )
 
     //PRE DESIGN
     const preDesignOpacity = useTransform(
         scrollYProgress,
-        [ 0.71, 0.75, 0.77, 0.81],
+        [ 0.63, 0.67, 0.72, 0.76],
         [ 0.0, 1.0, 1.0, 0.0]
     )
 
     //BOX OPACITY
     const boxOpacity = useTransform(
         scrollYProgress,
-        [ 0.75, 0.81, 0.85, 0.91],
+        [ 0.72, 0.76, 0.8, 0.84],
         [ 0.0, 1.0, 1.0, 0.0 ]
     )
     const postDesignOpacity = useTransform(
         scrollYProgress,
-        [ 0.85, 0.89, 0.94],
+        [ 0.8, 0.84, 0.94],
         [ 0.0, 1.0, 1.0]
     )
 
     // BOX1
     const box1X = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["0%", "0%", "0%", "0%"]
     )
     const box1XSpring = useSpring(box1X, { stiffness: 70, damping: 15 });
     const box1Y = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["0%", "0%", "0%", "0%"]
     )
     const box1YSpring = useSpring(box1Y, { stiffness: 70, damping: 15 });
     const box1Width = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["100%", "100%", "100%", "100%"]
     )
     const box1WidthSpring = useSpring(box1Width, { stiffness: 70, damping: 15 });
     const box1Height = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["33%", "33%", "100%", "100%"]
     )
     const box1HeightSpring = useSpring(box1Height, { stiffness: 70, damping: 15 });
     const box1BG = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         [0.6, 0.6, 0.6, 0.6]
     )
     const box1BGSpring = useSpring(box1BG, { stiffness: 70, damping: 15 });
@@ -571,31 +575,31 @@ export default function Home() {
     // BOX2
     const box2X = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["43.5%", "43.5%", "91%", "91%"]
     )
     const box2XSpring = useSpring(box2X, { stiffness: 70, damping: 15 });
     const box2Y = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["7%", "7%", "1.5%", "1.5%"]
     )
     const box2YSpring = useSpring(box2Y, { stiffness: 70, damping: 15 });
     const box2Width = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["13%", "13%", "5%", "5%"]
     )
     const box2WidthSpring = useSpring(box2Width, { stiffness: 70, damping: 15 });
     const box2Height = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["3%", "3%", "6%", "6%"]
     )
     const box2HeightSpring = useSpring(box2Height, { stiffness: 70, damping: 15 });
     const box2BG = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         [0.0, 0.0, 0.0, 0.0]
     )
     const box2BGSpring = useSpring(box2BG, { stiffness: 70, damping: 15 });
@@ -604,31 +608,31 @@ export default function Home() {
     //box3
     const box3X = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["35.5%", "35.5%", "4%", "4%"]
     )
     const box3XSpring = useSpring(box3X, { stiffness: 70, damping: 15 });
     const box3Y = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["15%", "15%", "1%", "1%"]
     )
     const box3YSpring = useSpring(box3Y, { stiffness: 70, damping: 15 });
     const box3Width = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["28%", "28%", "20%", "20%"]
     )
     const box3WidthSpring = useSpring(box3Width, { stiffness: 70, damping: 15 });
     const box3Height = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["11.5%", "11.5%", "7%", "7%"]
     )
     const box3HeightSpring = useSpring(box3Height, { stiffness: 70, damping: 15 });
     const box3BG = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         [0.0, 0.0, 0.0, 0.0]
     )
     const box3BGSpring = useSpring(box3BG, { stiffness: 70, damping: 15 });
@@ -637,31 +641,31 @@ export default function Home() {
      //box4
     const box4X = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["0%", "0%", "11%", "11%"]
     )
     const box4XSpring = useSpring(box4X, { stiffness: 70, damping: 15 });
     const box4Y = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["34%", "34%", "26%", "26%"]
     )
     const box4YSpring = useSpring(box4Y, { stiffness: 70, damping: 15 });
     const box4Width = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["100%", "100%", "40%", "40%"]
     )
     const box4WidthSpring = useSpring(box4Width, { stiffness: 70, damping: 15 });
     const box4Height = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["11%", "11%", "23%", "23%"]
     )
     const box4HeightSpring = useSpring(box4Height, { stiffness: 70, damping: 15 });
     const box4BG = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         [0.6, 0.6, 0.0, 0.0]
     )
     const box4BGSpring = useSpring(box4BG, { stiffness: 70, damping: 15 });
@@ -670,31 +674,31 @@ export default function Home() {
     //box5
     const box5X = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["32%", "32%", "11%", "11%"]
     )
     const box5XSpring = useSpring(box5X, { stiffness: 70, damping: 15 });
     const box5Y = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["36%", "36%", "49%", "49%"]
     )
     const box5YSpring = useSpring(box5Y, { stiffness: 70, damping: 15 });
     const box5Width = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["37%", "37%", "40%", "40%"]
     )
     const box5WidthSpring = useSpring(box5Width, { stiffness: 70, damping: 15 });
     const box5Height = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["7%", "7%", "9%", "9%"]
     )
     const box5HeightSpring = useSpring(box5Height, { stiffness: 70, damping: 15 });
     const box5BG = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         [0.0, 0.0, 0.0, 0.0]
     )
     const box5BGSpring = useSpring(box5BG, { stiffness: 70, damping: 15 });
@@ -703,31 +707,31 @@ export default function Home() {
     //box6
     const box6X = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["0%", "0%", "11%", "11%"]
     )
     const box6XSpring = useSpring(box6X, { stiffness: 70, damping: 15 });
     const box6Y = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["46%", "46%", "58%", "58%"]
     )
     const box6YSpring = useSpring(box6Y, { stiffness: 70, damping: 15 });
     const box6Width = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["100%", "100%", "22%", "22%"]
     )
     const box6WidthSpring = useSpring(box6Width, { stiffness: 70, damping: 15 });
     const box6Height = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["54%", "54%", "5%", "5%"]
     )
     const box6HeightSpring = useSpring(box6Height, { stiffness: 70, damping: 15 });
     const box6BG = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         [0.6, 0.6, 0.0, 0.0]
     )
     const box6BGSpring = useSpring(box6BG, { stiffness: 70, damping: 15 });
@@ -736,31 +740,31 @@ export default function Home() {
     //box7
     const box7X = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["33%", "33%", "14%", "14%"]
     )
     const box7XSpring = useSpring(box7X, { stiffness: 70, damping: 15 });
     const box7Y = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["51%", "51%", "77%", "77%"]
     )
     const box7YSpring = useSpring(box7Y, { stiffness: 70, damping: 15 });
     const box7Width = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["10%", "10%", "18.5%", "18.5%"]
     )
     const box7WidthSpring = useSpring(box7Width, { stiffness: 70, damping: 15 });
     const box7Height = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["5%", "5%", "16%", "16%"]
     )
     const box7HeightSpring = useSpring(box7Height, { stiffness: 70, damping: 15 });
     const box7BG = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         [0.0, 0.0, 0.0, 0.0]
     )
     const box7BGSpring = useSpring(box7BG, { stiffness: 70, damping: 15 });
@@ -769,31 +773,31 @@ export default function Home() {
     //box8
     const box8X = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["45%", "45%", "32.5%", "32.5%"]
     )
     const box8XSpring = useSpring(box8X, { stiffness: 70, damping: 15 });
     const box8Y = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["51%", "51%", "77%", "77%"]
     )
     const box8YSpring = useSpring(box8Y, { stiffness: 70, damping: 15 });
     const box8Width = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["10%", "10%", "18.5%", "18.5%"]
     )
     const box8WidthSpring = useSpring(box8Width, { stiffness: 70, damping: 15 });
     const box8Height = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["5%", "5%", "16%", "16%"]
     )
     const box8HeightSpring = useSpring(box8Height, { stiffness: 70, damping: 15 });
     const box8BG = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         [0.0, 0.0, 0.0, 0.0]
     )
     const box8BGSpring = useSpring(box8BG, { stiffness: 70, damping: 15 });
@@ -803,31 +807,31 @@ export default function Home() {
     //box9
     const box9X = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["57%", "57%", "51%", "51%"]
     )
     const box9XSpring = useSpring(box9X, { stiffness: 70, damping: 15 });
     const box9Y = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["51%", "51%", "77%", "77%"]
     )
     const box9YSpring = useSpring(box9Y, { stiffness: 70, damping: 15 });
     const box9Width = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["10%", "10%", "18.5%", "18.5%"]
     )
     const box9WidthSpring = useSpring(box9Width, { stiffness: 70, damping: 15 });
     const box9Height = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["5%", "5%", "16%", "16%"]
     )
     const box9HeightSpring = useSpring(box9Height, { stiffness: 70, damping: 15 });
     const box9BG = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         [0.0, 0.0, 0.0, 0.0]
     )
     const box9BGSpring = useSpring(box9BG, { stiffness: 70, damping: 15 });
@@ -836,31 +840,31 @@ export default function Home() {
     //box10
     const box10X = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["25%", "25%", "69.5%", "69.5%"]
     )
     const box10XSpring = useSpring(box10X, { stiffness: 70, damping: 15 });
     const box10Y = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["60%", "60%", "77%", "77%"]
     )
     const box10YSpring = useSpring(box10Y, { stiffness: 70, damping: 15 });
     const box10Width = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["50%", "50%", "18.5%", "18.5%"]
     )
     const box10WidthSpring = useSpring(box10Width, { stiffness: 70, damping: 15 });
     const box10Height = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         ["36%", "36%", "16%", "16%"]
     )
     const box10HeightSpring = useSpring(box10Height, { stiffness: 70, damping: 15 });
     const box10BG = useTransform(
         scrollYProgress,
-        [0.75, 0.81, 0.85, 0.91],
+        [0.72, 0.76, 0.8, 0.84],
         [0.0, 0.0, 0.0, 0.0]
     )
     const box10BGSpring = useSpring(box10BG, { stiffness: 70, damping: 15 });
@@ -996,11 +1000,11 @@ export default function Home() {
                                                 animate={{rotate: 360}}
                                                 transition={{repeat: Infinity, duration: 50, ease: "linear"}}
                                                 style={{
-                                                    scale: useSpring(useTransform(scrollYProgress, [0.4, 0.63], [1, 2.0]), {
+                                                    scale: useSpring(useTransform(scrollYProgress, [0.4, 0.49], [1, 1.2]), {
                                                         stiffness: 80,
                                                         damping: 20,
                                                     }),
-                                                    opacity: useSpring(useTransform(scrollYProgress, [0.4, 0.5], [.7, 0]), {
+                                                    opacity: useSpring(useTransform(scrollYProgress, [0.4, 0.5], [1, 0]), {
                                                         stiffness: 80,
                                                         damping: 20,
                                                     }),
@@ -1084,7 +1088,7 @@ export default function Home() {
                                         >
 
                                             {/*<Gooey/>*/}
-                                            <h2>Custom Redesigns</h2>
+                                            <h2>WEBSITE REDESIGNS</h2>
                                         </motion.div>
 
                                         <motion.div className="boxContainer">
@@ -1313,7 +1317,6 @@ export default function Home() {
 
                             </motion.div>
                         </motion.div>
-
                         <div className="canvasCont">
                             <canvas ref={canvasRef} style={{width: '100%', height: '100vh'}}/>
                         </div>
