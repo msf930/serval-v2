@@ -50,9 +50,9 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(true);
     const [loadProgress, setLoadProgress] = useState("0%");
     const [loadTransition, setLoadTransition] = useState(false);
-    
 
- 
+
+
 
 
     const main = useRef();
@@ -164,35 +164,36 @@ export default function Home() {
                     }
                 }
             });
+            gsap.set(".loadingTextH1", {opacity: 1});
 
-            SplitText.create('.loadingTextH1', {
+            const splitText = SplitText.create("#loadingTextH1Id", {
                 type: "chars",
-                onSplit: (split) => {
-                    // Set initial state to hidden
-                    gsap.from(split.chars, {
-                        y: 20,
-                        opacity: 0,
-                        stagger: {
-                            amount: 0.4,
-                        },
-                    })
-                    gsap.set(split.chars, {
-                        y: 20,
-                        opacity: 0,
-                    });
-
-                    // Animate in
-                    gsap.to(split.chars, {
-                        y: 0,
-                        opacity: 1,
-                        stagger: {
-                            amount: 0.4,
-                            // from: "random",
-                        },
-                        delay: 0.5, // Add a small delay before animation starts
-                    })
-                }
+            });
+            
+            // Set initial state to hidden
+            gsap.from(splitText.chars, {
+                y: 20,
+                autoAlpha: 0,
+                stagger: {
+                    amount: 0.4,
+                },
             })
+            // gsap.set(splitText.chars, {
+            //     y: 20,
+            //     opacity: 0,
+            // });
+
+            // // Animate in
+            // gsap.to(splitText.chars, {
+            //     y: 0,
+            //     opacity: 1,
+            //     stagger: {
+            //         amount: 0.4,
+            //         // from: "random",
+            //     },
+            //     delay: 0.5, // Add a small delay before animation starts
+            // })
+
             ScrollTrigger.create({
                 trigger: '#stickyContent2',
                 pin: true,
@@ -212,6 +213,7 @@ export default function Home() {
         },
         {
             scope: main,
+
         }
     );
 
@@ -1024,7 +1026,9 @@ export default function Home() {
 
                                     <motion.div className="loadingText" transition={{ delay: 1.0 }} initial={{ opacity: 1 }} exit={{ opacity: 0 }}>
 
-                                        <h1 className="loadingTextH1">LOADING</h1>
+                                        <motion.div id="loadingTextH1Id">
+                                            <h1 className="loadingTextH1">LOADING</h1>
+                                        </motion.div>
 
                                         <div className="loadProgressCont">
                                             <motion.div className="loadingBar" style={{ width: scaleX }}></motion.div>
@@ -1212,12 +1216,12 @@ export default function Home() {
                     <motion.div className="sectionDesign">
                         <motion.div id="stickyContent3" data-speed="1.5" className="sticky-div">
                             <motion.div className="progressTextCont">
-                                    <motion.div className="beforeText" style={{ opacity: preDesignOpacity }}>
-                                        <h1>BEFORE</h1>
-                                    </motion.div>
-                                    <motion.div className="afterText" style={{ opacity: postDesignOpacity }}>
-                                        <h1>AFTER</h1>
-                                    </motion.div>
+                                <motion.div className="beforeText" style={{ opacity: preDesignOpacity }}>
+                                    <h1>BEFORE</h1>
+                                </motion.div>
+                                <motion.div className="afterText" style={{ opacity: postDesignOpacity }}>
+                                    <h1>AFTER</h1>
+                                </motion.div>
                             </motion.div>
                             <motion.div
                                 className="designTitleCont"
