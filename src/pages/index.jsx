@@ -1160,7 +1160,7 @@ export default function Home() {
                                 transition={{ duration: 0.5, ease: 'easeInOut' }}
                                 className="resizeCont"
                                 >
-                                {/* <motion.div className='resizeOut'></motion.div> */}
+                                <motion.div className='resizeOut'></motion.div>
                                 <h1 className="resizeTextH1" id="resizeTextH1Id">CONTENT INCOMING</h1>
                                 
                                 {/* Half Circle Path */}
