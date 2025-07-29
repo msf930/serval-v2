@@ -19,7 +19,7 @@ import house from '../../public/house.png';
 import RiveWebBtn from '@/components/RiveWebBtn';
 
 
-import { motion, useScroll, useTransform, useSpring, useMotionValue, AnimatePresence } from 'motion/react';
+import { motion, useInView, useTransform, useSpring, useMotionValue, AnimatePresence } from 'motion/react';
 
 import gsap from 'gsap/dist/gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
@@ -50,13 +50,15 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(true);
     const [loadProgress, setLoadProgress] = useState("0%");
     const [loadTransition, setLoadTransition] = useState(false);
-
+    const [isResize, setIsResize] = useState(false);
 
 
 
 
     const main = useRef();
     const smoother = useRef();
+
+
 
 
 
@@ -122,7 +124,11 @@ export default function Home() {
 
             let viewportHeight = window.innerHeight;
             const handleResize = () => {
-                viewportHeight = window.innerHeight
+                setIsResize(true);
+                setTimeout(() => {
+                    window.location.reload();
+                    viewportHeight = window.innerHeight
+                }, 2000);
             };
             window.addEventListener('resize', handleResize);
 
@@ -164,12 +170,12 @@ export default function Home() {
                     }
                 }
             });
-            gsap.set(".loadingTextH1", {opacity: 1});
+            gsap.set(".loadingTextH1", { opacity: 1 });
 
             const splitText = SplitText.create("#loadingTextH1Id", {
                 type: "chars",
             });
-            
+
             // Set initial state to hidden
             gsap.from(splitText.chars, {
                 y: 20,
@@ -178,6 +184,8 @@ export default function Home() {
                     amount: 0.4,
                 },
             })
+
+            
             // gsap.set(splitText.chars, {
             //     y: 20,
             //     opacity: 0,
@@ -228,7 +236,32 @@ export default function Home() {
 
     }, [isLoading]);
 
+    useEffect(() => {
+        if (isResize) {
+            gsap.set(".resizeTextH1", { opacity: 1 });
+            const splitText = SplitText.create("#resizeTextH1Id", {
+                type: "chars",
+            });
+            
+            gsap.from(splitText.chars, {
+                y: 20,
+                autoAlpha: 0,
+                stagger: {
+                    amount: 0.4,
+                },
+                onComplete: () => {
+                    splitText.revert();
+                }
+            });
 
+            // Animate the half circle path
+            gsap.to(".halfCirclePath", {
+                strokeDasharray: "0 1000",
+                duration: 2,
+                ease: "power2.inOut"
+            });
+        }
+    }, [isResize]);
 
 
     useEffect(() => {
@@ -237,6 +270,7 @@ export default function Home() {
         const tl = horizontalLoop(scrollingText, {
             repeat: -1,
             paddingRight: 0,
+            reverse: false,
         });
 
         const scrollingText2 = gsap.utils.toArray('.designTitleRedesign h2');
@@ -244,25 +278,28 @@ export default function Home() {
         const tl2 = horizontalLoop(scrollingText2, {
             repeat: -1,
             paddingRight: 0,
+            reverse: true,
         });
 
-        Observer.create({
-            onChangeY(self) {
-                let factor = 2.5;
-                if (self.deltaY < 0) {
-                    factor;
-                }
-                gsap.timeline({
-                    defaults: {
-                        ease: "none",
-                    }
-                })
-                    .to(tl, { timeScale: factor * 0.7, duration: 0.2, overwrite: true, })
-                    // .to(tl, { timeScale: factor / 0.5, duration: 1 }, "+=0.3")
-                    .to(tl2, { timeScale: factor * -0.7, duration: 0.2, overwrite: true, })
-                // .to(tl2, { timeScale: factor / -0.5, duration: 1 }, "+=0.3");
-            }
-        });
+        // Observer.create({
+        //     onChangeY(self) {
+        //         let factor = 1;
+        //         if (self.deltaY < 0) {
+        //             factor;
+        //         }
+
+
+        //         gsap.timeline({
+        //             defaults: {
+        //                 ease: "none",
+        //             }
+        //         })
+        //             .to(tl, { timeScale: (Math.abs(self.velocityY) / 300), duration: 0.0, overwrite: true })
+        //             // .to(tl, { timeScale: factor / 0.5, duration: 1 }, "+=0.3")
+        //             .to(tl2, { timeScale: (Math.abs(self.velocityY) / -300), duration: 0.0, overwrite: true })
+        //             // .to(tl2, { timeScale: (factor * -1) / 0.5, duration: 1 }, "-=0.3");
+        //     }
+        // });
 
 
         /*
@@ -289,7 +326,8 @@ export default function Home() {
                 widths = [],
                 xPercents = [],
                 curIndex = 0,
-                pixelsPerSecond = (config.speed || 1) * 50,
+                // pixelsPerSecond = (config.speed || 1) * 1,
+                pixelsPerSecond = 1,
                 snap = config.snap === false ? v => v : gsap.utils.snap(config.snap || 1), // some browsers shift by a pixel to accommodate flex layouts, so for example if width is 20% the first element's width might be 242px, and the next 243px, alternating back and forth. So we snap to 5 percentage points to make things look more natural
                 totalWidth, curX, distanceToStart, distanceToLoop, item, i;
             gsap.set(items, { // convert "x" to "xPercent" to make things responsive, and populate the widths/xPercents Arrays to make lookups faster.
@@ -329,10 +367,37 @@ export default function Home() {
             tl.current = () => curIndex;
             tl.toIndex = (index, vars) => toIndex(index, vars);
             tl.times = times;
-            tl.progress(1, true).progress(0, true); // pre-render for performance
+            // tl.progress(1, true).progress(0, true); // pre-render for performance
             if (config.reversed) {
                 tl.vars.onReverseComplete();
                 tl.reverse();
+            }
+            if (config.reverse) {
+                ScrollTrigger.create({
+                    trigger: ".sectionDesign",
+                    start: "top+=100vh bottom",
+                    end: "bottom-=500vh top",
+                    // end: "bottom top",
+                    markers: false,
+                    scrub: config.scrub || 1,
+                    onUpdate: (self) => {
+                        tl.progress(self.progress * -0.5 + 1);
+                        // console.log(self.progress);
+                    },
+                });
+            } else {
+                ScrollTrigger.create({
+                    trigger: ".sectionDesign",
+                    start: "top+=100vh bottom",
+                    end: "bottom-=500vh top",
+                    // end: "bottom top",
+                    markers: false,
+                    scrub: config.scrub || 1,
+                    onUpdate: (self) => {
+                        tl.progress(self.progress * 0.5);
+                        // console.log(self.progress);
+                    },
+                });
             }
             return tl;
         }
@@ -573,6 +638,7 @@ export default function Home() {
     const webCard1 = useTransform(
         scrollYProgress,
         [0.1, 0.12, 0.32, 0.34],
+        // ["0%", "0%", "0%", "0%"]
         ["-100%", "0%", "0%", "-100%"]
     )
     const webCard1Spring = useSpring(webCard1, { stiffness: 80, damping: 20 });
@@ -1023,9 +1089,7 @@ export default function Home() {
                             // true
                             && (
                                 <motion.div className="loadingCont">
-
                                     <motion.div className="loadingText" transition={{ delay: 1.0 }} initial={{ opacity: 1 }} exit={{ opacity: 0 }}>
-
                                         <motion.div id="loadingTextH1Id">
                                             <h1 className="loadingTextH1">LOADING</h1>
                                         </motion.div>
@@ -1052,6 +1116,63 @@ export default function Home() {
                             )
                         }
                     </AnimatePresence>
+                    <AnimatePresence>
+                        {isResize &&
+                            <motion.div
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.5, ease: 'easeInOut' }}
+                                className="resizeCont"
+                                >
+                                <h1 className="resizeTextH1" id="resizeTextH1Id">CONTENT INCOMING</h1>
+                                
+                                {/* Half Circle Path */}
+                                <svg 
+                                    className="halfCircleSVG" 
+                                    viewBox="0 0 200 100" 
+                                    style={{ 
+                                        position: 'absolute', 
+                                        top: '50%', 
+                                        left: '40%', 
+                                        transform: 'translate(-50%, -50%) rotate(-90deg)',
+                                        width: '300px',
+                                        height: '150px'
+                                    }}
+                                >
+                                    <path
+                                        className="halfCirclePath"
+                                        d="M 10 90 A 80 80 0 0 1 190 90"
+                                        fill="none"
+                                        stroke="#ffffff"
+                                        strokeWidth="3"
+                                        strokeDasharray="1000 1000"
+                                        strokeDashoffset="0"
+                                    />
+                                </svg>
+                                <svg 
+                                    className="halfCircleSVG" 
+                                    viewBox="0 0 200 100" 
+                                    style={{ 
+                                        position: 'absolute', 
+                                        top: '50%', 
+                                        left: '60%', 
+                                        transform: 'translate(-50%, -50%) rotate(90deg)',
+                                        width: '300px',
+                                        height: '150px'
+                                    }}
+                                >
+                                    <path
+                                        className="halfCirclePath"
+                                        d="M 10 90 A 80 80 0 0 1 190 90"
+                                        fill="none"
+                                        stroke="#ffffff"
+                                        strokeWidth="3"
+                                        strokeDasharray="1000 1000"
+                                        strokeDashoffset="0"
+                                    />
+                                </svg>
+                            </motion.div>
+                        }
+                    </AnimatePresence>
                     <div className="sectionTop">
                         <AnimatePresence>
                             {loadTransition &&
@@ -1060,7 +1181,7 @@ export default function Home() {
                                     animate={{ opacity: 1 }}
                                     transition={{ duration: 0.5, ease: 'easeInOut' }}
                                     className="logoCont">
-                                    <Image src="/logo.png"
+                                    <Image src={logo}
                                         alt="logo"
                                         fill
                                         className="logoLogo"
@@ -1117,7 +1238,11 @@ export default function Home() {
                                         right: webCard1Spring,
                                     }}
                                 >
-                                    <Carousel />
+                                    <motion.div
+
+                                    >
+                                        <Carousel />
+                                    </motion.div>
                                 </motion.div>
                             </div>
                         </div>

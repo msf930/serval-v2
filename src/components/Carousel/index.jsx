@@ -1,38 +1,40 @@
 "use client"
 
 import ReactDOM from "react-dom";
-import {useEffect} from "react";
-import {useContext} from "react";
-import {useRef} from "react";
-import {gsap} from "gsap/dist/gsap";
-import {Draggable} from "gsap/dist/Draggable";
-import {InertiaPlugin} from "gsap/dist/InertiaPlugin";
+import { useEffect } from "react";
+import { useContext } from "react";
+import { useRef } from "react";
+import { gsap } from "gsap/dist/gsap";
+import { Draggable } from "gsap/dist/Draggable";
+import { InertiaPlugin } from "gsap/dist/InertiaPlugin";
 import { useGSAP } from '@gsap/react';
-import {useState} from "react";
-import {Flip} from "gsap/dist/Flip";
-import {ScrollTrigger} from "gsap/dist/ScrollTrigger";
+import { useState } from "react";
+import { Flip } from "gsap/dist/Flip";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import Image from "next/image";
 
 import { FaArrowRight, FaArrowDown, FaTimes } from 'react-icons/fa';
 
-import test from "@/../public/test.jpg";
-import arapahoe from "@/../public/arapahoe.png";
-import asb from "@/../public/asb.png";
-import envision from "@/../public/envision.png";
-import floworks from "@/../public/floworks.png";
-import mtc from "@/../public/mtc.png";
-import realm from "@/../public/realm.png";
-import recess from "@/../public/recess.png";
-import rizzazzle from "@/../public/rizzazzle.png";
-import rmr from "@/../public/rmr.png";
-import savvyb from "@/../public/savvyb.png";
-import vpa from "@/../public/vpa.png";
-import yusha from "@/../public/yusha.png";
+// import test from "@/../public/test.jpg";
+// import arapahoe from "@/../public/arapahoe.png";
+// import asb from "@/../public/asb.png";
+// import envision from "@/../public/envision.png";
+// import floworks from "@/../public/floworks.png";
+// import mtc from "@/../public/mtc.png";
+// import realm from "@/../public/realm.png";
+// import recess from "@/../public/recess.png";
+// import rizzazzle from "@/../public/rizzazzle.png";
+// import rmr from "@/../public/rmr.png";
+// import savvyb from "@/../public/savvyb.png";
+// import vpa from "@/../public/vpa.png";
+// import yusha from "@/../public/yusha.png";
 
 
 gsap.registerPlugin(Draggable, InertiaPlugin, Flip, ScrollTrigger);
 
 export default function Carousel() {
+
+   
 
 
     useGSAP(() => {
@@ -50,47 +52,49 @@ export default function Carousel() {
 
         let activeItem;
         function showDetails(flipItem) {
-            if (activeItem) { // someone could click on an element behind the open details panel, in which case we should just close it.
+            if (activeItem) { // someone could click on an element behind the open details panel, in which case we should just close it.          
                 return hideDetails();
             }
             let onLoad = () => {
-                document.querySelector(".detailCont").removeEventListener("click", showDetails);
-                document.querySelector(".detailCont").addEventListener('wheel', (event) => {
+                document.querySelector(".boxContent1").removeEventListener("click", showDetails);
+                document.querySelector(".boxContent1").addEventListener('wheel', (event) => {
                     event.preventDefault();
                     event.stopPropagation();
 
                     // Handle the scroll (e.g., update child's position)
-                    document.querySelector(".detailCont").scrollTop += event.deltaY;
+                    document.querySelector(".boxContent1").scrollTop += event.deltaY;
                 });
-                gsap.set(details, {visibility: "hidden"}); // hide the details until we know where to put it
+                gsap.set(details, { visibility: "hidden" }); // hide the details until we know where to put it
                 // position the details on top of the item (scaled down)
                 Flip.fit(
                     details,
                     flipItem,
-                    {scale: true, fitChild: detailImage}
-
+                    { scale: true }
                 );
 
                 // record the state
                 const state = Flip.getState(details);
 
                 // set the final state
-                gsap.set(details, {clearProps: true}); // wipe out all inline stuff so it's in the native state (not scaled)
-                gsap.set(details, { visibility: "visible", overflow: "hidden"});
-                gsap.set(detailsCont, {x: "50%", top: "0%", rotateY: 0, opacity: 1});
+                gsap.set(details, { clearProps: true }); // wipe out all inline stuff so it's in the native state (not scaled)
+                gsap.set(details, { visibility: "visible", overflow: "hidden" });
+                gsap.set(detailsCont, { left: "50%", top: "50%", x: "-50%", y: "-50%", rotateY: 0, opacity: 1 });
 
                 Flip.from(state, {
                     duration: 0.5,
                     ease: "power2.inOut",
                     scale: true,
-                    onComplete: () => gsap.set(details, {overflow: "auto"}) // to permit scrolling if necessary
+                    onComplete: () => gsap.set(details, { overflow: "auto" }) // to permit scrolling if necessary
                 })
                     // Flip.from() returns a timeline, so add a tween to reveal the detail content. That way, if the flip gets interrupted and forced to completion & killed, this does too.
-                    .to(detailContent, {yPercent: 0}, 0.2);
+                    .to(detailContent, { yPercent: 0 }, 0.2);
 
                 // detailImage.removeEventListener("load", onLoad);
                 document.querySelector('.closeBtn').addEventListener('click', hideDetails);
                 document.querySelector('.detailBG').addEventListener('click', hideDetails);
+
+                // Add scroll listener to hide details when scrolling
+                addScrollListener();
 
             };
 
@@ -98,7 +102,7 @@ export default function Carousel() {
             const data = flipItem.dataset;
             // detailImage.addEventListener("load", onLoad);
             onLoad();
-            detailImage.src = flipItem.querySelector('img').src;
+            detailImage.src = flipItem.querySelector('#boxContentImageId').src;
             detailTitle.innerText = data.title;
             detailSecondary.innerText = data.secondary;
             detailDescription.innerText = data.text;
@@ -110,21 +114,21 @@ export default function Carousel() {
         }
         function hideDetails() {
             document.querySelector('.detail').removeEventListener('click', hideDetails);
-            gsap.set(details, {overflow: "hidden"});
-            gsap.set(detailsCont, { rotateY: -20, opacity: 0});
+            gsap.set(details, { overflow: "hidden" });
+            gsap.set(detailsCont, { rotateY: -20, opacity: 0 });
 
             // record the current state of details
             const state = Flip.getState(details);
 
             // scale details down so that its detailImage fits exactly on top of activeItem
-            Flip.fit(details, activeItem, {scale: true, fitChild: detailImage});
+            Flip.fit(details, activeItem, { scale: true, fitChild: detailImage });
 
             // animate the other elements, like all fade all items back up to full opacity, slide the detailContent away, and tween the background color to white.
             const tl = gsap.timeline();
-            tl.set(details, {overflow: "hidden"})
-                .to(detailContent, {yPercent: -100})
-                // .to(flipItems, {opacity: 1, stagger: {amount: 0.7, from: flipItems.indexOf(activeItem), grid: "auto"}})
-                // .to(".app", {backgroundColor: "#fff"}, "<");
+            tl.set(details, { overflow: "hidden" })
+                .to(detailContent, { yPercent: -100 })
+            // .to(flipItems, {opacity: 1, stagger: {amount: 0.7, from: flipItems.indexOf(activeItem), grid: "auto"}})
+            // .to(".app", {backgroundColor: "#fff"}, "<");
 
             // animate from the original state to the current one.
             Flip.from(state, {
@@ -133,61 +137,98 @@ export default function Carousel() {
                 delay: 0.2, // 0.2 seconds because we want the details to slide up first, then flip.
                 onInterrupt: () => tl.kill()
             })
-                .set(details, {visibility: "hidden"});
+                .set(details, { visibility: "hidden" });
             activeItem = null;
         }
 
-// Add click listeners
-//             boxContentElement.addEventListener('click', showDetails(boxContentElement));
+        // Scroll listener to hide details when scrolling more than 50px
+        let lastScrollY = window.scrollY;
+        let scrollTimeout;
+
+        function handleScroll() {
+            if (activeItem) {
+                const currentScrollY = window.scrollY;
+                const scrollDifference = Math.abs(currentScrollY - lastScrollY);
+
+                if (scrollDifference > 50) {
+                    hideDetails();
+                    // Remove scroll listener after hiding
+                    window.removeEventListener('scroll', handleScroll);
+                }
+            }
+        }
+
+        // Add scroll listener when details are shown
+        function addScrollListener() {
+            lastScrollY = window.scrollY;
+            window.addEventListener('scroll', handleScroll);
+        }
+
+        // Add click listeners
+        //             boxContentElement.addEventListener('click', showDetails(boxContentElement));
         gsap.utils.toArray('.boxContent1').forEach(flipItem => flipItem.addEventListener('click', () => showDetails(flipItem)));
-//         const item1 = document.querySelector('.active .boxInner .boxContent1');
-//         if(item1 !== null) {
-//             item1.addEventListener('click', () => showDetails(item1));
-//         }
+        //         const item1 = document.querySelector('.active .boxInner .boxContent1');
+        //         if(item1 !== null) {
+        //             item1.addEventListener('click', () => showDetails(item1));
+        //         }
 
 
 
-// ---------------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------------------------
 
 
 
 
-// Intro animation
-        window.addEventListener('load', () => {
-            // gsap.to('.app', { autoAlpha: 1, duration: 0.2 });
-            gsap.from('.item', {autoAlpha: 0, yPercent: 30, stagger: 0.04});
-        });
+        // Intro animation
+        // window.addEventListener('load', () => {
+        //     // gsap.to('.app', { autoAlpha: 1, duration: 0.2 });
+        //     gsap.from('.item', { autoAlpha: 0, yPercent: 30, stagger: 0.04 });
+        // });
         const wrapper = document.querySelector(".wrapper");
 
-        const boxes = gsap.utils.toArray(".box1");
-        const boxes2 = gsap.utils.toArray(".box2");
+        let boxes = gsap.utils.toArray(".box1");
+        let boxes2 = gsap.utils.toArray(".box2");
         // console.clear();
 
 
         let activeElement;
-        const loop = verticalLoop(boxes, {
-            paused: true,
-            draggable: false, // make it draggable
-            center: true, // the active element is the one in the center of the container rather than the left edge
-            reverse: false,
-            onChange: (element, index) => { // when the active element changes, this function gets called.
-                activeElement && activeElement.classList.remove("active");
-                element.classList.add("active");
-                activeElement = element;
-            }
-        });
-        const loop2 = verticalLoop(boxes2, {
-            paused: true,
-            draggable: false, // make it draggable
-            center: true, // the active element is the one in the center of the container rather than the left edge
-            reverse: true,
-            onChange: (element, index) => { // when the active element changes, this function gets called.
-                activeElement && activeElement.classList.remove("active");
-                element.classList.add("active");
-                activeElement = element;
-            }
-        });
+        let activeElement2;
+        let loop = null;
+        let loop2 = null;
+        // let isCreatingLoops = true;
 
+        function createLoops() {
+            if (loop) loop.kill();
+            if (loop2) loop2.kill();
+            loop = null;
+            loop2 = null;
+            loop = verticalLoop(boxes, {
+                paused: true,
+                draggable: false, // make it draggable
+                center: true, // the active element is the one in the center of the container rather than the left edge
+                reverse: false,
+                triggerSelector: ".wrapper",
+                onChange: (element, index) => { // when the active element changes, this function gets called.
+                    activeElement && activeElement.classList.remove("active");
+                    element.classList.add("active");
+                    activeElement = element;
+                }
+            });
+
+            loop2 = verticalLoop(boxes2, {
+                paused: true,
+                draggable: false, // make it draggable
+                center: true, // the active element is the one in the center of the container rather than the left edge
+                reverse: true,
+                triggerSelector: ".wrapper2",
+                onChange: (element, index) => { // when the active element changes, this function gets called.
+                    activeElement2 && activeElement2.classList.remove("active");
+                    element.classList.add("active");
+                    activeElement2 = element;
+                }
+            });
+
+        }
 
         // boxes.forEach((box, i) => box.addEventListener("click", () => loop.toIndex(i, {duration: 0.8, ease: "power1.inOut"})));
 
@@ -218,18 +259,18 @@ export default function Carousel() {
             config = config || {};
             gsap.context(() => { // use a context so that if this is called from within another context or a gsap.matchMedia(), we can perform proper cleanup like the "resize" event handler on the window
                 let onChange = config.onChange,
+                    triggerSelector = config.triggerSelector,
                     reverse = config.reverse,
                     lastIndex = 0,
-                    tl = gsap.timeline({repeat: config.repeat, onUpdate: onChange && function() {
-                            let i = tl.closestIndex();
-                            if (lastIndex !== i) {
-                                lastIndex = i;
-                                onChange(items[i], i);
-                            }
-                        }, paused: config.paused, defaults: {ease: "none"}, onReverseComplete: () => tl.totalTime(tl.rawTime() + tl.duration() * 100)}),
+                    times = [], // <-- move this up before tl
+                    tl = gsap.timeline({
+                        repeat: config.repeat,
+                        paused: config.paused,
+                        defaults: { ease: "none" },
+                        onReverseComplete: () => tl.totalTime(tl.rawTime() + tl.duration() * 100)
+                    }),
                     length = items.length,
                     startY = items[0].offsetTop,
-                    times = [],
                     heights = [],
                     spaceBefore = [],
                     yPercents = [],
@@ -241,7 +282,7 @@ export default function Carousel() {
                     timeOffset = 0,
                     container = center === true ? items[0].parentNode : gsap.utils.toArray(center)[0] || items[0].parentNode,
                     totalHeight,
-                    getTotalHeight = () => items[length-1].offsetTop + yPercents[length-1] / 100 * heights[length-1] - startY + spaceBefore[0] + items[length-1].offsetHeight * gsap.getProperty(items[length-1], "scaleY") + (parseFloat(config.paddingBottom) || 0),
+                    getTotalHeight = () => items[length - 1].offsetTop + yPercents[length - 1] / 100 * heights[length - 1] - startY + spaceBefore[0] + items[length - 1].offsetHeight * gsap.getProperty(items[length - 1], "scaleY") + (parseFloat(config.paddingBottom) || 0),
                     populateHeights = () => {
                         let b1 = container.getBoundingClientRect(), b2;
                         items.forEach((el, i) => {
@@ -287,28 +328,88 @@ export default function Carousel() {
                             curX = yPercents[i] / 100 * heights[i];
                             distanceToStart = item.offsetTop + curX - startY + spaceBefore[0];
                             distanceToLoop = distanceToStart + heights[i] * gsap.getProperty(item, "scaleY");
-                            tl.to(item, {yPercent: snap((curX - distanceToLoop) / heights[i] * 100), duration: distanceToLoop / pixelsPerSecond}, 0)
-                                .fromTo(item, {yPercent: snap((curX - distanceToLoop + totalHeight) / heights[i] * 100)}, {yPercent: yPercents[i], duration: (curX - distanceToLoop + totalHeight - curX) / pixelsPerSecond, immediateRender: false}, distanceToLoop / pixelsPerSecond)
+                            tl.to(item, { yPercent: snap((curX - distanceToLoop) / heights[i] * 100), duration: distanceToLoop / pixelsPerSecond }, 0)
+                                .fromTo(item, { yPercent: snap((curX - distanceToLoop + totalHeight) / heights[i] * 100) }, { yPercent: yPercents[i], duration: (curX - distanceToLoop + totalHeight - curX) / pixelsPerSecond, immediateRender: false }, distanceToLoop / pixelsPerSecond)
                                 .add("label" + i, distanceToStart / pixelsPerSecond);
                             times[i] = distanceToStart / pixelsPerSecond;
                         }
                         timeWrap = gsap.utils.wrap(0, tl.duration());
                     },
+                    carouselScrollTrigger = null,
+                    makeScrollTrigger = () => {
+                        // Kill all ScrollTriggers for .carouselCont before creating a new one
+
+
+                        ScrollTrigger.getAll().forEach(trigger => {
+                            if (trigger.vars && trigger.vars.trigger === triggerSelector) {
+                                trigger.kill();
+                            }
+                        });
+
+                        // if (carouselScrollTrigger) {
+                        //     carouselScrollTrigger.kill();
+                        // }
+                        if (reverse) {
+                            carouselScrollTrigger = ScrollTrigger.create({
+                                trigger: triggerSelector,
+                                start: `${window.innerHeight}`,
+                                end: `${window.innerHeight * 16}`,
+                                // end: "bottom top",
+                                markers: false,
+                                // scrub: config.scrub || 1,
+                                onUpdate: (self) => {
+                                    tl.progress(self.progress * -1.8 + 1);
+                                    // console.log(self.progress);
+                                },
+                                onToggle: (self) => {
+                                    tl.progress(self.progress * -1.8 + 1);
+                                    // console.log(self.progress);
+                                },
+                                
+                            });
+
+                        } else {
+                            carouselScrollTrigger = ScrollTrigger.create({
+                                trigger: triggerSelector,
+                                start: `${window.innerHeight}`,
+                                end: `${window.innerHeight * 16}`,
+                                // end: "bottom top",
+                                markers: true,
+                                // scrub: config.scrub || 1,
+                                onUpdate: (self) => {
+                                    tl.progress(self.progress * 1.8);
+                                    // console.log(self.progress);
+                                },
+                                onToggle: (self) => {
+                                    tl.progress(self.progress * 1.8);
+                                    // console.log(self.progress);
+                                },
+                                
+                            });
+
+                        }
+
+                    },
+
                     refresh = (deep) => {
+
                         let progress = tl.progress();
                         tl.progress(0, true);
                         populateHeights();
                         deep && populateTimeline();
                         populateOffsets();
                         deep && tl.draggable && tl.paused() ? tl.time(times[curIndex], true) : tl.progress(progress, true);
+
                     },
-                    onResize = () => refresh(true),
+
+                    
                     proxy;
-                gsap.set(items, {y: 0});
+                gsap.set(items, { y: 0 });
                 populateHeights();
                 populateTimeline();
                 populateOffsets();
-                window.addEventListener("resize", onResize);
+                makeScrollTrigger();
+                
                 function toIndex(index, vars) {
                     vars = vars || {};
                     (Math.abs(index - curIndex) > length / 2) && (index += index > curIndex ? -length : length); // always go in the shortest direction
@@ -318,7 +419,7 @@ export default function Carousel() {
                         time += tl.duration() * (index > curIndex ? 1 : -1);
                     }
                     if (time < 0 || time > tl.duration()) {
-                        vars.modifiers = {time: timeWrap};
+                        vars.modifiers = { time: timeWrap };
                     }
                     curIndex = newIndex;
                     vars.overwrite = true;
@@ -335,95 +436,11 @@ export default function Carousel() {
                     return index;
                 };
                 tl.current = () => indexIsDirty ? tl.closestIndex(true) : curIndex;
-                tl.next = vars => toIndex(tl.current()+1, vars);
-                tl.previous = vars => toIndex(tl.current()-1, vars);
+                tl.next = vars => toIndex(tl.current() + 1, vars);
+                tl.previous = vars => toIndex(tl.current() - 1, vars);
                 tl.times = times;
-                // tl.progress(1, true).progress(0, true); // pre-render for performance
-                if (config.reversed) {
-                    tl.vars.onReverseComplete();
-                    tl.reverse();
-                }
-                if (config.draggable && typeof(Draggable) === "function") {
-                    proxy = document.createElement("div")
-                    let wrap = gsap.utils.wrap(0, 1),
-                        ratio, startProgress, draggable, dragSnap, lastSnap, initChangeX, wasPlaying,
-                        align = () => tl.progress(wrap(startProgress + (draggable.startY - draggable.y) * ratio)),
-                        syncIndex = () => tl.closestIndex(true);
-                    typeof(InertiaPlugin) === "undefined" && console.warn("InertiaPlugin required for momentum-based scrolling and snapping. https://greensock.com/club");
-                    draggable = Draggable.create(proxy, {
-                        trigger: items[0].parentNode,
-                        type: "y",
-                        onPressInit() {
-                            let y = this.y;
-                            gsap.killTweensOf(tl);
-                            wasPlaying = !tl.paused();
-                            tl.pause();
-                            startProgress = tl.progress();
-                            refresh();
-                            ratio = 1 / totalHeight;
-                            initChangeX = (startProgress / -ratio) - y;
-                            gsap.set(proxy, {y: startProgress / -ratio});
-                        },
-                        onDrag: align,
-                        onThrowUpdate: align,
-                        overshootTolerance: 0,
-                        inertia: true,
-                        snap(value) {
-                            //note: if the user presses and releases in the middle of a throw, due to the sudden correction of proxy.x in the onPressInit(), the velocity could be very large, throwing off the snap.
-                            // So sense that condition and adjust for it. We also need to set overshootTolerance to 0 to prevent the inertia from causing it to shoot past and come back
-                            if (Math.abs(startProgress / -ratio - this.y) < 10) {
-                                return lastSnap + initChangeX
-                            }
-                            let time = -(value * ratio) * tl.duration(),
-                                wrappedTime = timeWrap(time),
-                                snapTime = times[getClosest(times, wrappedTime, tl.duration())],
-                                dif = snapTime - wrappedTime;
-                            Math.abs(dif) > tl.duration() / 2 && (dif += dif < 0 ? tl.duration() : -tl.duration());
-                            lastSnap = (time + dif) / tl.duration() / -ratio;
-                            return lastSnap;
-                        },
-                        onRelease() {
-                            syncIndex();
-                            draggable.isThrowing && (indexIsDirty = true);
-                        },
-                        onThrowComplete: () => {
-                            syncIndex();
-                            wasPlaying && tl.play();
-                        }
-                    })[0];
-                    tl.draggable = draggable;
-                }
-
-                if(reverse) {
-                    ScrollTrigger.create({
-                        trigger: ".carouselCont",
-                        start: "top top",
-                        end: `${window.innerHeight * 16}`,
-                        // end: "bottom top",
-                        markers: false,
-                        scrub: config.scrub || 1,
-                        onUpdate: (self) => {
-                            tl.progress(self.progress * -1.8 + 1);
-                            // console.log(self.progress);
-                        },
-                    });
-                } else {
-                    ScrollTrigger.create({
-                        trigger: ".carouselCont",
-                        start: "top top",
-                        end: `${window.innerHeight * 16}`,
-                        // end: "bottom top",
-                        markers: false,
-                        scrub: config.scrub || 1,
-                        onUpdate: (self) => {
-                            tl.progress(self.progress * 1.8);
-                            // console.log(self.progress);
-                        },
-                    });
-                }
-
-                    // tl.progress(webScroll)
-                    // console.log(webScroll);
+                // tl.progress(webScroll)
+                // console.log(webScroll);
 
                 // document.querySelector(".carouselCont").addEventListener("wheel", (event) => {
                 //     // event.preventDefault();
@@ -440,11 +457,31 @@ export default function Carousel() {
                 lastIndex = curIndex;
                 onChange && onChange(items[curIndex], curIndex);
                 timeline = tl;
-                return () => window.removeEventListener("resize", onResize); // cleanup
+                return () => {
+                    if (carouselScrollTrigger) carouselScrollTrigger.kill();
+                    if (tl) tl.kill();
+                }
             });
             return timeline;
         }
+        createLoops();
+        let resizeTimeout = null;
+
+        function handleResize() {
+            if (resizeTimeout) clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                createLoops();
+            }, 200); // 200ms after the last resize event
+        }
+
+        // window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+            if (loop) loop.kill();
+            if (loop2) loop2.kill();
+        };
     }, []);
+
     useEffect(() => {
         const boxes = document.querySelectorAll(".boxInner");
 
@@ -459,8 +496,8 @@ export default function Carousel() {
         }
 
         function handleMouseLeave() {
-                boxes.forEach(box => box.classList.remove("highlighted"));
-                boxes.forEach(box => box.classList.remove("dimmed"));
+            boxes.forEach(box => box.classList.remove("highlighted"));
+            boxes.forEach(box => box.classList.remove("dimmed"));
 
         }
 
@@ -481,22 +518,22 @@ export default function Carousel() {
         <div>
 
 
-        <div id="carouselCont" className="carouselCont">
-            {/*<div className="button-cont">*/}
-            {/*    <button className="prev"><FaArrowUp size={24} color="black" /></button>*/}
-            {/*    /!*<button className="toggle">toggle overflow</button>*!/*/}
-            {/*    <button className="next"><FaArrowDown size={24} color="black" /></button>*/}
-            {/*</div>*/}
+            <div id="carouselCont" className="carouselCont">
+                {/*<div className="button-cont">*/}
+                {/*    <button className="prev"><FaArrowUp size={24} color="black" /></button>*/}
+                {/*    /!*<button className="toggle">toggle overflow</button>*!/*/}
+                {/*    <button className="next"><FaArrowDown size={24} color="black" /></button>*/}
+                {/*</div>*/}
 
-            <div className="wrapper">
-                <div className="box1" id="box1">
-                    {/*<FaArrowRight/>*/}
-                    <div className="boxInner" id="boxInner">
-                        <div className="boxContent1"
+                <div className="wrapper">
+                    <div className="box1" id="box1">
+                        {/*<FaArrowRight/>*/}
+                        <div className="boxInner" id="boxInner">
+                            <div className="boxContent1"
 
-                             data-title="Owl"
-                             data-secondary="Hoo are you?"
-                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                                data-title="Owl"
+                                data-secondary="Hoo are you?"
+                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
@@ -506,29 +543,32 @@ export default function Carousel() {
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.">
 
-                            <Image
+                                {/* <Image
                                 src={arapahoe}
                                 alt="test"
                                 fill
                                 className="boxContentImage"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                            <img
-                                src="/arapahoe.png"
-                                alt="test"
-                            />
+                            /> */}
+                                <img
+                                    className="boxContentImage"
+                                    src="/arapahoe.png"
+                                    alt="test"
+                                    id="boxContentImageId"
+                                    loading="lazy"
+                                />
 
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="box1" id="box1">
-                     {/*<FaArrowRight/>*/}
-                    <div className="boxInner" id="boxInner">
-                        <div className="boxContent1"
+                    <div className="box1" id="box1">
+                        {/*<FaArrowRight/>*/}
+                        <div className="boxInner" id="boxInner">
+                            <div className="boxContent1"
 
-                             data-title="Owl"
-                             data-secondary="Hoo are you?"
-                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                                data-title="Owl"
+                                data-secondary="Hoo are you?"
+                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
@@ -537,28 +577,31 @@ export default function Carousel() {
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.">
-                            <Image
+                                {/* <Image
                                 src={asb}
                                 alt="test"
                                 fill
                                 className="boxContentImage"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                            <img
-                                src="/asb.png"
-                                alt="test"
-                            />
+                            /> */}
+                                <img
+                                    src="/asb.png"
+                                    alt="test"
+                                    className="boxContentImage"
+                                    id="boxContentImageId"
+                                    loading="lazy"
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="box1">
-                     {/*<FaArrowRight/>*/}
-                    <div className="boxInner">
-                        <div className="boxContent1"
+                    <div className="box1">
+                        {/*<FaArrowRight/>*/}
+                        <div className="boxInner">
+                            <div className="boxContent1"
 
-                             data-title="Owl"
-                             data-secondary="Hoo are you?"
-                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                                data-title="Owl"
+                                data-secondary="Hoo are you?"
+                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
@@ -567,28 +610,31 @@ export default function Carousel() {
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.">
-                            <Image
+                                {/* <Image
                                 src={envision}
                                 alt="test"
                                 fill
                                 className="boxContentImage"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                            <img
-                                src="/envision.png"
-                                alt="test"
-                            />
+                            /> */}
+                                <img
+                                    src="/envision.png"
+                                    alt="test"
+                                    className="boxContentImage"
+                                    id="boxContentImageId"
+                                    loading="lazy"
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="box1">
-                     {/*<FaArrowRight/>*/}
-                    <div className="boxInner">
-                        <div className="boxContent1"
+                    <div className="box1">
+                        {/*<FaArrowRight/>*/}
+                        <div className="boxInner">
+                            <div className="boxContent1"
 
-                             data-title="Owl"
-                             data-secondary="Hoo are you?"
-                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                                data-title="Owl"
+                                data-secondary="Hoo are you?"
+                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
@@ -597,28 +643,31 @@ export default function Carousel() {
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.">
-                            <Image
+                                {/* <Image
                                 src={floworks}
                                 alt="test"
                                 fill
                                 className="boxContentImage"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                            <img
-                                src="/floworks.png"
-                                alt="test"
-                            />
+                            /> */}
+                                <img
+                                    src="/floworks.png"
+                                    alt="test"
+                                    className="boxContentImage"
+                                    id="boxContentImageId"
+                                    loading="lazy"
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="box1">
-                     {/*<FaArrowRight/>*/}
-                    <div className="boxInner">
-                        <div className="boxContent1"
+                    <div className="box1">
+                        {/*<FaArrowRight/>*/}
+                        <div className="boxInner">
+                            <div className="boxContent1"
 
-                             data-title="Owl"
-                             data-secondary="Hoo are you?"
-                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                                data-title="Owl"
+                                data-secondary="Hoo are you?"
+                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
@@ -627,28 +676,31 @@ export default function Carousel() {
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.">
-                            <Image
+                                {/* <Image
                                 src={mtc}
                                 alt="test"
                                 fill
                                 className="boxContentImage"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                            <img
-                                src="/mtc.png"
-                                alt="test"
-                            />
+                            /> */}
+                                <img
+                                    src="/mtc.png"
+                                    alt="test"
+                                    className="boxContentImage"
+                                    id="boxContentImageId"
+                                    loading="lazy"
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="box1">
-                     {/*<FaArrowRight/>*/}
-                    <div className="boxInner">
-                        <div className="boxContent1"
+                    <div className="box1">
+                        {/*<FaArrowRight/>*/}
+                        <div className="boxInner">
+                            <div className="boxContent1"
 
-                             data-title="Owl"
-                             data-secondary="Hoo are you?"
-                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                                data-title="Owl"
+                                data-secondary="Hoo are you?"
+                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
@@ -657,32 +709,35 @@ export default function Carousel() {
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.">
-                            <Image
+                                {/* <Image
                                 src={realm}
                                 alt="test"
                                 fill
                                 className="boxContentImage"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                            <img
-                                src="/realm.png"
-                                alt="test"
-                            />
+                            /> */}
+                                <img
+                                    src="/realm.png"
+                                    alt="test"
+                                    className="boxContentImage"
+                                    id="boxContentImageId"
+                                    loading="lazy"
+                                />
+                            </div>
                         </div>
                     </div>
+
+
                 </div>
+                <div className="wrapper2">
+                    <div className="box2">
+                        {/*<FaArrowRight/>*/}
+                        <div className="boxInner">
+                            <div className="boxContent1"
 
-
-            </div>
-            <div className="wrapper2">
-                <div className="box2">
-                     {/*<FaArrowRight/>*/}
-                    <div className="boxInner">
-                        <div className="boxContent1"
-
-                             data-title="Owl"
-                             data-secondary="Hoo are you?"
-                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                                data-title="Owl"
+                                data-secondary="Hoo are you?"
+                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
@@ -691,29 +746,31 @@ export default function Carousel() {
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.">
-                            <Image
+                                {/* <Image
                                 src={recess}
                                 alt="test"
                                 fill
                                 className="boxContentImage"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                            <img
-                                src="/recess.png"
-                                alt="test"
-
-                            />
+                            /> */}
+                                <img
+                                    src="/recess.png"
+                                    alt="test"
+                                    className="boxContentImage"
+                                    id="boxContentImageId"
+                                    loading="lazy"
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="box2">
-                     {/*<FaArrowRight/>*/}
-                    <div className="boxInner">
-                        <div className="boxContent1"
+                    <div className="box2">
+                        {/*<FaArrowRight/>*/}
+                        <div className="boxInner">
+                            <div className="boxContent1"
 
-                             data-title="Owl"
-                             data-secondary="Hoo are you?"
-                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                                data-title="Owl"
+                                data-secondary="Hoo are you?"
+                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
@@ -722,29 +779,32 @@ export default function Carousel() {
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.">
-                            <Image
+                                {/* <Image
                                 src={rizzazzle}
                                 alt="test"
                                 fill
                                 className="boxContentImage"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                            <img
-                                src="/rizzazzle.png"
-                                alt="test"
+                            /> */}
+                                <img
+                                    src="/rizzazzle.png"
+                                    alt="test"
+                                    className="boxContentImage"
+                                    id="boxContentImageId"
+                                    loading="lazy"
 
-                            />
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="box2">
-                     {/*<FaArrowRight/>*/}
-                    <div className="boxInner">
-                        <div className="boxContent1"
+                    <div className="box2">
+                        {/*<FaArrowRight/>*/}
+                        <div className="boxInner">
+                            <div className="boxContent1"
 
-                             data-title="Owl"
-                             data-secondary="Hoo are you?"
-                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                                data-title="Owl"
+                                data-secondary="Hoo are you?"
+                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
@@ -753,29 +813,31 @@ export default function Carousel() {
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.">
-                            <Image
+                                {/* <Image
                                 src={rmr}
                                 alt="test"
                                 fill
                                 className="boxContentImage"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                            <img
-                                src="/rmr.png"
-                                alt="test"
-
-                            />
+                            /> */}
+                                <img
+                                    src="/rmr.png"
+                                    alt="test"
+                                    className="boxContentImage"
+                                    id="boxContentImageId"
+                                    loading="lazy"
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="box2">
-                     {/*<FaArrowRight/>*/}
-                    <div className="boxInner">
-                        <div className="boxContent1"
+                    <div className="box2">
+                        {/*<FaArrowRight/>*/}
+                        <div className="boxInner">
+                            <div className="boxContent1"
 
-                             data-title="Owl"
-                             data-secondary="Hoo are you?"
-                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                                data-title="Owl"
+                                data-secondary="Hoo are you?"
+                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
@@ -784,29 +846,31 @@ export default function Carousel() {
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.">
-                            <Image
+                                {/* <Image
                                 src={savvyb}
                                 alt="test"
                                 fill
                                 className="boxContentImage"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                            <img
-                                src="/savvyb.png"
-                                alt="test"
-
-                            />
+                            /> */}
+                                <img
+                                    src="/savvyb.png"
+                                    alt="test"
+                                    className="boxContentImage"
+                                    id="boxContentImageId"
+                                    loading="lazy"
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="box2">
-                     {/*<FaArrowRight/>*/}
-                    <div className="boxInner">
-                        <div className="boxContent1"
+                    <div className="box2">
+                        {/*<FaArrowRight/>*/}
+                        <div className="boxInner">
+                            <div className="boxContent1"
 
-                             data-title="Owl"
-                             data-secondary="Hoo are you?"
-                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                                data-title="Owl"
+                                data-secondary="Hoo are you?"
+                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
@@ -815,29 +879,31 @@ export default function Carousel() {
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.">
-                            <Image
+                                {/* <Image
                                 src={vpa}
                                 alt="test"
                                 fill
                                 className="boxContentImage"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                            <img
-                                src="/vpa.png"
-                                alt="test"
-
-                            />
+                            /> */}
+                                <img
+                                    src="/vpa.png"
+                                    alt="test"
+                                    className="boxContentImage"
+                                    id="boxContentImageId"
+                                    loading="lazy"
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="box2">
-                     {/*<FaArrowRight/>*/}
-                    <div className="boxInner">
-                        <div className="boxContent1"
+                    <div className="box2">
+                        {/*<FaArrowRight/>*/}
+                        <div className="boxInner">
+                            <div className="boxContent1"
 
-                             data-title="Owl"
-                             data-secondary="Hoo are you?"
-                             data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
+                                data-title="Owl"
+                                data-secondary="Hoo are you?"
+                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
@@ -846,33 +912,40 @@ export default function Carousel() {
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.">
-                            <Image
+                                {/* <Image
                                 src={yusha}
                                 alt="test"
                                 fill
                                 className="boxContentImage"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                            <img
-                                src="/yusha.png"
-                                alt="test"
-
-                            />
+                            /> */}
+                                <img
+                                    src="/yusha.png"
+                                    alt="test"
+                                    className="boxContentImage"
+                                    id="boxContentImageId"
+                                    loading="lazy"
+                                />
+                            </div>
                         </div>
                     </div>
+
                 </div>
 
+
             </div>
-
-
-        </div>
             <div className="detail">
 
                 <div className="detailCont">
                     <button className="closeBtn">
                         <FaTimes size={24} color="white" />
                     </button>
-                    <img />
+                    <img
+                        src="/test.png"
+                        alt="test"
+                        className="boxContentImage"
+                        loading="lazy"
+                    />
                     <div className="content">
                         <div className="title">Placeholder title</div>
                         <div className="secondary">Placeholder secondary</div>
