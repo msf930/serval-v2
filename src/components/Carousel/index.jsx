@@ -32,9 +32,54 @@ import { FaArrowRight, FaArrowDown, FaTimes } from 'react-icons/fa';
 
 gsap.registerPlugin(Draggable, InertiaPlugin, Flip, ScrollTrigger);
 
-export default function Carousel() {
+export default function Carousel({ onImagesLoaded, itemsLoaded }) {
+    // const [loadedImages, setLoadedImages] = useState(0);
+    const totalImages = 13; // Total number of images in the carousel
+    
+    // Track image loading
+    useEffect(() => {
+        const images = document.querySelectorAll('.boxContentImage');
+        let loadedCount = 0;
+        let hasCalledOnImagesLoaded = false; // Prevent multiple calls
+        
+        const handleImageLoad = () => {
+            loadedCount++;
+            itemsLoaded(Math.round((loadedCount/totalImages)*50));
+            // console.log(`Image loaded: ${loadedCount}/${totalImages}`);
+            
+            if (loadedCount >= totalImages && !hasCalledOnImagesLoaded) {
+                hasCalledOnImagesLoaded = true;
+                onImagesLoaded();
+            }
+        };
 
-   
+        const handleImageError = () => {
+            loadedCount++;
+            // console.log(`Image error: ${loadedCount}/${totalImages}`);
+            
+            if (loadedCount >= totalImages && !hasCalledOnImagesLoaded) {
+                hasCalledOnImagesLoaded = true;
+                onImagesLoaded();
+            }
+        };
+        
+        images.forEach(img => {
+            if (img.complete) {
+                handleImageLoad();
+            } else {
+                img.addEventListener('load', handleImageLoad);
+                img.addEventListener('error', handleImageError);
+            }
+        });
+
+        // Cleanup
+        return () => {
+            images.forEach(img => {
+                img.removeEventListener('load', handleImageLoad);
+                img.removeEventListener('error', handleImageError);
+            });
+        };
+    }, [onImagesLoaded, itemsLoaded, totalImages]);
 
 
     useGSAP(() => {
@@ -555,7 +600,7 @@ export default function Carousel() {
                                     src="/arapahoe.png"
                                     alt="test"
                                     id="boxContentImageId"
-                                    loading="lazy"
+                                    loading="eager"
                                 />
 
                             </div>
@@ -589,7 +634,7 @@ export default function Carousel() {
                                     alt="test"
                                     className="boxContentImage"
                                     id="boxContentImageId"
-                                    loading="lazy"
+                                    loading="eager"
                                 />
                             </div>
                         </div>
@@ -622,7 +667,7 @@ export default function Carousel() {
                                     alt="test"
                                     className="boxContentImage"
                                     id="boxContentImageId"
-                                    loading="lazy"
+                                    loading="eager"
                                 />
                             </div>
                         </div>
@@ -655,7 +700,7 @@ export default function Carousel() {
                                     alt="test"
                                     className="boxContentImage"
                                     id="boxContentImageId"
-                                    loading="lazy"
+                                    loading="eager"
                                 />
                             </div>
                         </div>
@@ -688,7 +733,7 @@ export default function Carousel() {
                                     alt="test"
                                     className="boxContentImage"
                                     id="boxContentImageId"
-                                    loading="lazy"
+                                    loading="eager"
                                 />
                             </div>
                         </div>
@@ -721,7 +766,7 @@ export default function Carousel() {
                                     alt="test"
                                     className="boxContentImage"
                                     id="boxContentImageId"
-                                    loading="lazy"
+                                    loading="eager"
                                 />
                             </div>
                         </div>
@@ -758,7 +803,7 @@ export default function Carousel() {
                                     alt="test"
                                     className="boxContentImage"
                                     id="boxContentImageId"
-                                    loading="lazy"
+                                    loading="eager"
                                 />
                             </div>
                         </div>
@@ -791,7 +836,7 @@ export default function Carousel() {
                                     alt="test"
                                     className="boxContentImage"
                                     id="boxContentImageId"
-                                    loading="lazy"
+                                    loading="eager"
 
                                 />
                             </div>
@@ -825,7 +870,7 @@ export default function Carousel() {
                                     alt="test"
                                     className="boxContentImage"
                                     id="boxContentImageId"
-                                    loading="lazy"
+                                    loading="eager"
                                 />
                             </div>
                         </div>
@@ -858,7 +903,7 @@ export default function Carousel() {
                                     alt="test"
                                     className="boxContentImage"
                                     id="boxContentImageId"
-                                    loading="lazy"
+                                    loading="eager"
                                 />
                             </div>
                         </div>
@@ -891,7 +936,7 @@ export default function Carousel() {
                                     alt="test"
                                     className="boxContentImage"
                                     id="boxContentImageId"
-                                    loading="lazy"
+                                    loading="eager"
                                 />
                             </div>
                         </div>
@@ -924,7 +969,7 @@ export default function Carousel() {
                                     alt="test"
                                     className="boxContentImage"
                                     id="boxContentImageId"
-                                    loading="lazy"
+                                    loading="eager"
                                 />
                             </div>
                         </div>
@@ -944,7 +989,7 @@ export default function Carousel() {
                         src="/test.png"
                         alt="test"
                         className="boxContentImage"
-                        loading="lazy"
+                        loading="eager"
                     />
                     <div className="content">
                         <div className="title">Placeholder title</div>

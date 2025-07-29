@@ -51,12 +51,36 @@ export default function Home() {
     const [loadProgress, setLoadProgress] = useState("0%");
     const [loadTransition, setLoadTransition] = useState(false);
     const [isResize, setIsResize] = useState(false);
+    const [carouselImagesLoaded, setCarouselImagesLoaded] = useState(false);
+    const [itemsLoaded, setItemsLoaded] = useState(0);
+    const [shaderLoadValue, setShaderLoadValue] = useState(0);
+    const [shaderLoadValueSpringData, setShaderLoadValueSpringData] = useState(0);
+
 
 
 
 
     const main = useRef();
     const smoother = useRef();
+
+
+    // const shaderLoadValueMotion = useMotionValue(shaderLoadValue);
+
+
+
+
+    let shaderLoadValueSpring = useSpring(shaderLoadValue + itemsLoaded, { mass: 0.8, stiffness: 75, damping: 15 })
+    let display = useTransform(shaderLoadValueSpring, (current) =>
+        Math.round(current).toLocaleString() + "%"
+    );
+
+    useEffect(() => {
+        shaderLoadValueSpring.set(shaderLoadValue + itemsLoaded);
+        setLoadProgress(display);
+    }, [shaderLoadValueSpring, shaderLoadValue, itemsLoaded, display]);
+
+
+
 
 
 
@@ -77,28 +101,43 @@ export default function Home() {
 
     useEffect(() => {
         if (isLoading) {
-            setLoadProgress("30%"); // Set intermediate progress
-        } else {
-            setLoadProgress("100%"); // Set final progress
+            setShaderLoadValue(0);
+            // setLoadProgress("33%"); // Set intermediate progress
         }
     }, [isLoading]);
+
+    useEffect(() => {
+        if (!isLoading) {
+            setShaderLoadValue(50);
+            // setLoadProgress("50%"); // Set progress when GSAP animations complete
+        }
+    }, [isLoading]);
+
+    // useEffect(() => {
+    //     // console.log(carouselImagesLoaded);
+    //     if (carouselImagesLoaded) {
+    //         setLoadProgress("100%"); // Set final progress when carousel images are loaded
+    //     }
+    // }, [carouselImagesLoaded]);
 
     const loadProgressMotion = useMotionValue(loadProgress);
     useEffect(() => {
         loadProgressMotion.set(loadProgress);
     }, [loadProgressMotion, loadProgress]);
+
     const scaleX = useSpring(loadProgressMotion, {
         stiffness: 80,
         damping: 30,
         restDelta: 0.001,
     })
     useEffect(() => {
-        if (!isLoading) {
+        if (!isLoading && carouselImagesLoaded) {
+            // setLoadProgress("100%");
             setTimeout(() => {
                 setLoadTransition(true);
-            }, 1600);
+            }, 1000);
         }
-    }, [isLoading])
+    }, [isLoading, carouselImagesLoaded])
 
 
     useGSAP(
@@ -145,7 +184,7 @@ export default function Home() {
             const splitWeb = SplitText.create(".websiteTitle2", {
                 type: "words",
             });
-            let hasAnimated = false;
+            let webHasAnimated = false;
             ScrollTrigger.create({
                 trigger: '#stickyContent',
 
@@ -153,7 +192,7 @@ export default function Home() {
                 end: 'center center',
                 markers: false,
                 onToggle: (self) => {
-                    if (self.isActive && !hasAnimated) {
+                    if (self.isActive && !webHasAnimated) {
                         gsap.to(splitWeb.words, {
                             stagger: {
                                 amount: 0.5,
@@ -166,7 +205,7 @@ export default function Home() {
                                 chars: "!@#$%^&*()+",
                             }
                         });
-                        hasAnimated = true;
+                        webHasAnimated = true;
                     }
                 }
             });
@@ -185,7 +224,7 @@ export default function Home() {
                 },
             })
 
-            
+
             // gsap.set(splitText.chars, {
             //     y: 20,
             //     opacity: 0,
@@ -242,7 +281,7 @@ export default function Home() {
             const splitText = SplitText.create("#resizeTextH1Id", {
                 type: "chars",
             });
-            
+
             gsap.from(splitText.chars, {
                 y: 20,
                 autoAlpha: 0,
@@ -1122,7 +1161,7 @@ export default function Home() {
                 <motion.div id="smooth-content" animate={true} className={!loadTransition ? "smoothContent1" : "smoothContent"}>
                     <AnimatePresence>
                         {
-                            isLoading
+                            !loadTransition
                             // true
                             && (
                                 <motion.div className="loadingCont">
@@ -1132,7 +1171,9 @@ export default function Home() {
                                         </motion.div>
 
                                         <div className="loadProgressCont">
-                                            <motion.div className="loadingBar" style={{ width: scaleX }}></motion.div>
+                                            <motion.div className="loadingBar" style={{ width: display }}></motion.div>
+                                            {/* <motion.div className="loadingBarText">{itemsLoaded}</motion.div> */}
+                                            <motion.div className="loadingBarText">{display}</motion.div>
                                         </div>
                                     </motion.div>
                                     <motion.div className="loadingGridTop">
@@ -1159,18 +1200,18 @@ export default function Home() {
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.5, ease: 'easeInOut' }}
                                 className="resizeCont"
-                                >
+                            >
                                 <motion.div className='resizeOut'></motion.div>
                                 <h1 className="resizeTextH1" id="resizeTextH1Id">CONTENT INCOMING</h1>
-                                
+
                                 {/* Half Circle Path */}
-                                <svg 
-                                    className="halfCircleSVG" 
-                                    viewBox="0 0 200 100" 
-                                    style={{ 
-                                        position: 'absolute', 
-                                        top: '50%', 
-                                        left: '40%', 
+                                <svg
+                                    className="halfCircleSVG"
+                                    viewBox="0 0 200 100"
+                                    style={{
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '40%',
                                         transform: 'translate(-50%, -50%) rotate(-90deg)',
                                         width: '300px',
                                         height: '150px'
@@ -1186,13 +1227,13 @@ export default function Home() {
                                         strokeDashoffset="0"
                                     />
                                 </svg>
-                                <svg 
-                                    className="halfCircleSVG" 
-                                    viewBox="0 0 200 100" 
-                                    style={{ 
-                                        position: 'absolute', 
-                                        top: '50%', 
-                                        left: '60%', 
+                                <svg
+                                    className="halfCircleSVG"
+                                    viewBox="0 0 200 100"
+                                    style={{
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '60%',
                                         transform: 'translate(-50%, -50%) rotate(90deg)',
                                         width: '300px',
                                         height: '150px'
@@ -1209,13 +1250,13 @@ export default function Home() {
                                     />
                                 </svg>
                                 {/* top and bottom semicircle */}
-                                <svg 
-                                    className="halfCircleSVG2" 
-                                    viewBox="0 0 200 100" 
-                                    style={{ 
-                                        position: 'absolute', 
-                                        top: '30%', 
-                                        left: '50%', 
+                                <svg
+                                    className="halfCircleSVG2"
+                                    viewBox="0 0 200 100"
+                                    style={{
+                                        position: 'absolute',
+                                        top: '30%',
+                                        left: '50%',
                                         transform: 'translate(-50%, -50%) rotate(0deg)',
                                         width: '300px',
                                         height: '150px'
@@ -1231,13 +1272,13 @@ export default function Home() {
                                         strokeDashoffset="0"
                                     />
                                 </svg>
-                                <svg 
-                                    className="halfCircleSVG2" 
-                                    viewBox="0 0 200 100" 
-                                    style={{ 
-                                        position: 'absolute', 
-                                        top: '70%', 
-                                        left: '50%', 
+                                <svg
+                                    className="halfCircleSVG2"
+                                    viewBox="0 0 200 100"
+                                    style={{
+                                        position: 'absolute',
+                                        top: '70%',
+                                        left: '50%',
                                         transform: 'translate(-50%, -50%) rotate(180deg)',
                                         width: '300px',
                                         height: '150px'
@@ -1253,13 +1294,13 @@ export default function Home() {
                                         strokeDashoffset="0"
                                     />
                                 </svg>
-                                <svg 
-                                    className="halfCircleSVG3" 
-                                    viewBox="0 0 200 100" 
-                                    style={{ 
-                                        position: 'absolute', 
-                                        top: '40%', 
-                                        left: '40%', 
+                                <svg
+                                    className="halfCircleSVG3"
+                                    viewBox="0 0 200 100"
+                                    style={{
+                                        position: 'absolute',
+                                        top: '40%',
+                                        left: '40%',
                                         transform: 'translate(-50%, -50%) rotate(-45deg)',
                                         width: '300px',
                                         height: '150px'
@@ -1275,13 +1316,13 @@ export default function Home() {
                                         strokeDashoffset="0"
                                     />
                                 </svg>
-                                <svg 
-                                    className="halfCircleSVG3" 
-                                    viewBox="0 0 200 100" 
-                                    style={{ 
-                                        position: 'absolute', 
-                                        top: '40%', 
-                                        left: '60%', 
+                                <svg
+                                    className="halfCircleSVG3"
+                                    viewBox="0 0 200 100"
+                                    style={{
+                                        position: 'absolute',
+                                        top: '40%',
+                                        left: '60%',
                                         transform: 'translate(-50%, -50%) rotate(45deg)',
                                         width: '300px',
                                         height: '150px'
@@ -1297,13 +1338,13 @@ export default function Home() {
                                         strokeDashoffset="0"
                                     />
                                 </svg>
-                                <svg 
-                                    className="halfCircleSVG3" 
-                                    viewBox="0 0 200 100" 
-                                    style={{ 
-                                        position: 'absolute', 
-                                        top: '60%', 
-                                        left: '40%', 
+                                <svg
+                                    className="halfCircleSVG3"
+                                    viewBox="0 0 200 100"
+                                    style={{
+                                        position: 'absolute',
+                                        top: '60%',
+                                        left: '40%',
                                         transform: 'translate(-50%, -50%) rotate(-135deg)',
                                         width: '300px',
                                         height: '150px'
@@ -1319,13 +1360,13 @@ export default function Home() {
                                         strokeDashoffset="0"
                                     />
                                 </svg>
-                                <svg 
-                                    className="halfCircleSVG3" 
-                                    viewBox="0 0 200 100" 
-                                    style={{ 
-                                        position: 'absolute', 
-                                        top: '60%', 
-                                        left: '60%', 
+                                <svg
+                                    className="halfCircleSVG3"
+                                    viewBox="0 0 200 100"
+                                    style={{
+                                        position: 'absolute',
+                                        top: '60%',
+                                        left: '60%',
                                         transform: 'translate(-50%, -50%) rotate(135deg)',
                                         width: '300px',
                                         height: '150px'
@@ -1342,7 +1383,7 @@ export default function Home() {
                                     />
                                 </svg>
 
-                               
+
                             </motion.div>
                         }
                     </AnimatePresence>
@@ -1414,7 +1455,7 @@ export default function Home() {
                                     <motion.div
 
                                     >
-                                        <Carousel />
+                                        <Carousel onImagesLoaded={() => setCarouselImagesLoaded(true)} itemsLoaded={(itemsLoaded) => setItemsLoaded(itemsLoaded)} />
                                     </motion.div>
                                 </motion.div>
                             </div>
