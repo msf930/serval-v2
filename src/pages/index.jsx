@@ -1160,7 +1160,7 @@ export default function Home() {
                                 transition={{ duration: 0.5, ease: 'easeInOut' }}
                                 className="resizeCont"
                                 >
-                                <motion.div className='resizeOut'></motion.div>
+                                {/* <motion.div className='resizeOut'></motion.div> */}
                                 <h1 className="resizeTextH1" id="resizeTextH1Id">CONTENT INCOMING</h1>
                                 
                                 {/* Half Circle Path */}
@@ -1342,53 +1342,7 @@ export default function Home() {
                                     />
                                 </svg>
 
-                                {/* Dotted Line */}
-                                {/* <svg 
-                                    className="dottedLineSVG" 
-                                    viewBox="0 0 200 100" 
-                                    style={{ 
-                                        position: 'absolute', 
-                                        top: 'calc(50% + 200px)', 
-                                        left: '50%', 
-                                        transform: 'translate(-50%, -50%) rotate(180deg)',
-                                        width: '400px',
-                                        height: '100px'
-                                    }}
-                                >
-                                    <path
-                                        className="dottedLine"
-                                        d="M 10 50 L 190 50"
-                                        fill="none"
-                                        stroke="#ffffff"
-                                        strokeWidth="2"
-                                        strokeDasharray="1000 1000"
-                                        strokeDashoffset="0"
-                                        opacity="1"
-                                    />
-                                </svg> */}
-                                {/* <svg 
-                                    className="dottedLineSVG" 
-                                    viewBox="0 0 200 100" 
-                                    style={{ 
-                                        position: 'absolute', 
-                                        top: 'calc(50% - 200px)', 
-                                        left: '50%', 
-                                        transform: 'translate(-50%, -50%)',
-                                        width: '400px',
-                                        height: '100px'
-                                    }}
-                                >
-                                    <path
-                                        className="dottedLine"
-                                        d="M 10 50 L 190 50"
-                                        fill="none"
-                                        stroke="#ffffff"
-                                        strokeWidth="2"
-                                        strokeDasharray="1000 1000"
-                                        strokeDashoffset="0"
-                                        opacity="1"
-                                    />
-                                </svg> */}
+                               
                             </motion.div>
                         }
                     </AnimatePresence>
