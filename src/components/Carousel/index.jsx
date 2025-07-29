@@ -374,7 +374,7 @@ export default function Carousel() {
                                 start: `${window.innerHeight}`,
                                 end: `${window.innerHeight * 16}`,
                                 // end: "bottom top",
-                                markers: true,
+                                markers: false,
                                 // scrub: config.scrub || 1,
                                 onUpdate: (self) => {
                                     tl.progress(self.progress * 1.8);

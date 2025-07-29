@@ -135,31 +135,33 @@ body,
 }
 .loadingBox{
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 101%;
+    height: 101%;
     background-color: #000000;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    /* overflow: hidden; */
     z-index: 10;
 }
 /*structure of home page*/
 .resizeCont{
     opacity: 0;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
     background-color: #ffffffC0;
     backdrop-filter: blur(20px);
-    z-index: 1000;
+    z-index: 900;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     text-transform: uppercase;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
 }
 .resizeTextH1{
     opacity: 0;
@@ -171,6 +173,24 @@ body,
 .halfCircleSVG{
     color: white;
     mix-blend-mode: difference;
+}
+.halfCircleSVG2{
+    color: white;
+    mix-blend-mode: difference;
+}
+.halfCircleSVG3{
+    color: white;
+    mix-blend-mode: difference;
+}
+.resizeOut{
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000;
+    z-index: 1000;
 }
 .sectionTop{
     position: relative;

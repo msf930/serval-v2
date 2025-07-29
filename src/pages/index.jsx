@@ -254,11 +254,48 @@ export default function Home() {
                 }
             });
 
-            // Animate the half circle path
+            // Animate the half circle path halfCircleSVG3
             gsap.to(".halfCirclePath", {
                 strokeDasharray: "0 1000",
-                duration: 2,
-                ease: "power2.inOut"
+                duration: 0.5,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    gsap.to(".halfCirclePath2", {
+                        strokeDasharray: "0 1000",
+                        duration: 0.5,
+                        ease: "power2.inOut",
+                        onComplete: () => {
+                            gsap.to(".halfCirclePath3", {
+                                strokeDasharray: "0 1000",
+                                duration: 0.5,
+                                ease: "power2.inOut",
+                                onComplete: () => {
+                                    gsap.to(".resizeOut", {
+                                        opacity: 1,
+                                        duration: 0.5,
+                                        ease: "power2.inOut",
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
+                // onComplete: () => {
+                //     // Fade in the dotted line after half circle animation completes
+                //     gsap.to(".dottedLine", {
+                //         opacity: 1,
+                //         duration: 0.5,
+                //         ease: "power2.out",
+                //         onComplete: () => {
+                //             // Animate the dotted line from 100% to 0% length
+                //             gsap.to(".dottedLine", {
+                //                 strokeDasharray: "0 1000",
+                //                 duration: 1.0,
+                //                 ease: "power2.inOut"
+                //             });
+                //         }
+                //     });
+                // }
             });
         }
     }, [isResize]);
@@ -1123,6 +1160,7 @@ export default function Home() {
                                 transition={{ duration: 0.5, ease: 'easeInOut' }}
                                 className="resizeCont"
                                 >
+                                <motion.div className='resizeOut'></motion.div>
                                 <h1 className="resizeTextH1" id="resizeTextH1Id">CONTENT INCOMING</h1>
                                 
                                 {/* Half Circle Path */}
@@ -1143,7 +1181,7 @@ export default function Home() {
                                         d="M 10 90 A 80 80 0 0 1 190 90"
                                         fill="none"
                                         stroke="#ffffff"
-                                        strokeWidth="3"
+                                        strokeWidth="4"
                                         strokeDasharray="1000 1000"
                                         strokeDashoffset="0"
                                     />
@@ -1165,11 +1203,192 @@ export default function Home() {
                                         d="M 10 90 A 80 80 0 0 1 190 90"
                                         fill="none"
                                         stroke="#ffffff"
-                                        strokeWidth="3"
+                                        strokeWidth="4"
                                         strokeDasharray="1000 1000"
                                         strokeDashoffset="0"
                                     />
                                 </svg>
+                                {/* top and bottom semicircle */}
+                                <svg 
+                                    className="halfCircleSVG2" 
+                                    viewBox="0 0 200 100" 
+                                    style={{ 
+                                        position: 'absolute', 
+                                        top: '30%', 
+                                        left: '50%', 
+                                        transform: 'translate(-50%, -50%) rotate(0deg)',
+                                        width: '300px',
+                                        height: '150px'
+                                    }}
+                                >
+                                    <path
+                                        className="halfCirclePath2"
+                                        d="M 10 90 A 80 80 0 0 1 190 90"
+                                        fill="none"
+                                        stroke="#ffffff"
+                                        strokeWidth="4"
+                                        strokeDasharray="1000 1000"
+                                        strokeDashoffset="0"
+                                    />
+                                </svg>
+                                <svg 
+                                    className="halfCircleSVG2" 
+                                    viewBox="0 0 200 100" 
+                                    style={{ 
+                                        position: 'absolute', 
+                                        top: '70%', 
+                                        left: '50%', 
+                                        transform: 'translate(-50%, -50%) rotate(180deg)',
+                                        width: '300px',
+                                        height: '150px'
+                                    }}
+                                >
+                                    <path
+                                        className="halfCirclePath2"
+                                        d="M 10 90 A 80 80 0 0 1 190 90"
+                                        fill="none"
+                                        stroke="#ffffff"
+                                        strokeWidth="4"
+                                        strokeDasharray="1000 1000"
+                                        strokeDashoffset="0"
+                                    />
+                                </svg>
+                                <svg 
+                                    className="halfCircleSVG3" 
+                                    viewBox="0 0 200 100" 
+                                    style={{ 
+                                        position: 'absolute', 
+                                        top: '40%', 
+                                        left: '40%', 
+                                        transform: 'translate(-50%, -50%) rotate(-45deg)',
+                                        width: '300px',
+                                        height: '150px'
+                                    }}
+                                >
+                                    <path
+                                        className="halfCirclePath3"
+                                        d="M 10 90 A 80 80 0 0 1 190 90"
+                                        fill="none"
+                                        stroke="#ffffff"
+                                        strokeWidth="4"
+                                        strokeDasharray="1000 1000"
+                                        strokeDashoffset="0"
+                                    />
+                                </svg>
+                                <svg 
+                                    className="halfCircleSVG3" 
+                                    viewBox="0 0 200 100" 
+                                    style={{ 
+                                        position: 'absolute', 
+                                        top: '40%', 
+                                        left: '60%', 
+                                        transform: 'translate(-50%, -50%) rotate(45deg)',
+                                        width: '300px',
+                                        height: '150px'
+                                    }}
+                                >
+                                    <path
+                                        className="halfCirclePath3"
+                                        d="M 10 90 A 80 80 0 0 1 190 90"
+                                        fill="none"
+                                        stroke="#ffffff"
+                                        strokeWidth="4"
+                                        strokeDasharray="1000 1000"
+                                        strokeDashoffset="0"
+                                    />
+                                </svg>
+                                <svg 
+                                    className="halfCircleSVG3" 
+                                    viewBox="0 0 200 100" 
+                                    style={{ 
+                                        position: 'absolute', 
+                                        top: '60%', 
+                                        left: '40%', 
+                                        transform: 'translate(-50%, -50%) rotate(-135deg)',
+                                        width: '300px',
+                                        height: '150px'
+                                    }}
+                                >
+                                    <path
+                                        className="halfCirclePath3"
+                                        d="M 10 90 A 80 80 0 0 1 190 90"
+                                        fill="none"
+                                        stroke="#ffffff"
+                                        strokeWidth="4"
+                                        strokeDasharray="1000 1000"
+                                        strokeDashoffset="0"
+                                    />
+                                </svg>
+                                <svg 
+                                    className="halfCircleSVG3" 
+                                    viewBox="0 0 200 100" 
+                                    style={{ 
+                                        position: 'absolute', 
+                                        top: '60%', 
+                                        left: '60%', 
+                                        transform: 'translate(-50%, -50%) rotate(135deg)',
+                                        width: '300px',
+                                        height: '150px'
+                                    }}
+                                >
+                                    <path
+                                        className="halfCirclePath3"
+                                        d="M 10 90 A 80 80 0 0 1 190 90"
+                                        fill="none"
+                                        stroke="#ffffff"
+                                        strokeWidth="4"
+                                        strokeDasharray="1000 1000"
+                                        strokeDashoffset="0"
+                                    />
+                                </svg>
+
+                                {/* Dotted Line */}
+                                {/* <svg 
+                                    className="dottedLineSVG" 
+                                    viewBox="0 0 200 100" 
+                                    style={{ 
+                                        position: 'absolute', 
+                                        top: 'calc(50% + 200px)', 
+                                        left: '50%', 
+                                        transform: 'translate(-50%, -50%) rotate(180deg)',
+                                        width: '400px',
+                                        height: '100px'
+                                    }}
+                                >
+                                    <path
+                                        className="dottedLine"
+                                        d="M 10 50 L 190 50"
+                                        fill="none"
+                                        stroke="#ffffff"
+                                        strokeWidth="2"
+                                        strokeDasharray="1000 1000"
+                                        strokeDashoffset="0"
+                                        opacity="1"
+                                    />
+                                </svg> */}
+                                {/* <svg 
+                                    className="dottedLineSVG" 
+                                    viewBox="0 0 200 100" 
+                                    style={{ 
+                                        position: 'absolute', 
+                                        top: 'calc(50% - 200px)', 
+                                        left: '50%', 
+                                        transform: 'translate(-50%, -50%)',
+                                        width: '400px',
+                                        height: '100px'
+                                    }}
+                                >
+                                    <path
+                                        className="dottedLine"
+                                        d="M 10 50 L 190 50"
+                                        fill="none"
+                                        stroke="#ffffff"
+                                        strokeWidth="2"
+                                        strokeDasharray="1000 1000"
+                                        strokeDashoffset="0"
+                                        opacity="1"
+                                    />
+                                </svg> */}
                             </motion.div>
                         }
                     </AnimatePresence>
