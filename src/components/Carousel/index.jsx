@@ -510,18 +510,18 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
             return timeline;
         }
         createLoops();
-        let resizeTimeout = null;
+        // let resizeTimeout = null;
 
-        function handleResize() {
-            if (resizeTimeout) clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                createLoops();
-            }, 200); // 200ms after the last resize event
-        }
+        // function handleResize() {
+        //     if (resizeTimeout) clearTimeout(resizeTimeout);
+        //     resizeTimeout = setTimeout(() => {
+        //         createLoops();
+        //     }, 200); // 200ms after the last resize event
+        // }
 
         // window.addEventListener("resize", handleResize);
         return () => {
-            window.removeEventListener("resize", handleResize);
+            // window.removeEventListener("resize", handleResize);
             if (loop) loop.kill();
             if (loop2) loop2.kill();
         };
@@ -561,21 +561,11 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
     }, []);
     return (
         <div>
-
-
             <div id="carouselCont" className="carouselCont">
-                {/*<div className="button-cont">*/}
-                {/*    <button className="prev"><FaArrowUp size={24} color="black" /></button>*/}
-                {/*    /!*<button className="toggle">toggle overflow</button>*!/*/}
-                {/*    <button className="next"><FaArrowDown size={24} color="black" /></button>*/}
-                {/*</div>*/}
-
                 <div className="wrapper">
-                    <div className="box1" id="box1">
-                        {/*<FaArrowRight/>*/}
+                    <div className="box1" id="box1">                     
                         <div className="boxInner" id="boxInner">
                             <div className="boxContent1"
-
                                 data-title="Owl"
                                 data-secondary="Hoo are you?"
                                 data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
@@ -587,14 +577,6 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.">
-
-                                {/* <Image
-                                src={arapahoe}
-                                alt="test"
-                                fill
-                                className="boxContentImage"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            /> */}
                                 <img
                                     className="boxContentImage"
                                     src="/arapahoe.png"
@@ -602,15 +584,12 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                                     id="boxContentImageId"
                                     loading="eager"
                                 />
-
                             </div>
                         </div>
                     </div>
-                    <div className="box1" id="box1">
-                        {/*<FaArrowRight/>*/}
+                    <div className="box1" id="box1">                   
                         <div className="boxInner" id="boxInner">
                             <div className="boxContent1"
-
                                 data-title="Owl"
                                 data-secondary="Hoo are you?"
                                 data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
@@ -621,14 +600,7 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">
-                                {/* <Image
-                                src={asb}
-                                alt="test"
-                                fill
-                                className="boxContentImage"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            /> */}
+                             fugit, quas ipsa impedit.">                               
                                 <img
                                     src="/asb.png"
                                     alt="test"
@@ -639,11 +611,9 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                             </div>
                         </div>
                     </div>
-                    <div className="box1">
-                        {/*<FaArrowRight/>*/}
+                    <div className="box1">                 
                         <div className="boxInner">
                             <div className="boxContent1"
-
                                 data-title="Owl"
                                 data-secondary="Hoo are you?"
                                 data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
@@ -654,14 +624,7 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">
-                                {/* <Image
-                                src={envision}
-                                alt="test"
-                                fill
-                                className="boxContentImage"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            /> */}
+                             fugit, quas ipsa impedit.">                        
                                 <img
                                     src="/envision.png"
                                     alt="test"
@@ -672,11 +635,9 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                             </div>
                         </div>
                     </div>
-                    <div className="box1">
-                        {/*<FaArrowRight/>*/}
+                    <div className="box1">                 
                         <div className="boxInner">
                             <div className="boxContent1"
-
                                 data-title="Owl"
                                 data-secondary="Hoo are you?"
                                 data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
@@ -687,14 +648,7 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">
-                                {/* <Image
-                                src={floworks}
-                                alt="test"
-                                fill
-                                className="boxContentImage"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            /> */}
+                             fugit, quas ipsa impedit.">                              
                                 <img
                                     src="/floworks.png"
                                     alt="test"
@@ -705,11 +659,9 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                             </div>
                         </div>
                     </div>
-                    <div className="box1">
-                        {/*<FaArrowRight/>*/}
+                    <div className="box1">                     
                         <div className="boxInner">
                             <div className="boxContent1"
-
                                 data-title="Owl"
                                 data-secondary="Hoo are you?"
                                 data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
@@ -720,14 +672,7 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">
-                                {/* <Image
-                                src={mtc}
-                                alt="test"
-                                fill
-                                className="boxContentImage"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            /> */}
+                             fugit, quas ipsa impedit.">                             
                                 <img
                                     src="/mtc.png"
                                     alt="test"
@@ -738,11 +683,9 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                             </div>
                         </div>
                     </div>
-                    <div className="box1">
-                        {/*<FaArrowRight/>*/}
+                    <div className="box1">                    
                         <div className="boxInner">
                             <div className="boxContent1"
-
                                 data-title="Owl"
                                 data-secondary="Hoo are you?"
                                 data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
@@ -753,14 +696,7 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">
-                                {/* <Image
-                                src={realm}
-                                alt="test"
-                                fill
-                                className="boxContentImage"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            /> */}
+                             fugit, quas ipsa impedit.">                            
                                 <img
                                     src="/realm.png"
                                     alt="test"
@@ -771,15 +707,11 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                             </div>
                         </div>
                     </div>
-
-
                 </div>
                 <div className="wrapper2">
-                    <div className="box2">
-                        {/*<FaArrowRight/>*/}
+                    <div className="box2">                    
                         <div className="boxInner">
                             <div className="boxContent1"
-
                                 data-title="Owl"
                                 data-secondary="Hoo are you?"
                                 data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
@@ -790,14 +722,7 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">
-                                {/* <Image
-                                src={recess}
-                                alt="test"
-                                fill
-                                className="boxContentImage"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            /> */}
+                             fugit, quas ipsa impedit.">                      
                                 <img
                                     src="/recess.png"
                                     alt="test"
@@ -808,8 +733,7 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                             </div>
                         </div>
                     </div>
-                    <div className="box2">
-                        {/*<FaArrowRight/>*/}
+                    <div className="box2">               
                         <div className="boxInner">
                             <div className="boxContent1"
 
@@ -823,14 +747,7 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">
-                                {/* <Image
-                                src={rizzazzle}
-                                alt="test"
-                                fill
-                                className="boxContentImage"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            /> */}
+                             fugit, quas ipsa impedit.">                               
                                 <img
                                     src="/rizzazzle.png"
                                     alt="test"
@@ -842,8 +759,7 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                             </div>
                         </div>
                     </div>
-                    <div className="box2">
-                        {/*<FaArrowRight/>*/}
+                    <div className="box2">               
                         <div className="boxInner">
                             <div className="boxContent1"
 
@@ -857,14 +773,7 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">
-                                {/* <Image
-                                src={rmr}
-                                alt="test"
-                                fill
-                                className="boxContentImage"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            /> */}
+                             fugit, quas ipsa impedit.">                             
                                 <img
                                     src="/rmr.png"
                                     alt="test"
@@ -876,10 +785,9 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                         </div>
                     </div>
                     <div className="box2">
-                        {/*<FaArrowRight/>*/}
+                        
                         <div className="boxInner">
                             <div className="boxContent1"
-
                                 data-title="Owl"
                                 data-secondary="Hoo are you?"
                                 data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
@@ -890,14 +798,7 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">
-                                {/* <Image
-                                src={savvyb}
-                                alt="test"
-                                fill
-                                className="boxContentImage"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            /> */}
+                             fugit, quas ipsa impedit.">                               
                                 <img
                                     src="/savvyb.png"
                                     alt="test"
@@ -909,7 +810,7 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                         </div>
                     </div>
                     <div className="box2">
-                        {/*<FaArrowRight/>*/}
+                        
                         <div className="boxInner">
                             <div className="boxContent1"
 
@@ -923,14 +824,7 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">
-                                {/* <Image
-                                src={vpa}
-                                alt="test"
-                                fill
-                                className="boxContentImage"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            /> */}
+                             fugit, quas ipsa impedit.">                          
                                 <img
                                     src="/vpa.png"
                                     alt="test"
@@ -942,10 +836,9 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                         </div>
                     </div>
                     <div className="box2">
-                        {/*<FaArrowRight/>*/}
+                        
                         <div className="boxInner">
                             <div className="boxContent1"
-
                                 data-title="Owl"
                                 data-secondary="Hoo are you?"
                                 data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
@@ -957,13 +850,6 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                              fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
                              blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
                              fugit, quas ipsa impedit.">
-                                {/* <Image
-                                src={yusha}
-                                alt="test"
-                                fill
-                                className="boxContentImage"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            /> */}
                                 <img
                                     src="/yusha.png"
                                     alt="test"
@@ -974,10 +860,7 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                             </div>
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
             <div className="detail">
 
