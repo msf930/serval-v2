@@ -236,7 +236,7 @@ body,
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: inherit;
+    /* background: inherit; */
 
 
 
@@ -480,7 +480,7 @@ body,
 }
 
 .seoTextContWrapper {
-    perspective: 1500px;
+    /* perspective: 1500px; */
     width: 100%;
     height: 100%;
     display: flex;
@@ -521,9 +521,9 @@ body,
     text-align: center;
     text-transform: uppercase;
     color: white;
-    background-color: #00000030;
+    /* background-color: #00000030; */
     transition: transform 0.2s;
-    transform-style: preserve-3d;
+    /* transform-style: preserve-3d; */
 
 }
 .seoTextCont h1{
@@ -561,10 +561,10 @@ body,
     align-items: center;
     padding: 0;
     background: rgba(0, 0, 0, 0.7);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    /* box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); */
     overflow: hidden;
 }
-.seoTextFront::before {
+/* .seoTextFront::before {
     content: '';
     position: absolute;
     top: 0;
@@ -593,19 +593,53 @@ body,
             transparent 90%
     );
     pointer-events: none;
-}
+} */
 
 .seoTextFront {
-    transform: translateZ(50px);
+    transform: translateZ(30px);
+    backface-visibility: hidden;
 }
 
 .seoTextBack {
-    transform: rotateY(180deg) translateZ(50px);
+    backface-visibility: hidden;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: 
+    rotateY(180deg) 
+    translateZ(30px);
 }
+.curved-rect {
+    position: relative;
+    width: 60px;
+    height: 15vw;
+    transform-style: preserve-3d;
+    transform: 
+    rotateY(90deg) 
+    translateZ(0px)
+    translateY(-7.5vw);
+  }
+
+  .slice {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(234, 234, 234, 0.7);
+    background: rgba(0, 0, 0, 1.0);
+    transform-origin: center bottom;
+    
+  }
 .seoTextBody{
     font-family: var(--font-anta);
     font-size: 1.2rem;
     line-height: 1.2;
+    backface-visibility: hidden;
 }
 .seoBackButton{
     position: relative;
@@ -621,6 +655,7 @@ body,
     height: 50px;
     width: 160px;
     font-family: var(--font-anta);
+    backface-visibility: hidden;
 }
 .textBottomSEO{
     position: relative;
@@ -1100,7 +1135,7 @@ body,
 
 
 .box1, .box2{
-    height: calc(24vw * 0.6);
+    height: 24vh;
     width: 24vw;
     display: flex;
     flex-direction: row;
@@ -1206,7 +1241,11 @@ body,
     opacity: 1;
     transition: opacity 0.4s ease-in-out, bottom 0.3s ease-in-out;
 }
-
+.boxContentImage{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
 
 .detail {
     position: fixed;
@@ -1243,9 +1282,9 @@ body,
     opacity: 0;
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
     border-radius: 10px;
-    background: #232323;
+    background: #ffffff60;
+    backdrop-filter: blur(10px);
     transform: rotateY(-20deg);
-    
 }
 .detailBG{
     position: absolute;
@@ -1267,7 +1306,8 @@ body,
 }
 
 .detailCont .content {
-    background: #232323;
+    background: #ffffff60;
+    
     padding: 2rem 1.5rem;
     font-size: 1rem;
     box-sizing: border-box;
@@ -1281,14 +1321,16 @@ body,
 .detailCont .title {
     font-size: 2rem;
     text-transform: uppercase;
+    color: black;
 }
 
 .detailCont .secondary {
-    color: lightgray;
+    color: black;
 }
 
-.detailCont .description {
+.detailCont .detailDescription {
     line-height: 1.5;
+    color: black;
 }
 .closeBtn {
     position: absolute;
@@ -1300,4 +1342,122 @@ body,
     border: none;
     cursor: pointer;
     z-index: 100;
+}
+.contactFormCont{
+    position: relative;
+    height: auto;
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #0000008d;
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 2rem 1.5rem;
+}
+.contactForm{   
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.contactForm h1{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    
+}
+.contactForm p{
+    font-size: 0.8rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+.contactForm input, .contactForm textarea{
+    background: #ffffff60;
+    width: 100%;
+}
+.contactFormNameCont{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+.contactFormInputCont{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    background-color: #1b1b1b8d;
+    padding: 10px;
+    border-radius: 10px;
+}
+.contactFormInputCont input, .contactFormInputCont textarea{
+    background-color: transparent;
+    border-radius: 10px;
+    padding: 4px;
+    border: none;
+    outline: none;
+    font-size: 1rem !important;
+    color: #ffffff;
+}
+.contactFormInputCont h3{
+    width: 100%;
+    font-size: 10px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+/* Change background color when input is focused */
+.contactFormInputCont:has(input:focus),
+.contactFormInputCont:has(textarea:focus) {
+    transition: background-color 0.2s ease-in-out;
+    background-color: #4b4b4bda;
+}
+
+/* Style Chrome autofill to match contactFormInputCont */
+.contactFormInputCont input:-webkit-autofill,
+.contactFormInputCont input:-webkit-autofill:hover,
+.contactFormInputCont input:-webkit-autofill:focus,
+.contactFormInputCont input:-webkit-autofill:active {
+    /* -webkit-box-shadow: 0 0 0 30px #1b1b1b8d inset !important; */
+    -webkit-text-fill-color: #ffffff !important;
+    background-color: transparent !important;
+    transition: background-color 5000s ease-in-out 0s;
+    font-size: 1rem !important;
+}
+
+/* Style autofill when container is focused */
+.contactFormInputCont:has(input:focus) input:-webkit-autofill,
+.contactFormInputCont:has(input:focus) input:-webkit-autofill:hover,
+.contactFormInputCont:has(input:focus) input:-webkit-autofill:focus,
+.contactFormInputCont:has(input:focus) input:-webkit-autofill:active {
+    /* -webkit-box-shadow: 0 0 0 30px #4b4b4bda inset !important; */
+    -webkit-text-fill-color: #ffffff !important;
+    background-color: transparent !important;
+    font-size: 1rem !important;
+}
+.contactFormButton{
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    
+}
+.contactFormButton:hover{
+    background-color: #000000;
+    color: #ffffff;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }

@@ -15,19 +15,7 @@ import Image from "next/image";
 
 import { FaArrowRight, FaArrowDown, FaTimes } from 'react-icons/fa';
 
-// import test from "@/../public/test.jpg";
-// import arapahoe from "@/../public/arapahoe.png";
-// import asb from "@/../public/asb.png";
-// import envision from "@/../public/envision.png";
-// import floworks from "@/../public/floworks.png";
-// import mtc from "@/../public/mtc.png";
-// import realm from "@/../public/realm.png";
-// import recess from "@/../public/recess.png";
-// import rizzazzle from "@/../public/rizzazzle.png";
-// import rmr from "@/../public/rmr.png";
-// import savvyb from "@/../public/savvyb.png";
-// import vpa from "@/../public/vpa.png";
-// import yusha from "@/../public/yusha.png";
+
 
 
 gsap.registerPlugin(Draggable, InertiaPlugin, Flip, ScrollTrigger);
@@ -92,7 +80,7 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
             detailImage = document.querySelector('.detailCont img'),
             detailTitle = document.querySelector('.detailCont .title'),
             detailSecondary = document.querySelector('.detailCont .secondary'),
-            detailDescription = document.querySelector('.detailCont .description');
+            detailDescription = document.querySelector('.detailCont .detailDescription');
 
 
         let activeItem;
@@ -566,17 +554,15 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                     <div className="box1" id="box1">                     
                         <div className="boxInner" id="boxInner">
                             <div className="boxContent1"
-                                data-title="Owl"
-                                data-secondary="Hoo are you?"
-                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">
+                                data-title="Arapahoe"
+                                data-secondary="High School Football Team"
+                                data-text="The Arapahoe Warriors&#39; website redesign brought a fresh, modern look that reflects 
+                                the pride and spirit of the team while making it easier for fans, players, and families to stay 
+                                connected. Pages were restructured with a cleaner, more professional layout, improving navigation 
+                                and readability across devices. New pages were added to highlight team rosters, game schedules, 
+                                player stats, and community events, while updated photo galleries and videos capture the energy of 
+                                game day. Content throughout the site was refreshed to ensure accurate, engaging information, 
+                                creating a dynamic online hub that celebrates the Warriors both on and off the field.">
                                 <img
                                     className="boxContentImage"
                                     src="/arapahoe.png"
@@ -590,17 +576,16 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                     <div className="box1" id="box1">                   
                         <div className="boxInner" id="boxInner">
                             <div className="boxContent1"
-                                data-title="Owl"
-                                data-secondary="Hoo are you?"
-                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">                               
+                                data-title="A Seasonal Being"
+                                data-secondary="Florist"
+                                data-text="The website redesign for A Seasonal Being blossomed into a vibrant, 
+                                inviting online space that truly reflects the artistry and warmth of the florist&#39;s 
+                                work. The updated design embraces a refined, elegant aesthetic with intuitive navigation, 
+                                making it simple for visitors to explore arrangements, services, and seasonal offerings. 
+                                Additional pages were introduced to showcase wedding portfolios, custom bouquet options, 
+                                and floral care tips, while refreshed imagery highlights the beauty and detail of each 
+                                creation. Updated copy brings the brand&#39;s personality to life, creating a welcoming digital 
+                                storefront that inspires customers to connect and celebrate life&#39;s moments with flowers.">                               
                                 <img
                                     src="/asb.png"
                                     alt="test"
@@ -614,17 +599,15 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                     <div className="box1">                 
                         <div className="boxInner">
                             <div className="boxContent1"
-                                data-title="Owl"
-                                data-secondary="Hoo are you?"
-                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">                        
+                                data-title="Envision Admin Services"
+                                data-secondary="Accounting and Bookkeeping"
+                                data-text="The Envision Administration Services website was built entirely from scratch, 
+                                creating a tailored digital presence that perfectly aligns with the company&#39;s brand and mission. 
+                                Designed with a clean, professional aesthetic, the site features intuitive navigation and a 
+                                structure crafted specifically to showcase Envision&#39;s full range of back office solutions, 
+                                from bookkeeping and payroll to compliance and administrative support. Every element from layout 
+                                to content was developed to enhance usability, ensuring clients can quickly find the information 
+                                they need.">                        
                                 <img
                                     src="/envision.png"
                                     alt="test"
@@ -638,17 +621,16 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                     <div className="box1">                 
                         <div className="boxInner">
                             <div className="boxContent1"
-                                data-title="Owl"
-                                data-secondary="Hoo are you?"
-                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">                              
+                                data-title="Floworks Plumbing"
+                                data-secondary="Plumbing"
+                                data-text="Floworks Plumbing launched a fully custom-built website designed to give customers 
+                                a clear, confident first impression while making it easy to connect with their services. 
+                                Built from the ground up, the site blends a modern, approachable design with straightforward 
+                                navigation, guiding visitors to information on repairs, installations, and emergency plumbing 
+                                with just a few clicks. Service pages were crafted to highlight expertise in residential and 
+                                commercial work, while contact forms and call-to-action features make scheduling seamless. 
+                                With performance-optimized code, tailored content, and a cohesive brand look, the new site 
+                                positions Floworks Plumbing as the go-to solution for reliable, professional plumbing services.">                              
                                 <img
                                     src="/floworks.png"
                                     alt="test"
@@ -662,17 +644,16 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                     <div className="box1">                     
                         <div className="boxInner">
                             <div className="boxContent1"
-                                data-title="Owl"
-                                data-secondary="Hoo are you?"
-                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">                             
+                                data-title="Making the Cut"
+                                data-secondary="Landscaping"
+                                data-text="Making the Cut debuted a completely custom-built website that captures the creativity 
+                                and precision behind their landscaping services. Developed from the ground up, the site combines 
+                                a fresh, nature-inspired design with intuitive navigation, making it simple for visitors to explore 
+                                offerings ranging from lawn care and garden design to hardscaping and seasonal maintenance. 
+                                Dedicated service pages and a vibrant project gallery showcase the team&#39;s craftsmanship, 
+                                while strategically placed contact options encourage quick inquiries and bookings. With tailored content, 
+                                smooth performance, and a design that reflects their passion for outdoor spaces, the new site firmly 
+                                establishes Making the Cut as a trusted name in transforming landscapes.">                             
                                 <img
                                     src="/mtc.png"
                                     alt="test"
@@ -686,17 +667,16 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                     <div className="box1">                    
                         <div className="boxInner">
                             <div className="boxContent1"
-                                data-title="Owl"
-                                data-secondary="Hoo are you?"
-                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">                            
+                                data-title="Realm Chiropractic"
+                                data-secondary="Chiropractor"
+                                data-text="Realm Chiropractic launched a fully custom-built website designed to reflect their 
+                                commitment to holistic care and patient well-being. Built from the ground up, the site features 
+                                a calming, professional design and clear navigation, guiding visitors to information on chiropractic
+                                treatments, wellness plans, and patient resources. Service pages highlight expertise in spinal health, 
+                                injury recovery, and preventative care, while an easy-to-use appointment request system streamlines 
+                                scheduling. Thoughtfully written content and inviting imagery work together to create a trustworthy, 
+                                approachable online presence, positioning Realm Chiropractic as a leading choice for those seeking 
+                                personalized, effective chiropractic care.">                            
                                 <img
                                     src="/realm.png"
                                     alt="test"
@@ -712,17 +692,16 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                     <div className="box2">                    
                         <div className="boxInner">
                             <div className="boxContent1"
-                                data-title="Owl"
-                                data-secondary="Hoo are you?"
-                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">                      
+                                data-title="RECEss"
+                                data-secondary="Real Estate Continuing Education"
+                                data-text="The website update for RECEss brought a refreshed, user-focused experience 
+                                to their real estate continuing education platform. The redesign improved navigation, 
+                                making it easier for users to find and register for courses, track progress, and access 
+                                resources. Updated visuals and branding give the site a more modern, professional feel, 
+                                while reorganized content ensures that information about class schedules, licensing 
+                                requirements, and learning materials is clear and accessible. Enhanced mobile optimization
+                                 and streamlined registration forms create a smoother user journey, helping RECEss better 
+                                 serve real estate professionals looking to maintain and expand their credentials with ease.">                      
                                 <img
                                     src="/recess.png"
                                     alt="test"
@@ -737,17 +716,16 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                         <div className="boxInner">
                             <div className="boxContent1"
 
-                                data-title="Owl"
-                                data-secondary="Hoo are you?"
-                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">                               
+                                data-title="Rizzazzle Repairs"
+                                data-secondary="Video and Audio Equipment Repair"
+                                data-text="Rizzazzle Repairs now boasts a completely custom-designed website built to showcase 
+                                their expertise in video and audio equipment repair. Developed from the ground up, the site 
+                                features a sleek, tech-savvy aesthetic with streamlined navigation, making it easy for customers 
+                                to explore repair services, request quotes, and learn about maintenance tips. Dedicated service
+                                 pages highlight capabilities in camera, microphone, speaker, and editing equipment repairs, 
+                                 while a gallery of before-and-after projects builds trust and credibility. Fast-loading performance, 
+                                 tailored content, and a cohesive brand identity work together to present Rizzazzle Repairs as 
+                                 the go-to destination for reliable, professional media equipment care.">                               
                                 <img
                                     src="/rizzazzle.png"
                                     alt="test"
@@ -763,17 +741,16 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                         <div className="boxInner">
                             <div className="boxContent1"
 
-                                data-title="Owl"
-                                data-secondary="Hoo are you?"
-                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">                             
+                                data-title="Rocky Mountain Remodels"
+                                data-secondary="Home Renovation and Remodeling"
+                                data-text="Rocky Mountain Remodels unveiled a fully custom-built website designed to highlight 
+                                their expertise in home renovation and remodeling. Crafted from the ground up, the site features 
+                                a clean, modern design with intuitive navigation, making it easy for visitors to explore services 
+                                such as kitchen and bathroom remodels, home additions, and custom renovations. Project galleries 
+                                showcase before-and-after transformations, while dedicated pages detail processes, client testimonials, 
+                                and design inspirations. With tailored content, smooth performance, and a professional aesthetic, 
+                                the new site positions Rocky Mountain Remodels as a trusted partner for homeowners looking 
+                                to bring their renovation visions to life.">                             
                                 <img
                                     src="/rmr.png"
                                     alt="test"
@@ -788,17 +765,16 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                         
                         <div className="boxInner">
                             <div className="boxContent1"
-                                data-title="Owl"
-                                data-secondary="Hoo are you?"
-                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">                               
+                                data-title="SavvyB"
+                                data-secondary="Salon Rental"
+                                data-text="SavvyB launched a fully custom-built website designed to showcase their 
+                                salon rental spaces with style and professionalism. Built from the ground up, the site 
+                                features a modern, inviting design and easy-to-navigate layout, allowing stylists and 
+                                beauty professionals to explore rental options, amenities, and booking details effortlessly. 
+                                Dedicated pages highlight available suites, flexible rental plans, and community benefits, 
+                                while high-quality visuals convey the vibrant, creative atmosphere of the space. Optimized 
+                                for performance and usability, the new site positions SavvyB as the go-to destination for
+                                 beauty professionals seeking a stylish, fully equipped workspace.">                               
                                 <img
                                     src="/savvyb.png"
                                     alt="test"
@@ -814,17 +790,17 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                         <div className="boxInner">
                             <div className="boxContent1"
 
-                                data-title="Owl"
-                                data-secondary="Hoo are you?"
-                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">                          
+                                data-title="Vibrant Acupuncture and Herbs"
+                                data-secondary="Acupuncture and Herbs"
+                                data-text="Vibrant Acupuncture and Herbs launched a fully custom-built website designed 
+                                to reflect the holistic, healing nature of their practice. Built from the ground up, 
+                                the site features a calming, natural design and intuitive navigation, guiding visitors 
+                                to information on acupuncture treatments, herbal remedies, wellness programs, and patient 
+                                resources. Dedicated service pages highlight techniques for pain relief, stress reduction,
+                                 and overall health, while an easy-to-use booking system simplifies scheduling appointments. 
+                                 Thoughtfully crafted content, soothing visuals, and seamless performance work together to 
+                                 position Vibrant Acupuncture and Herbs as a trusted destination for those seeking personalized, 
+                                 natural health care.">                          
                                 <img
                                     src="/vpa.png"
                                     alt="test"
@@ -839,17 +815,16 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                         
                         <div className="boxInner">
                             <div className="boxContent1"
-                                data-title="Owl"
-                                data-secondary="Hoo are you?"
-                                data-text="Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.Owel lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est amet delectus,
-                             blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum adipisci iste earum distinctio,
-                             fugit, quas ipsa impedit.">
+                                data-title="Yusha.ai"
+                                data-secondary="AI Animation"
+                                data-text="The website update for Yusha.ai refreshed the company&#39;s online presence 
+                                to better showcase their AI-powered animation services. The redesign features a sleek, 
+                                modern aesthetic with improved navigation, making it easy for users to explore offerings, 
+                                view sample animations, and understand the capabilities of AI-driven content creation. 
+                                Updated visuals, interactive demos, and streamlined content highlight the efficiency, 
+                                creativity, and versatility of the platform. Enhanced performance and a responsive 
+                                design ensure a smooth experience across devices, positioning Yusha.ai as a cutting-edge 
+                                solution for businesses and creators looking to bring their ideas to life with AI animation.">
                                 <img
                                     src="/yusha.png"
                                     alt="test"
@@ -877,7 +852,7 @@ export default function Carousel({ onImagesLoaded, itemsLoaded }) {
                     <div className="content">
                         <div className="title">Placeholder title</div>
                         <div className="secondary">Placeholder secondary</div>
-                        <div className="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est
+                        <div className="detailDescription">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est
                             amet delectus, blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum
                             adipisci iste earum distinctio, fugit, quas ipsa impedit.
                         </div>

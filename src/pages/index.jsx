@@ -65,7 +65,7 @@ export default function Home() {
 
     useEffect(() => {
         shaderLoadValueSpring.set(shaderLoadValue + itemsLoaded);
-        
+
     }, [shaderLoadValueSpring, shaderLoadValue, itemsLoaded]);
 
 
@@ -84,20 +84,20 @@ export default function Home() {
     useEffect(() => {
         if (isLoading) {
             setShaderLoadValue(20);
-            
+
         }
     }, [isLoading]);
 
     useEffect(() => {
         if (!isLoading) {
-            setShaderLoadValue(50); 
+            setShaderLoadValue(50);
         }
     }, [isLoading]);
 
-    
+
     useEffect(() => {
         if (!isLoading && carouselImagesLoaded) {
-            
+
             setTimeout(() => {
                 setLoadTransition(true);
             }, 1600);
@@ -117,9 +117,9 @@ export default function Home() {
 
     useGSAP(
         () => {
-            
+
             ScrollTrigger.normalizeScroll(true);
-            
+
             smoother.current = ScrollSmoother.create({
                 smooth: 2,
                 effects: true,
@@ -129,7 +129,7 @@ export default function Home() {
             //create a scroll trigger for the sticky divs
 
             let viewportHeight = window.innerHeight;
-            
+
 
             ScrollTrigger.create({
                 trigger: '#stickyContent',
@@ -264,7 +264,7 @@ export default function Home() {
                         }
                     })
                 }
-                
+
             });
             setTimeout(() => {
                 setIsResizeBlackOut(true);
@@ -370,7 +370,7 @@ export default function Home() {
                     markers: false,
                     scrub: config.scrub || 1,
                     onUpdate: (self) => {
-                        tl.progress(self.progress * -0.5 + 1);
+                        tl.progress(self.progress * -0.2 + 1);
                         // console.log(self.progress);
                     },
                 });
@@ -383,7 +383,7 @@ export default function Home() {
                     markers: false,
                     scrub: config.scrub || 1,
                     onUpdate: (self) => {
-                        tl.progress(self.progress * 0.5);
+                        tl.progress(self.progress * 0.2);
                         // console.log(self.progress);
                     },
                 });
@@ -1065,9 +1065,54 @@ export default function Home() {
 
     //     return () => unsubscribe(); // Cleanup listener on unmount
     // }, [scrollYProgress, webInView]);
+    const rectRef = useRef(null);
 
+    useEffect(() => {
+        const rect = rectRef.current;
+        const slices = 360; // number of layers for smooth curve
+        const maxAngle = 100; // max rotation angle to curve away
 
+        // Clear previous slices if any
+        rect.innerHTML = "";
 
+        for (let i = 0; i < slices; i++) {
+            const slice = document.createElement("div");
+            slice.className = "slice";
+
+            // Calculate rotation and depth
+            const angle = i;
+            // const angle = (i / (slices - 1)) * maxAngle;
+            // slice.style.transform = `rotateX(${angle}deg) translateZ(${-i * 1.5}px)`;
+            slice.style.transform = `rotateX(${angle}deg)`;
+
+            rect.appendChild(slice);
+        }
+    }, []);
+
+    const [result, setResult] = React.useState("");
+
+    const onSubmit = async (event) => {
+      event.preventDefault();
+      setResult("Sending....");
+      const formData = new FormData(event.target);
+  
+      formData.append("access_key", "28bf711e-7ad3-41c0-8a51-b96b7d51ddfc");
+  
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+  
+      const data = await response.json();
+  
+      if (data.success) {
+        setResult("Form Submitted Successfully");
+        event.target.reset();
+      } else {
+        console.log("Error", data);
+        setResult(data.message);
+      }
+    };
     return (
         <motion.div ref={scrollRef} className="mainCont">
             <motion.div id="smooth-wrapper" ref={main} animate={true} className="smoothWrap">
@@ -1107,8 +1152,8 @@ export default function Home() {
                             )
                         }
                     </AnimatePresence>
-                    
-                    
+
+
                     <div className="sectionTop">
                         <AnimatePresence>
                             {loadTransition &&
@@ -1223,7 +1268,7 @@ export default function Home() {
 
                             <div
                                 className="seoTextContWrapper"
-                                style={{ perspective: '1500px' }}
+                            // style={{ perspective: '1500px' }}
                             >
                                 <motion.div
                                     className="seoTextCont"
@@ -1235,7 +1280,7 @@ export default function Home() {
                                     <div
                                         className="seoTextFront"
                                         style={{
-                                            backfaceVisibility: 'hidden',
+                                            // backfaceVisibility: 'hidden',
 
                                         }}
                                     >
@@ -1243,21 +1288,12 @@ export default function Home() {
                                         <h3>SOLUTIONS</h3>
 
                                     </div>
+                                    <div className="curved-rect" ref={rectRef}></div>
+
+
                                     <div
                                         className="seoTextBack"
-                                        style={{
-                                            backfaceVisibility: 'hidden',
-                                            transform: 'rotateY(180deg)',
-                                            position: 'absolute',
-                                            top: 0,
-                                            left: 0,
-                                            width: '100%',
-                                            height: '100%',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
 
-                                        }}
                                     >
 
                                         <motion.div className="seoBackCont">
@@ -1531,11 +1567,81 @@ export default function Home() {
                         </motion.div>
                     </motion.div>
                     <div className="sectionBottom">
-                        <motion.div initial={{ y: 0 }} animate={{ y: 0 }} whileInView={{ y: 0 }}
-                            viewport={{ once: true }}
+                        <motion.div
                             className="sticky-div">
-                            <h1 className="text-white ">CONTACT</h1>
-                            <h1 className="text-white">SECTION</h1>
+                            <div className="contactFormCont">
+                                <form onSubmit={onSubmit} className="contactForm">
+                                    {/* <input type="hidden" name="access_key" value="28bf711e-7ad3-41c0-8a51-b96b7d51ddfc" /> */}
+                                    <h1>Work With Us</h1>
+                                    <div className="contactFormNameCont">
+                                        <div className="contactFormInputCont" onClick={(e) => {
+                                            e.stopPropagation();
+                                            const input = e.currentTarget.querySelector('input');
+                                            if (input) input.focus();
+                                        }}>
+                                            <h3>First Name</h3>
+                                            <input type="text" name="nameFirst" required />
+                                        </div>
+                                        <div className="contactFormInputCont" onClick={(e) => {
+                                            e.stopPropagation();
+                                            const input = e.currentTarget.querySelector('input');
+                                            if (input) input.focus();
+                                        }}>
+                                            <h3>Last Name</h3>
+                                            <input type="text" name="nameLast" required />
+                                        </div>
+                                    </div>
+                                    <div className="contactFormInputCont" onClick={(e) => {
+                                        e.stopPropagation();
+                                        const input = e.currentTarget.querySelector('input');
+                                        if (input) input.focus();
+                                    }}>
+                                        <h3>Email</h3>
+                                        <input type="email" name="email" required />
+                                    </div>
+                                    <div className="contactFormInputCont" onClick={(e) => {
+                                        e.stopPropagation();
+                                        const input = e.currentTarget.querySelector('input');
+                                        if (input) input.focus();
+                                    }}>
+                                        <h3>Phone</h3>
+                                        <input 
+                                            type="tel" 
+                                            name="phone" 
+                                            required 
+                                            onChange={(e) => {
+                                                const value = e.target.value.replace(/\D/g, '');
+                                                let formattedValue = '';
+                                                
+                                                if (value.length > 0) {
+                                                    if (value.length <= 3) {
+                                                        formattedValue = `(${value}`;
+                                                    } else if (value.length <= 6) {
+                                                        formattedValue = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+                                                    } else {
+                                                        formattedValue = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+                                                    }
+                                                }
+                                                
+                                                e.target.value = formattedValue;
+                                            }}
+                                            
+                                        />
+                                    </div>
+                                    <div className="contactFormInputCont" onClick={(e) => {
+                                        e.stopPropagation();
+                                        const textarea = e.currentTarget.querySelector('textarea');
+                                        if (textarea) textarea.focus();
+                                    }}>
+                                        <h3>Message</h3>
+                                        <textarea name="message" required />
+                                    </div>
+                                    {/* <input type="hidden" name="redirect" value="https://web3forms.com/success" /> */}
+                                    <button className="contactFormButton" type="submit">Submit Form</button>
+                                    {result && <p>{result}</p>}
+                                </form>
+
+                            </div>
 
                         </motion.div>
                     </div>
@@ -1551,198 +1657,198 @@ export default function Home() {
                 }
             </AnimatePresence>
             <AnimatePresence>
-                        {isResize &&
-                            <motion.div
-                                animate={{ opacity: 1 }}
-                                transition={{ duration: 0.5, ease: 'easeInOut' }}
-                                className="resizeCont"
-                            >
-                                {/* <motion.div className='resizeOut'></motion.div> */}
-                                <h1 className="resizeTextH1" id="resizeTextH1Id">CONTENT INCOMING</h1>
-
-                                
-                                <svg
-                                    className="halfCircleSVG"
-                                    viewBox="0 0 200 100"
-                                    style={{
-                                        position: 'absolute',
-                                        top: '50%',
-                                        left: '40%',
-                                        transform: 'translate(-50%, -50%) rotate(-90deg)',
-                                        width: '300px',
-                                        height: '150px'
-                                    }}
-                                >
-                                    <path
-                                        className="halfCirclePath"
-                                        d="M 10 90 A 80 80 0 0 1 190 90"
-                                        fill="none"
-                                        stroke="#ffffff"
-                                        strokeWidth="4"
-                                        strokeDasharray="1000 1000"
-                                        strokeDashoffset="0"
-                                    />
-                                </svg>
-                                <svg
-                                    className="halfCircleSVG"
-                                    viewBox="0 0 200 100"
-                                    style={{
-                                        position: 'absolute',
-                                        top: '50%',
-                                        left: '60%',
-                                        transform: 'translate(-50%, -50%) rotate(90deg)',
-                                        width: '300px',
-                                        height: '150px'
-                                    }}
-                                >
-                                    <path
-                                        className="halfCirclePath"
-                                        d="M 10 90 A 80 80 0 0 1 190 90"
-                                        fill="none"
-                                        stroke="#ffffff"
-                                        strokeWidth="4"
-                                        strokeDasharray="1000 1000"
-                                        strokeDashoffset="0"
-                                    />
-                                </svg>
-                                
-                                <svg
-                                    className="halfCircleSVG2"
-                                    viewBox="0 0 200 100"
-                                    style={{
-                                        position: 'absolute',
-                                        top: '30%',
-                                        left: '50%',
-                                        transform: 'translate(-50%, -50%) rotate(0deg)',
-                                        width: '300px',
-                                        height: '150px'
-                                    }}
-                                >
-                                    <path
-                                        className="halfCirclePath2"
-                                        d="M 10 90 A 80 80 0 0 1 190 90"
-                                        fill="none"
-                                        stroke="#ffffff"
-                                        strokeWidth="4"
-                                        strokeDasharray="1000 1000"
-                                        strokeDashoffset="0"
-                                    />
-                                </svg>
-                                <svg
-                                    className="halfCircleSVG2"
-                                    viewBox="0 0 200 100"
-                                    style={{
-                                        position: 'absolute',
-                                        top: '70%',
-                                        left: '50%',
-                                        transform: 'translate(-50%, -50%) rotate(180deg)',
-                                        width: '300px',
-                                        height: '150px'
-                                    }}
-                                >
-                                    <path
-                                        className="halfCirclePath2"
-                                        d="M 10 90 A 80 80 0 0 1 190 90"
-                                        fill="none"
-                                        stroke="#ffffff"
-                                        strokeWidth="4"
-                                        strokeDasharray="1000 1000"
-                                        strokeDashoffset="0"
-                                    />
-                                </svg>
-                                <svg
-                                    className="halfCircleSVG3"
-                                    viewBox="0 0 200 100"
-                                    style={{
-                                        position: 'absolute',
-                                        top: '40%',
-                                        left: '40%',
-                                        transform: 'translate(-50%, -50%) rotate(-45deg)',
-                                        width: '300px',
-                                        height: '150px'
-                                    }}
-                                >
-                                    <path
-                                        className="halfCirclePath3"
-                                        d="M 10 90 A 80 80 0 0 1 190 90"
-                                        fill="none"
-                                        stroke="#ffffff"
-                                        strokeWidth="4"
-                                        strokeDasharray="1000 1000"
-                                        strokeDashoffset="0"
-                                    />
-                                </svg>
-                                <svg
-                                    className="halfCircleSVG3"
-                                    viewBox="0 0 200 100"
-                                    style={{
-                                        position: 'absolute',
-                                        top: '40%',
-                                        left: '60%',
-                                        transform: 'translate(-50%, -50%) rotate(45deg)',
-                                        width: '300px',
-                                        height: '150px'
-                                    }}
-                                >
-                                    <path
-                                        className="halfCirclePath3"
-                                        d="M 10 90 A 80 80 0 0 1 190 90"
-                                        fill="none"
-                                        stroke="#ffffff"
-                                        strokeWidth="4"
-                                        strokeDasharray="1000 1000"
-                                        strokeDashoffset="0"
-                                    />
-                                </svg>
-                                <svg
-                                    className="halfCircleSVG3"
-                                    viewBox="0 0 200 100"
-                                    style={{
-                                        position: 'absolute',
-                                        top: '60%',
-                                        left: '40%',
-                                        transform: 'translate(-50%, -50%) rotate(-135deg)',
-                                        width: '300px',
-                                        height: '150px'
-                                    }}
-                                >
-                                    <path
-                                        className="halfCirclePath3"
-                                        d="M 10 90 A 80 80 0 0 1 190 90"
-                                        fill="none"
-                                        stroke="#ffffff"
-                                        strokeWidth="4"
-                                        strokeDasharray="1000 1000"
-                                        strokeDashoffset="0"
-                                    />
-                                </svg>
-                                <svg
-                                    className="halfCircleSVG3"
-                                    viewBox="0 0 200 100"
-                                    style={{
-                                        position: 'absolute',
-                                        top: '60%',
-                                        left: '60%',
-                                        transform: 'translate(-50%, -50%) rotate(135deg)',
-                                        width: '300px',
-                                        height: '150px'
-                                    }}
-                                >
-                                    <path
-                                        className="halfCirclePath3"
-                                        d="M 10 90 A 80 80 0 0 1 190 90"
-                                        fill="none"
-                                        stroke="#ffffff"
-                                        strokeWidth="4"
-                                        strokeDasharray="1000 1000"
-                                        strokeDashoffset="0"
-                                    />
-                                </svg>
+                {isResize &&
+                    <motion.div
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5, ease: 'easeInOut' }}
+                        className="resizeCont"
+                    >
+                        {/* <motion.div className='resizeOut'></motion.div> */}
+                        <h1 className="resizeTextH1" id="resizeTextH1Id">CONTENT INCOMING</h1>
 
 
-                            </motion.div>
-                        }
-                    </AnimatePresence>
+                        <svg
+                            className="halfCircleSVG"
+                            viewBox="0 0 200 100"
+                            style={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '40%',
+                                transform: 'translate(-50%, -50%) rotate(-90deg)',
+                                width: '300px',
+                                height: '150px'
+                            }}
+                        >
+                            <path
+                                className="halfCirclePath"
+                                d="M 10 90 A 80 80 0 0 1 190 90"
+                                fill="none"
+                                stroke="#ffffff"
+                                strokeWidth="4"
+                                strokeDasharray="1000 1000"
+                                strokeDashoffset="0"
+                            />
+                        </svg>
+                        <svg
+                            className="halfCircleSVG"
+                            viewBox="0 0 200 100"
+                            style={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '60%',
+                                transform: 'translate(-50%, -50%) rotate(90deg)',
+                                width: '300px',
+                                height: '150px'
+                            }}
+                        >
+                            <path
+                                className="halfCirclePath"
+                                d="M 10 90 A 80 80 0 0 1 190 90"
+                                fill="none"
+                                stroke="#ffffff"
+                                strokeWidth="4"
+                                strokeDasharray="1000 1000"
+                                strokeDashoffset="0"
+                            />
+                        </svg>
+
+                        <svg
+                            className="halfCircleSVG2"
+                            viewBox="0 0 200 100"
+                            style={{
+                                position: 'absolute',
+                                top: '30%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%) rotate(0deg)',
+                                width: '300px',
+                                height: '150px'
+                            }}
+                        >
+                            <path
+                                className="halfCirclePath2"
+                                d="M 10 90 A 80 80 0 0 1 190 90"
+                                fill="none"
+                                stroke="#ffffff"
+                                strokeWidth="4"
+                                strokeDasharray="1000 1000"
+                                strokeDashoffset="0"
+                            />
+                        </svg>
+                        <svg
+                            className="halfCircleSVG2"
+                            viewBox="0 0 200 100"
+                            style={{
+                                position: 'absolute',
+                                top: '70%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%) rotate(180deg)',
+                                width: '300px',
+                                height: '150px'
+                            }}
+                        >
+                            <path
+                                className="halfCirclePath2"
+                                d="M 10 90 A 80 80 0 0 1 190 90"
+                                fill="none"
+                                stroke="#ffffff"
+                                strokeWidth="4"
+                                strokeDasharray="1000 1000"
+                                strokeDashoffset="0"
+                            />
+                        </svg>
+                        <svg
+                            className="halfCircleSVG3"
+                            viewBox="0 0 200 100"
+                            style={{
+                                position: 'absolute',
+                                top: '40%',
+                                left: '40%',
+                                transform: 'translate(-50%, -50%) rotate(-45deg)',
+                                width: '300px',
+                                height: '150px'
+                            }}
+                        >
+                            <path
+                                className="halfCirclePath3"
+                                d="M 10 90 A 80 80 0 0 1 190 90"
+                                fill="none"
+                                stroke="#ffffff"
+                                strokeWidth="4"
+                                strokeDasharray="1000 1000"
+                                strokeDashoffset="0"
+                            />
+                        </svg>
+                        <svg
+                            className="halfCircleSVG3"
+                            viewBox="0 0 200 100"
+                            style={{
+                                position: 'absolute',
+                                top: '40%',
+                                left: '60%',
+                                transform: 'translate(-50%, -50%) rotate(45deg)',
+                                width: '300px',
+                                height: '150px'
+                            }}
+                        >
+                            <path
+                                className="halfCirclePath3"
+                                d="M 10 90 A 80 80 0 0 1 190 90"
+                                fill="none"
+                                stroke="#ffffff"
+                                strokeWidth="4"
+                                strokeDasharray="1000 1000"
+                                strokeDashoffset="0"
+                            />
+                        </svg>
+                        <svg
+                            className="halfCircleSVG3"
+                            viewBox="0 0 200 100"
+                            style={{
+                                position: 'absolute',
+                                top: '60%',
+                                left: '40%',
+                                transform: 'translate(-50%, -50%) rotate(-135deg)',
+                                width: '300px',
+                                height: '150px'
+                            }}
+                        >
+                            <path
+                                className="halfCirclePath3"
+                                d="M 10 90 A 80 80 0 0 1 190 90"
+                                fill="none"
+                                stroke="#ffffff"
+                                strokeWidth="4"
+                                strokeDasharray="1000 1000"
+                                strokeDashoffset="0"
+                            />
+                        </svg>
+                        <svg
+                            className="halfCircleSVG3"
+                            viewBox="0 0 200 100"
+                            style={{
+                                position: 'absolute',
+                                top: '60%',
+                                left: '60%',
+                                transform: 'translate(-50%, -50%) rotate(135deg)',
+                                width: '300px',
+                                height: '150px'
+                            }}
+                        >
+                            <path
+                                className="halfCirclePath3"
+                                d="M 10 90 A 80 80 0 0 1 190 90"
+                                fill="none"
+                                stroke="#ffffff"
+                                strokeWidth="4"
+                                strokeDasharray="1000 1000"
+                                strokeDashoffset="0"
+                            />
+                        </svg>
+
+
+                    </motion.div>
+                }
+            </AnimatePresence>
             <div className={`canvasCont ${isResize ? "z-[1998]" : "z-[1]"} `}>
                 <canvas className={`${isResize ? "z-[1999]" : "z-[2]"}`} ref={canvasRef} style={{ width: '100%', height: '100vh' }} />
             </div>
