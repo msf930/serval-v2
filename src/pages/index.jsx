@@ -30,7 +30,7 @@ import { ScrambleTextPlugin } from 'gsap/dist/ScrambleTextPlugin';
 import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin';
 import { useGSAP } from '@gsap/react';
 
-import { FaCircle } from "react-icons/fa";
+
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText, ScrambleTextPlugin, Observer, ScrollToPlugin);
 
@@ -41,7 +41,8 @@ import logo from '../../public/logo.png';
 import styles from "@/components/WebsiteSection/styles.module.css";
 import { scale } from "motion";
 import Carousel from "@/components/Carousel";
-import Gooey from "@/components/Gooey";
+import Curve from '@/components/Layout/Curve';
+
 
 export default function Home() {
     //GSAP stuff
@@ -54,6 +55,8 @@ export default function Home() {
     const [itemsLoaded, setItemsLoaded] = useState(0);
     const [shaderLoadValue, setShaderLoadValue] = useState(0);
     const [isResizeBlackOut, setIsResizeBlackOut] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+    const [innerHeight, setInnerHeight] = useState(0);
 
     const main = useRef();
     const smoother = useRef();
@@ -94,6 +97,22 @@ export default function Home() {
         }
     }, [isLoading]);
 
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 766);
+            setInnerHeight(window.innerHeight);
+        };
+
+        // Check on mount
+        checkMobile();
+
+        // Add event listener for window resize
+        window.addEventListener('resize', checkMobile);
+
+        // Cleanup
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     useEffect(() => {
         if (!isLoading && carouselImagesLoaded) {
@@ -1092,26 +1111,26 @@ export default function Home() {
     const [result, setResult] = React.useState("");
 
     const onSubmit = async (event) => {
-      event.preventDefault();
-      setResult("Sending....");
-      const formData = new FormData(event.target);
-  
-      formData.append("access_key", "28bf711e-7ad3-41c0-8a51-b96b7d51ddfc");
-  
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData
-      });
-  
-      const data = await response.json();
-  
-      if (data.success) {
-        setResult("Form Submitted Successfully");
-        event.target.reset();
-      } else {
-        console.log("Error", data);
-        setResult(data.message);
-      }
+        event.preventDefault();
+        setResult("Sending....");
+        const formData = new FormData(event.target);
+
+        formData.append("access_key", "28bf711e-7ad3-41c0-8a51-b96b7d51ddfc");
+
+        const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            setResult("Form Submitted Successfully");
+            event.target.reset();
+        } else {
+            console.log("Error", data);
+            setResult(data.message);
+        }
     };
     return (
         <motion.div ref={scrollRef} className="mainCont">
@@ -1153,37 +1172,77 @@ export default function Home() {
                         }
                     </AnimatePresence>
 
+                    {isMobile ?
+                    <Curve backgroundColor="transparent">
+                        <div className="sectionTop" style={{ height: isMobile ? innerHeight : "100vh" }}>
 
-                    <div className="sectionTop">
-                        <AnimatePresence>
-                            {loadTransition &&
-                                <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ duration: 0.5, ease: 'easeInOut', delay: 1.0 }}
-                                    className="logoCont">
-                                    <Image src={logo}
-                                        alt="logo"
-                                        fill
-                                        className="logoLogo"
-                                        priority={true}
-                                    />
+                            
 
-                                </motion.div>
-                            }
-                        </AnimatePresence>
-                        <motion.div className="logoText" >
-                            <div className=" mt-[-20px] flex flex-row justify-center items-center gap-1 cursor-pointer">
-                                <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent" }, ease: "power2" }); }}>WEB</a>
-                                <h3>&#8226;</h3>
-                                <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent2" }, ease: "power2" }); }}>SEO</a>
-                                <h3>&#8226;</h3>
-                                <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent3" }, ease: "power2" }); }}>DESIGN</a>
-                            </div>
-                            <h3 className="">info@servaldesigns.com</h3>
-                        </motion.div>
-                    </div>
+                            <AnimatePresence>
 
+                                {loadTransition &&
+
+                                    <motion.div
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ duration: 0.5, ease: 'easeInOut', delay: 1.0 }}
+                                        className="logoCont">
+                                        <Image src={logo}
+                                            alt="logo"
+                                            fill
+                                            className="logoLogo"
+                                            priority={true}
+                                        />
+
+                                    </motion.div>
+                                }
+                            </AnimatePresence>
+                            <motion.div className="logoText" >
+                                <div className=" mt-[-20px] flex flex-row justify-center items-center gap-1 cursor-pointer">
+                                    <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent" }, ease: "power2" }); }}>WEB</a>
+                                    <h3>&#8226;</h3>
+                                    <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent2" }, ease: "power2" }); }}>SEO</a>
+                                    <h3>&#8226;</h3>
+                                    <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent3" }, ease: "power2" }); }}>DESIGN</a>
+                                </div>
+                                <h3 className="">info@servaldesigns.com</h3>
+                            </motion.div>
+                        </div>
+                        </Curve>
+                        :
+                        <div className="sectionTop" style={{ height: isMobile ? innerHeight : "100vh" }}>
+
+                            <AnimatePresence>
+
+                                {loadTransition &&
+
+                                    <motion.div
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ duration: 0.5, ease: 'easeInOut', delay: 1.0 }}
+                                        className="logoCont">
+                                        <Image src={logo}
+                                            alt="logo"
+                                            fill
+                                            className="logoLogo"
+                                            priority={true}
+                                        />
+
+                                    </motion.div>
+                                }
+                            </AnimatePresence>
+                            <motion.div className="logoText" >
+                                <div className=" mt-[-20px] flex flex-row justify-center items-center gap-1 cursor-pointer">
+                                    <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent" }, ease: "power2" }); }}>WEB</a>
+                                    <h3>&#8226;</h3>
+                                    <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent2" }, ease: "power2" }); }}>SEO</a>
+                                    <h3>&#8226;</h3>
+                                    <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent3" }, ease: "power2" }); }}>DESIGN</a>
+                                </div>
+                                <h3 className="">info@servaldesigns.com</h3>
+                            </motion.div>
+                        </div>
+                    }
                     <motion.div className="sectionWeb">
                         <div className="sticky-div" id="stickyContent" data-speed="1.5">
                             <div className="infoCont">
@@ -1605,14 +1664,14 @@ export default function Home() {
                                         if (input) input.focus();
                                     }}>
                                         <h3>Phone</h3>
-                                        <input 
-                                            type="tel" 
-                                            name="phone" 
-                                            required 
+                                        <input
+                                            type="tel"
+                                            name="phone"
+                                            required
                                             onChange={(e) => {
                                                 const value = e.target.value.replace(/\D/g, '');
                                                 let formattedValue = '';
-                                                
+
                                                 if (value.length > 0) {
                                                     if (value.length <= 3) {
                                                         formattedValue = `(${value}`;
@@ -1622,10 +1681,10 @@ export default function Home() {
                                                         formattedValue = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
                                                     }
                                                 }
-                                                
+
                                                 e.target.value = formattedValue;
                                             }}
-                                            
+
                                         />
                                     </div>
                                     <div className="contactFormInputCont" onClick={(e) => {

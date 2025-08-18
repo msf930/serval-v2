@@ -32,7 +32,7 @@
     "@tailwindcss/postcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
-    "sass": "^1.89.1",
+    "sass": "^1.90.0",
     "tailwindcss": "^4"
   }
 }
