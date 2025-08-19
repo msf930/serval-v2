@@ -17,9 +17,9 @@ export default function Web() {
     return (
 
 
-        <Curve backgroundColor="#f0f0f0">
-            <div className={styles.mainCont} style={{ height: innerHeight }}>
-                <div className={styles.mobileMain} >
+        <div className={styles.mainCont} >
+            <Curve backgroundColor="#f0f0f0">
+                <div className={styles.mobileMain} style={{ height: innerHeight }} >
 
                     <h1>Web</h1>
 
@@ -32,8 +32,8 @@ export default function Web() {
                     bg3b={0.3} 
                     bg3={0.8}
                 /> */}
-            </div>
-        </Curve>
+            </Curve>
+        </div>
     );
 }
 
