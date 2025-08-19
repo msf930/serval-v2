@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { text, curve, translate } from './anim';
 
 const routes = {
-    "/": "Home",
+    "/": "Welcome",
     "/web": "Web",
     "/design": "Design",
     "/seo": "SEO",

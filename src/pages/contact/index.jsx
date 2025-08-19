@@ -18,14 +18,14 @@ export default function contact() {
                 
                 <h1>Contact</h1>
             </div>
-            <MobileShader 
+            {/* <MobileShader 
                     bg1b={0.1} 
                     bg1={0.7} 
                     bg2b={0.1} 
                     bg2={0.7} 
                     bg3b={0.1} 
                     bg3={0.7}
-                />
+                /> */}
         </Curve>
         </div>
     );

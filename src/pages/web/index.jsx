@@ -20,14 +20,14 @@ export default function Web() {
                     <h1>Web</h1>
                     
                 </div>
-                <MobileShader 
+                {/* <MobileShader 
                     bg1b={0.0} 
                     bg1={0.0} 
                     bg2b={0.0} 
                     bg2={0.7} 
                     bg3b={0.3} 
                     bg3={0.8}
-                />
+                /> */}
             </Curve>
         </div>
     );

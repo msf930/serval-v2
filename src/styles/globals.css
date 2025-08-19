@@ -23,7 +23,7 @@ body,
 }
 
 @media (max-width: 768px) {
-    .sectionTop {
+    .sectionTopMobile {
         position: relative;
         height: 100vh;
         width: 100vw;
@@ -32,11 +32,18 @@ body,
         justify-content: center;
         align-items: center;
         overflow: hidden;
+        background-color: #1B5299;
        
     
     }
+    .sectionTop {
+        display: none !important;
+    }
     .loadingText{
         font-size: 2rem !important;
+    }
+    .loadingBarText{
+        display: none !important;
     }
     .sectionSEO {
         display: none !important;

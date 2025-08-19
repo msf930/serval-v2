@@ -18,14 +18,14 @@ export default function seo() {
                 
                 <h1>SEO</h1>
             </div>
-            <MobileShader 
+            {/* <MobileShader 
                     bg1b={0.2} 
                     bg1={0.8} 
                     bg2b={0.2} 
                     bg2={0.5} 
                     bg3b={0.0} 
                     bg3={0.7}
-                />
+                /> */}
         </Curve>
         </div>
     );

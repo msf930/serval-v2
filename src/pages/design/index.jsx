@@ -17,14 +17,14 @@ export default function design() {
                     {/* <MobileNav currentUrl={currentUrl} routeProp={routePropCurve} /> */}
                     <h1>Design</h1>
                 </div>
-                <MobileShader 
+                {/* <MobileShader 
                     bg1b={0.2} 
                     bg1={0.8} 
-                    bg2b={0.2} 
-                    bg2={0.5} 
-                    bg3b={0.0} 
-                    bg3={0.7}
-                />
+                    bg2b={0.4} 
+                    bg2={0.6} 
+                    bg3b={0.1} 
+                    bg3={0.6}
+                /> */}
             </Curve>
         </div>
     );

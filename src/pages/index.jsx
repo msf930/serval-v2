@@ -1136,7 +1136,7 @@ export default function Home() {
         <motion.div ref={scrollRef} className="mainCont">
             <motion.div id="smooth-wrapper" ref={main} animate={true} className="smoothWrap">
                 <motion.div id="smooth-content" animate={true} className={!loadTransition ? "smoothContent1" : "smoothContent"}>
-                    <AnimatePresence>
+                    {!isMobile && <AnimatePresence>
                         {
                             !loadTransition
                             // true
@@ -1150,7 +1150,7 @@ export default function Home() {
                                         <div className="loadProgressCont">
                                             <motion.div className="loadingBar" style={{ width: display }}></motion.div>
                                             {/* <motion.div className="loadingBarText">{itemsLoaded}</motion.div> */}
-                                            <motion.div className="loadingBarText">{display}</motion.div>
+                                           {!isMobile && <motion.div className="loadingBarText">{display}</motion.div>}
                                         </div>
                                     </motion.div>
                                     <motion.div className="loadingGridTop">
@@ -1170,17 +1170,17 @@ export default function Home() {
                                 </motion.div>
                             )
                         }
-                    </AnimatePresence>
+                    </AnimatePresence>}
 
                     {isMobile ?
                     <Curve backgroundColor="transparent">
-                        <div className="sectionTop" style={{ height: isMobile ? innerHeight : "100vh" }}>
+                        <div className="sectionTopMobile" style={{ height: isMobile ? innerHeight : "100vh" }}>
 
                             
 
                             <AnimatePresence>
 
-                                {loadTransition &&
+                                
 
                                     <motion.div
                                         initial={{ opacity: 0 }}
@@ -1195,7 +1195,7 @@ export default function Home() {
                                         />
 
                                     </motion.div>
-                                }
+                                
                             </AnimatePresence>
                             <motion.div className="logoText" >
                                 <div className=" mt-[-20px] flex flex-row justify-center items-center gap-1 cursor-pointer">
@@ -1219,7 +1219,7 @@ export default function Home() {
                                     <motion.div
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
-                                        transition={{ duration: 0.5, ease: 'easeInOut', delay: 1.0 }}
+                                        transition={{ duration: 0.5, ease: 'easeInOut', delay: 2.1 }}
                                         className="logoCont">
                                         <Image src={logo}
                                             alt="logo"
@@ -1908,9 +1908,9 @@ export default function Home() {
                     </motion.div>
                 }
             </AnimatePresence>
-            <div className={`canvasCont ${isResize ? "z-[1998]" : "z-[1]"} `}>
+           {!isMobile && <div className={`canvasCont ${isResize ? "z-[1998]" : "z-[1]"} `}>
                 <canvas className={`${isResize ? "z-[1999]" : "z-[2]"}`} ref={canvasRef} style={{ width: '100%', height: '100vh' }} />
-            </div>
+            </div>}
         </motion.div>
 
     )
