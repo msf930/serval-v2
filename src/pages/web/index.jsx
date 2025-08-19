@@ -8,17 +8,17 @@ import MobileShader from '@/components/MobileShader';
 
 
 export default function Web() {
-    
+
 
     return (
-        <div className={styles.mainCont}>
 
-        
-            <Curve backgroundColor="black">
+
+        <Curve backgroundColor="#f0f0f0">
+            <div className={styles.mainCont}>
                 <div className={styles.mobileMain} >
-                    
+
                     <h1>Web</h1>
-                    
+
                 </div>
                 {/* <MobileShader 
                     bg1b={0.0} 
@@ -28,8 +28,8 @@ export default function Web() {
                     bg3b={0.3} 
                     bg3={0.8}
                 /> */}
-            </Curve>
-        </div>
+            </div>
+        </Curve>
     );
 }
 
