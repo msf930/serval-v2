@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
+import { useRouter } from 'next/router';
 
 const MobileNav = ({ currentUrl, routeProp = () => {} }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -9,7 +10,7 @@ const MobileNav = ({ currentUrl, routeProp = () => {} }) => {
     const [line3, setLine3] = useState("");
     const [lineLoaded, setLineLoaded] = useState(false);
     const [currentPageIndex, setCurrentPageIndex] = useState(0);
-
+    const router = useRouter();
     useEffect(() => {
         
         const pageArr = ['/', '/web', '/design', '/seo', '/contact'];
@@ -73,9 +74,11 @@ const MobileNav = ({ currentUrl, routeProp = () => {} }) => {
             setIsOpen(false);
             
             // Wait for menu close animation, then navigate
-            setTimeout(() => {
+            // setTimeout(() => {
+                // console.log(href);
                 routeProp(href);
-                }, 1000); // 300ms delay for smooth transition
+                // router.push(href);
+                // }, 1000);
             }
         
         } else {

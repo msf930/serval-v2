@@ -1,9 +1,11 @@
 
+
 import gsap from 'gsap/dist/gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { ScrollSmoother } from 'gsap/dist/ScrollSmoother';
 import { useGSAP } from '@gsap/react';
 import { AnimatePresence } from 'motion/react'
+import { useState, useEffect } from 'react';
 
 import { Caveat, Instrument_Sans, Protest_Strike, Anta, Baumans, Fugaz_One } from 'next/font/google';
 
@@ -55,18 +57,22 @@ if (typeof window !== 'undefined') {
 export default function App({ Component, pageProps, router }) {
 
 
-  const routePropCurveData = (href) => {
-    console.log(href);
-  }
-
-  const onClickHandler = (href) => {
-    router.push(href);
-  }
+  const [pageRoute, setPageRoute] = useState("");
+  const [keyRoute, setKeyRoute] = useState("");
 
 
   const routePropCurve = (href) => {
-    router.push(href);
+    // console.log(href);
+    setPageRoute(href);
+
+    setKeyRoute(href);
+
+    setTimeout(() => {
+      router.push(href);
+    }, 1100);
   }
+  // router.push(href);
+
 
   return (
     <div className={`
@@ -79,8 +85,14 @@ export default function App({ Component, pageProps, router }) {
         main
     `}>
       <MobileNav currentUrl={router.route} routeProp={routePropCurve} />
-      <AnimatePresence mode='wait'>
-        <Component key={router.route} {...pageProps} routePropCurveData={routePropCurveData} />
+      <AnimatePresence
+        mode="wait"
+      // onExitComplete={() => { }}
+      // initial={false}
+      // presenceAffectsLayout={false}
+      // key={router.asPath}
+      >
+        <Component key={keyRoute} {...pageProps} pageRoute={pageRoute} />
       </AnimatePresence>
     </div>
   )

@@ -1,6 +1,28 @@
+export const blur = {
+    initial: {
+        
+        filter: "blur(10px)"
+        // transition: {duration: .2, delay: .1, ease: [0.76, 0, 0.24, 1]},
+        // transitionEnd: { filter: "blur(0px)"}
+    },
+    enter: {
+        
+        filter: "blur(0px)",
+        transition: {duration: .2, delay: .1, ease: [0.76, 0, 0.24, 1]},
+        transitionEnd: {filter: "blur(0px)"}
+    }
+    // exit: {
+        
+    //     filter: "blur(10px)",
+    //     transition: {duration: .5, delay: .4, ease: [0.33, 1, 0.68, 1]}
+    // }
+}
+
 export const text = {
     initial: {
         opacity: 1,
+        transition: {duration: .2, delay: .1, ease: [0.76, 0, 0.24, 1]},
+        transitionEnd: { opacity: 1}
     },
     enter: {
         opacity: 0,
@@ -9,7 +31,7 @@ export const text = {
         transitionEnd: {top: "47.5%"}
     },
     exit: {
-        opacity: 1,
+        opacity: 0,
         top: "40%",
         transition: {duration: .5, delay: .4, ease: [0.33, 1, 0.68, 1]}
     }

@@ -44,7 +44,7 @@ import Carousel from "@/components/Carousel";
 import Curve from '@/components/Layout/Curve';
 
 
-export default function Home() {
+export default function Home({pageRoute}) {
     //GSAP stuff
     const [scroll, setScroll] = useState(0.0);
     const hasAnimated = useRef(false);
@@ -1150,7 +1150,7 @@ export default function Home() {
                                         <div className="loadProgressCont">
                                             <motion.div className="loadingBar" style={{ width: display }}></motion.div>
                                             {/* <motion.div className="loadingBarText">{itemsLoaded}</motion.div> */}
-                                           {!isMobile && <motion.div className="loadingBarText">{display}</motion.div>}
+                                            {!isMobile && <motion.div className="loadingBarText">{display}</motion.div>}
                                         </div>
                                     </motion.div>
                                     <motion.div className="loadingGridTop">
@@ -1173,14 +1173,14 @@ export default function Home() {
                     </AnimatePresence>}
 
                     {isMobile ?
-                    <Curve backgroundColor="transparent">
-                        <div className="sectionTopMobile" style={{ height: isMobile ? innerHeight : "100vh" }}>
+                        <Curve backgroundColor="transparent" routeLabel={pageRoute}>
+                            <div className="sectionTopMobile" style={{ height: isMobile ? innerHeight : "100vh" }}>
 
-                            
 
-                            <AnimatePresence>
 
-                                
+                                <AnimatePresence>
+
+
 
                                     <motion.div
                                         initial={{ opacity: 0 }}
@@ -1195,19 +1195,19 @@ export default function Home() {
                                         />
 
                                     </motion.div>
-                                
-                            </AnimatePresence>
-                            <motion.div className="logoText" >
-                                <div className=" mt-[-20px] flex flex-row justify-center items-center gap-1 cursor-pointer">
-                                    <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent" }, ease: "power2" }); }}>WEB</a>
-                                    <h3>&#8226;</h3>
-                                    <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent2" }, ease: "power2" }); }}>SEO</a>
-                                    <h3>&#8226;</h3>
-                                    <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent3" }, ease: "power2" }); }}>DESIGN</a>
-                                </div>
-                                <h3 className="">info@servaldesigns.com</h3>
-                            </motion.div>
-                        </div>
+
+                                </AnimatePresence>
+                                <motion.div className="logoText" >
+                                    <div className=" mt-[-20px] flex flex-row justify-center items-center gap-1 cursor-pointer">
+                                        <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent" }, ease: "power2" }); }}>WEB</a>
+                                        <h3>&#8226;</h3>
+                                        <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent2" }, ease: "power2" }); }}>SEO</a>
+                                        <h3>&#8226;</h3>
+                                        <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent3" }, ease: "power2" }); }}>DESIGN</a>
+                                    </div>
+                                    <h3 className="">info@servaldesigns.com</h3>
+                                </motion.div>
+                            </div>
                         </Curve>
                         :
                         <div className="sectionTop" style={{ height: isMobile ? innerHeight : "100vh" }}>
@@ -1908,7 +1908,7 @@ export default function Home() {
                     </motion.div>
                 }
             </AnimatePresence>
-           {!isMobile && <div className={`canvasCont ${isResize ? "z-[1998]" : "z-[1]"} `}>
+            {!isMobile && <div className={`canvasCont ${isResize ? "z-[1998]" : "z-[1]"} `}>
                 <canvas className={`${isResize ? "z-[1999]" : "z-[2]"}`} ref={canvasRef} style={{ width: '100%', height: '100vh' }} />
             </div>}
         </motion.div>

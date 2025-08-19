@@ -2,15 +2,15 @@
 import React, { useEffect, useState } from 'react'
 import { motion } from 'motion/react'
 import { useRouter } from 'next/router';
-import { text, curve, translate } from './anim';
+import { text, curve, translate, blur } from './anim';
 
-const routes = {
-    "/": "Welcome",
-    "/web": "Web",
-    "/design": "Design",
-    "/seo": "SEO",
-    "/contact": "Contact"
-}
+// const routes = {
+//     "/": "Welcome",
+//     "/web": "Web",
+//     "/design": "Design",
+//     "/seo": "SEO",
+//     "/contact": "Contact"
+// }
 
 const anim = (variants) => {
     return {
@@ -21,10 +21,17 @@ const anim = (variants) => {
     }
 }
 
-export default function Curve({children, backgroundColor, routePropCurveData = () => {}}) {
-    
+export default function Curve({children, backgroundColor, routeLabel}) {
+    const routes = {
+        "": "Welcome",
+        "/": "Welcome",
+        "/web": "Web",
+        "/design": "Design",
+        "/seo": "SEO",
+        "/contact": "Contact"
+    }
 
-    
+    const [label, setLabel] = useState(routeLabel);
 
     const router = useRouter();
     const [dimensions, setDimensions] = useState({
@@ -45,12 +52,18 @@ export default function Curve({children, backgroundColor, routePropCurveData = (
             window.removeEventListener("resize", resize);
         }
     }, [])
+    useEffect(() => {
+        // console.log(routeLabel);
+        setLabel(routes[routeLabel]);
+    }, []);
 
     return (
         <div className='page curve' style={{backgroundColor}}>
             <div style={{opacity: dimensions.width == null ? 1 : 0}} className='background'/>
             <motion.p className='route' {...anim(text)}>
-                {routes[router.route]}
+                <motion.span {...anim(blur)}>
+                    {label}
+                </motion.span>
             </motion.p>
             {dimensions.width != null && <SVG {...dimensions}/>}
             {

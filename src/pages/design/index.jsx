@@ -5,28 +5,29 @@ import styles from './styles.module.css';
 import MobileNav from '@/components/MobileNav';
 import Curve from '@/components/Layout/Curve';
 import MobileShader from '@/components/MobileShader';
+import { motion } from 'framer-motion';
 
-
-export default function design() {
+export default function design({pageRoute}) {
     
+    const [innerHeight, setInnerHeight] = useState(0);
+    
+    useEffect(() => {
+        console.log(pageRoute);
+        setInnerHeight(window.innerHeight);
+        
+    }, []);
 
     return (
-        <div className={styles.mainCont}>
-            <Curve backgroundColor="black">
+        <motion.div className={styles.mainCont} animate={true}  style={{ height: innerHeight ? innerHeight : "100vh" }}>
+            <Curve backgroundColor="transparent" routeLabel={pageRoute}>
                 <div className={styles.mobileMain}>
-                    {/* <MobileNav currentUrl={currentUrl} routeProp={routePropCurve} /> */}
+
                     <h1>Design</h1>
+
                 </div>
-                {/* <MobileShader 
-                    bg1b={0.2} 
-                    bg1={0.8} 
-                    bg2b={0.4} 
-                    bg2={0.6} 
-                    bg3b={0.1} 
-                    bg3={0.6}
-                /> */}
+
             </Curve>
-        </div>
+        </motion.div>
     );
 }
 
