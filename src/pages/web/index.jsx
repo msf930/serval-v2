@@ -9,12 +9,16 @@ import MobileShader from '@/components/MobileShader';
 
 export default function Web() {
 
+    const [innerHeight, setInnerHeight] = useState(0);
+    useEffect(() => {
+        setInnerHeight(window.innerHeight);
+    }, []);
 
     return (
 
 
         <Curve backgroundColor="#f0f0f0">
-            <div className={styles.mainCont}>
+            <div className={styles.mainCont} style={{ height: innerHeight }}>
                 <div className={styles.mobileMain} >
 
                     <h1>Web</h1>
