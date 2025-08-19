@@ -18,7 +18,7 @@ export default function Web() {
 
 
         <div className={styles.mainCont} >
-            <Curve backgroundColor="#f0f0f0">
+            <Curve backgroundColor="black">
                 <div className={styles.mobileMain} style={{ height: innerHeight }} >
 
                     <h1>Web</h1>
