@@ -25,26 +25,45 @@ body,
 @media (max-width: 768px) {
     .sectionTopMobile {
         position: relative;
-        height: 100vh;
+        top: 0;
+        left: 0;
+        height: 100dvh !important;
         width: 100vw;
+        
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        overflow: hidden;
+        overflow: hidden !important;
         background-color: #1B5299;
+
+
+    }
+    .mobileMain{
+        position: relative;
        
-    
+        width: 100%;
+        height: 100dvh !important;
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+        color: white;
     }
     .sectionTop {
         display: none !important;
     }
-    .loadingText{
+
+    .loadingText {
         font-size: 2rem !important;
     }
-    .loadingBarText{
+
+    .loadingBarText {
         display: none !important;
     }
+
     .sectionSEO {
         display: none !important;
     }
@@ -63,12 +82,15 @@ body,
 
     /* Hide scrollbar on mobile */
     .scrollContainer {
-        scrollbar-width: none !important; /* Firefox */
-        -ms-overflow-style: none !important; /* IE and Edge */
+        scrollbar-width: none !important;
+        /* Firefox */
+        -ms-overflow-style: none !important;
+        /* IE and Edge */
     }
-    
+
     .scrollContainer::-webkit-scrollbar {
-        display: none !important; /* Chrome, Safari, Opera */
+        display: none !important;
+        /* Chrome, Safari, Opera */
     }
 
 }

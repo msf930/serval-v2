@@ -114,7 +114,7 @@ const MobileNav = ({ currentUrl, routeProp = () => {} }) => {
                         <path className={`${styles.line} ${styles.line3}`} d={line3} />
                     </svg>
                 </button>
-                <div className={styles.menuContent}>
+                <div className={styles.menuContent} style={{display: isOpen ? 'block' : 'none'}}>
                     {/* Navigation Links */}
                     <ul className={styles.navLinks}>
                         <li>
