@@ -15,6 +15,9 @@ import Link from 'next/link';
 import MobileNav from '@/components/MobileNav';
 
 
+
+
+
 const caveat = Caveat({
   subsets: ['latin'],
   weight: ['400', '700'],
@@ -72,7 +75,8 @@ export default function App({ Component, pageProps, router }) {
     }, 750);
   }
   // router.push(href);
-
+ 
+  
 
   return (
     <div className={`
@@ -92,7 +96,9 @@ export default function App({ Component, pageProps, router }) {
       // presenceAffectsLayout={false}
       // key={router.asPath}
       >
-        <Component key={keyRoute} {...pageProps} pageRoute={pageRoute} />
+        
+          <Component key={keyRoute} {...pageProps} pageRoute={pageRoute} />
+        
       </AnimatePresence>
     </div>
   )

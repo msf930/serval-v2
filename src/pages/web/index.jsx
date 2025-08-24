@@ -2,10 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from './styles.module.css';
-import MobileNav from '@/components/MobileNav';
 import Curve from '@/components/Layout/Curve'
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
+import { AnimatePresence, cubicBezier } from 'motion/react';
 
+import GameCards from '../../components/WebCards';
 
 
 export default function Web({ pageRoute }) {
@@ -16,6 +17,22 @@ export default function Web({ pageRoute }) {
 
         setInnerHeight(window.innerHeight);
     }, []);
+   
+
+    
+    const gameScreenVariants = {
+        initial: {
+            opacity: 0,
+        },
+        animate: {
+            opacity: 1,
+            transition: { duration: 2, ease: cubicBezier(0.16, 1, 0.3, 1) },
+        },
+        exit: {
+            opacity: 0,
+            transition: { duration: 0.2, ease: cubicBezier(0.7, 0, 0.84, 0) },
+        },
+    };
 
     return (
 
@@ -24,8 +41,21 @@ export default function Web({ pageRoute }) {
             <motion.div className={styles.mainCont} animate={true} style={{ height: innerHeight ? innerHeight : "100dvh" }}>
                 <Curve backgroundColor="transparent" routeLabel={pageRoute}>
                     <div className={styles.mobileMain}>
-
-                        <h1>Web</h1>
+                        {/* <AnimatePresence mode="wait">
+                            
+                                <motion.div
+                                    key="gameScreen1"
+                                    id="gameScreen"
+                                    variants={gameScreenVariants}
+                                    initial="initial"
+                                    animate="animate"
+                                    exit="exit"
+                                > */}
+                                    <GameCards />
+                                {/* </motion.div>
+                           
+                        </AnimatePresence>
+ */}
 
                     </div>
 

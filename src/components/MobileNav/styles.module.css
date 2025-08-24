@@ -53,6 +53,7 @@
     height: 60px;
     background-color: transparent;
     z-index: 100000;
+    pointer-events: auto;
 }
 .menuIcon{
     position: absolute;
@@ -115,11 +116,13 @@
     visibility: visible;
     transition: all 0.3s ease;
     z-index: 1000;
+    pointer-events: none;
 }
 
 .menuOverlay.open {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
 }
 .menuOverlayBG{
     position: fixed;
