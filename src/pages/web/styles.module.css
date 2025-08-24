@@ -2,13 +2,13 @@
     position: absolute;
     top: 0;
     left: 0;
-    height: 100vh;
+    height: 100dvh;
     width: 100vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    /* overflow: hidden; */
     z-index: 10;
     background-color: grey;
 }
@@ -18,7 +18,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 200dvh;
     background-color: grey;
     display: flex;
     justify-content: center;

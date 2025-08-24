@@ -8,28 +8,30 @@ import { motion } from 'framer-motion';
 
 
 
-export default function Web({pageRoute}) {
+export default function Web({ pageRoute }) {
 
     const [innerHeight, setInnerHeight] = useState(0);
-    
+
     useEffect(() => {
-        console.log(pageRoute);
+
         setInnerHeight(window.innerHeight);
     }, []);
-    
+
     return (
 
+        <>
 
-        <motion.div className={styles.mainCont} animate={true}  style={{ height: innerHeight ? innerHeight : "100vh" }}>
-            <Curve backgroundColor="transparent" routeLabel={pageRoute}>
-                <div className={styles.mobileMain}>
+            <motion.div className={styles.mainCont} animate={true} style={{ height: innerHeight ? innerHeight : "100dvh" }}>
+                <Curve backgroundColor="transparent" routeLabel={pageRoute}>
+                    <div className={styles.mobileMain}>
 
-                    <h1>Web</h1>
+                        <h1>Web</h1>
 
-                </div>
+                    </div>
 
-            </Curve>
-        </motion.div>
+                </Curve>
+            </motion.div>
+        </>
     );
 }
 

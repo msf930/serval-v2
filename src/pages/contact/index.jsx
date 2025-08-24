@@ -11,7 +11,7 @@ export default function contact({pageRoute}) {
     const [innerHeight, setInnerHeight] = useState(0);
     
     useEffect(() => {
-        console.log(pageRoute);
+        
         setInnerHeight(window.innerHeight);
         
     }, []);

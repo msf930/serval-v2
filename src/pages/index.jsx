@@ -102,6 +102,7 @@ export default function Home({ pageRoute }) {
         const checkMobile = () => {
             setIsMobile(window.innerWidth < 766);
             setInnerHeight(window.innerHeight);
+
         };
 
         // Check on mount
@@ -125,10 +126,13 @@ export default function Home({ pageRoute }) {
 
     useEffect(() => {
         const handleResize = () => {
+            
             setIsResize(true);
             setTimeout(() => {
-                window.location.reload();
-                // viewportHeight = window.innerHeight
+                if (window.innerWidth > 766) {
+                    window.location.reload();
+                    // viewportHeight = window.innerHeight
+                }
             }, 2000);
         };
         window.addEventListener('resize', handleResize);
@@ -1173,11 +1177,11 @@ export default function Home({ pageRoute }) {
                     </AnimatePresence>}
 
                     {isMobile ?
-                        <div className="sectionTopMobile" 
-                        // style={{ height: isMobile ? innerHeight : "100vh" }}
+                        <motion.div className="sectionTopMobile"
+                            style={{ height: innerHeight ? innerHeight : "100dvh" }}
                         >
                             <Curve backgroundColor="transparent" routeLabel={pageRoute}>
-                                <div className="mobileMain" 
+                                <div className="mobileMain"
                                 // style={{ height: isMobile ? innerHeight : "100vh" }}
                                 >
 
@@ -1213,7 +1217,7 @@ export default function Home({ pageRoute }) {
                                     </motion.div>
                                 </div>
                             </Curve>
-                        </div>
+                        </motion.div>
                         :
                         <div className="sectionTop" style={{ height: isMobile ? innerHeight : "100vh" }}>
 

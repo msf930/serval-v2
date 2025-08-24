@@ -1,22 +1,29 @@
 .mainCont {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100dvh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* overflow: hidden; */
+    z-index: 10;
+    background-color: grey;
 }
-
 
 .mobileMain {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 200dvh;
     background-color: tan;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1;
+    z-index: 11;
     color: white;
-    mix-blend-mode: difference;
+    
 }

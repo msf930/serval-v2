@@ -47,9 +47,9 @@ export default function Curve({children, backgroundColor, routeLabel}) {
             })
         }
         resize();
-        window.addEventListener("resize", resize)
+        // window.addEventListener("resize", resize)
         return () => {
-            window.removeEventListener("resize", resize);
+            // window.removeEventListener("resize", resize);
         }
     }, [])
     useEffect(() => {

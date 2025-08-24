@@ -27,7 +27,7 @@ const MobileNav = ({ currentUrl, routeProp = () => {} }) => {
         document.documentElement.style.setProperty('--line-transition', `0ms`);
         setTimeout(() => {
             document.documentElement.style.setProperty('--line-transition', `600ms`);
-        }, 100);
+        }, 200);
     }, []);
 
     useEffect(() => {
@@ -47,9 +47,9 @@ const MobileNav = ({ currentUrl, routeProp = () => {} }) => {
         };
 
         calculateLine1();
-        window.addEventListener('resize', calculateLine1);
+        // window.addEventListener('resize', calculateLine1);
 
-        return () => window.removeEventListener('resize', calculateLine1);
+        // return () => window.removeEventListener('resize', calculateLine1);
     }, [currentPageIndex]);
 
     useEffect(() => {

@@ -69,7 +69,7 @@ export default function App({ Component, pageProps, router }) {
 
     setTimeout(() => {
       router.push(href);
-    }, 1100);
+    }, 750);
   }
   // router.push(href);
 
