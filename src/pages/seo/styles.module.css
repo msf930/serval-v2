@@ -12,11 +12,130 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    background-color: moccasin;
+    background-color: #9fc2cc;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 20px;
     z-index: 1;
     color: white;
     mix-blend-mode: difference;
+}
+
+.textCont {
+    position: relative;
+    width: 300px;
+    height: 450px;
+    background-color: #9fc2cc;
+    border-radius: 12px;
+    border: 1px solid white;
+    z-index: 10;
+    touch-action: none;
+    overflow: hidden;
+}
+.textContInner{
+    position: absolute;
+    inset: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    touch-action: none;
+   
+}
+.textContInnerItem h1{
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.swipeCont {
+    position: relative;
+    height: 80px;
+
+    width: 300px;
+    overflow: hidden;
+    background-color: transparent;
+    border-radius: 12px;
+    border: 1px solid white;
+    z-index: 0;
+    touch-action: none;
+}
+
+.swipeHome {
+    position: absolute;
+    /* inset: 0px; */
+    height: 100%;
+    width: 900px;
+    background-color: transparent;
+    color:black;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: none;
+
+    touch-action: none;
+}
+
+.swipeHomeContent {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.swipeLeft {
+    position: absolute;
+    inset: 0px;
+    background-color: #1B5299;
+    z-index: 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: none;
+    touch-action: none;
+}
+
+.swipeLeft2 {
+    position: absolute;
+    inset: 0px;
+    background-color: #F1ECCE;
+    color: black;
+    z-index: 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: none;
+    touch-action: none;
+}
+
+.swipeRight {
+    position: absolute;
+    inset: 0px;
+    background-color: #694D75;
+    z-index: 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: none;
+    touch-action: none;
+}
+
+.swipeRight2 {
+    position: absolute;
+    inset: 0px;
+    background-color: #331832;
+    z-index: 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: none;
+    touch-action: none;
 }
