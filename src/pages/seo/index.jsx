@@ -64,7 +64,7 @@ export default function seo({ pageRoute }) {
             <Curve backgroundColor="transparent" routeLabel={pageRoute}>
                 <div className={styles.mobileMain}>
                     <motion.div className={styles.textCont} >
-                        <motion.div className={styles.textContInner} style={{filter: useTransform(blurSpring, (value) => `blur(${value}px)`)}}>
+                        <motion.div className={styles.textContInner} >
                             <motion.div className={styles.textContInnerItem}
                                 style={{ x: section1X, opacity: section1Opacity }}
                             >
@@ -73,7 +73,7 @@ export default function seo({ pageRoute }) {
                                 </h1>
                             </motion.div>
                         </motion.div>
-                        <motion.div className={styles.textContInner} style={{filter: useTransform(blurSpring, (value) => `blur(${value}px)`)}}>
+                        <motion.div className={styles.textContInner} >
                             <motion.div className={styles.textContInnerItem}
                                 style={{ x: section2X, opacity: section2Opacity }}
                             >
@@ -82,7 +82,7 @@ export default function seo({ pageRoute }) {
                                 </h1>
                             </motion.div>
                         </motion.div>
-                        <motion.div className={styles.textContInner} style={{filter: useTransform(blurSpring, (value) => `blur(${value}px)`)}}>
+                        <motion.div className={styles.textContInner} >
                             <motion.div className={styles.textContInnerItem}
                                 style={{ x: section3X, opacity: section3Opacity }}
                             >
@@ -91,7 +91,7 @@ export default function seo({ pageRoute }) {
                                 </h1>
                             </motion.div>
                         </motion.div>
-                        <motion.div className={styles.textContInner} style={{filter: useTransform(blurSpring, (value) => `blur(${value}px)`)}}>
+                        <motion.div className={styles.textContInner} >
                             <motion.div className={styles.textContInnerItem}
                                 style={{ x: section4X, opacity: section4Opacity }}
                             >
@@ -100,7 +100,7 @@ export default function seo({ pageRoute }) {
                                 </h1>
                             </motion.div>
                         </motion.div>
-                        <motion.div className={styles.textContInner} style={{filter: useTransform(blurSpring, (value) => `blur(${value}px)`)}}>
+                        <motion.div className={styles.textContInner} >
                             <motion.div className={styles.textContInnerItem}
                                 style={{ x: section5X, opacity: section5Opacity }}
                             >
