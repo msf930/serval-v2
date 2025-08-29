@@ -20,38 +20,95 @@
     gap: 20px;
     z-index: 1;
     color: white;
-    mix-blend-mode: difference;
+    /* mix-blend-mode: difference; */
 }
 
 .textCont {
     position: relative;
     width: 300px;
     height: 450px;
-    background-color: #9fc2cc;
-    border-radius: 12px;
-    border: 1px solid white;
+    
+    
     z-index: 10;
-    touch-action: none;
-    overflow: hidden;
+    /* touch-action: none; */
+    /* overflow: hidden; */
 }
 .textContInner{
     position: absolute;
-    inset: 0px;
+    /* inset: 0px; */
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10;
-    touch-action: none;
+    z-index: 0;
+    
+    width: 100%;
+    height: 100%;
+    /* touch-action: none; */
    
+}
+.textContInner2{
+    position: absolute;
+    /* inset: 0px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    
+    width: 100%;
+    height: 100%;
+    /* touch-action: none; */
+   
+}
+.textContInnerItem{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .textContInnerItem h1{
     font-size: 24px;
     font-weight: 600;
     color: white;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    
 }
+.sectionTitleCont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid white;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    z-index: 100;
+    
+    
+}
+.sectionIcon{
+    font-size: 10px;
+    color: white;
+}
+.sectionText{
+    display: flex;
+    flex-direction: column;
+    
+}
+.sectionText h2{
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 10px;
+}
+.sectionText p{
+    
+    font-size: 16px;
+    font-weight: 400;
+    color: white;
+    z-index: 0;
+}
+
 .swipeCont {
     position: relative;
     height: 80px;
@@ -89,6 +146,12 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
 }
 
 .swipeLeft {

@@ -108,12 +108,12 @@ const GameCards = () => {
 
       <div
         id="gameUIWrapper"
-        className="flex flex-col gap-6 w-full h-[100dvh] items-center justify-center relative z-10001 bg-red-500"
+        className="flex flex-col gap-6 w-full h-[100dvh] items-center justify-center relative  bg-red-500"
         
       >
         <div
           id="cardsWrapper"
-          className="w-[100vw]  h-[100dvh] max-w-xs mt-[300px] relative z-101 "
+          className="w-[100vw]  h-[100dvh] max-w-xs mt-[300px] relative "
         >
           <AnimatePresence>
             {game.map((card, i) => {
@@ -123,7 +123,7 @@ const GameCards = () => {
                 <motion.div
                   key={`card-${i}`}
                   id={`card-${card.id}`}
-                  className={`relative w-[100vw]   z-102 flex justify-center items-center`}
+                  className={`relative w-[100vw]    flex justify-center items-center`}
                   variants={cardVariants}
                   initial="remainings"
                   animate={
@@ -146,25 +146,7 @@ const GameCards = () => {
             })}
           </AnimatePresence>
         </div>
-        <div
-          id="actions"
-          className="flex items-center justify-center w-full  gap-4 relative z-10"
-        >
-          {/* <GameActionBtn
-            direction="left"
-            ariaLabel="swipe left"
-            scale={cardDrivenProps.buttonScaleBadAnswer}
-            isDragOffBoundary={isDragOffBoundary}
-            onClick={() => handleActionBtnOnClick("left")}
-          />
-          <GameActionBtn
-            direction="right"
-            ariaLabel="swipe right"
-            scale={cardDrivenProps.buttonScaleGoodAnswer}
-            isDragOffBoundary={isDragOffBoundary}
-            onClick={() => handleActionBtnOnClick("right")}
-          /> */}
-        </div>
+        
       </div>
     </motion.div>
   );
