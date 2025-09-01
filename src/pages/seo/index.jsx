@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styles from './styles.module.css';
 
 import Curve from '@/components/Layout/Curve';
+import MobileShader from '@/components/MobileShader';
 
 import { motion, useMotionValue, useTransform, useVelocity, useMotionValueEvent, useSpring } from 'motion/react';
 
@@ -16,7 +17,7 @@ gsap.registerPlugin(SplitText);
 
 export default function seo({ pageRoute }) {
     const [innerHeight, setInnerHeight] = useState(0);
-    const [animatedSections, setAnimatedSections] = useState(new Set());
+    
 
     useEffect(() => {
 
@@ -26,45 +27,42 @@ export default function seo({ pageRoute }) {
 
     const swipeX = useMotionValue(-300)
     const swipeXLeft = useTransform(swipeX, (value) => value)
-    const swipeXRight = useTransform(swipeX, (value) => value + 600)
+    const swipeXRight = useTransform(swipeX, (value) => value + 600 + 100)
     const opacity = useTransform(
         swipeX,
         [-500, -300, -100],
         [0, 1, 0]
     )
-    const left1Width = useTransform(swipeX, [0, -50, -150, -300], [0, 125, 125, 0])
-    const left2Width = useTransform(swipeX, [0, -50, -150, -300], [300, 125, 25, 0])
-    const right1Width = useTransform(swipeX, [-600, -550, -450, -300], [0, 125, 125, 0])
-    const right2Width = useTransform(swipeX, [-600, -550, -450, -300], [300, 125, 25, 0])
+    const left1Width = useTransform(swipeX, [0, -50, -150, -300], [100, 75, 50, 0])
+    const left2Width = useTransform(swipeX, [0, -50, -150, -300], [100, 75, 50, 0])
+    const right1Width = useTransform(swipeX, [-600, -550, -450, -300], [100, 75, 50, 0])
+    const right2Width = useTransform(swipeX, [-600, -550, -450, -300], [100, 75, 50, 0])
 
-    const left1Opacity = useTransform(swipeX, [0, -50, -150, -300], [0, 1, 1, 0])
-    const left2Opacity = useTransform(swipeX, [0, -50, -150, -300], [1, 1, 0, 0])
-    const right1Opacity = useTransform(swipeX, [-600, -550, -450, -300], [0, 1, 1, 0])
-    const right2Opacity = useTransform(swipeX, [-600, -550, -450, -300], [1, 1, 0, 0])
+    const left1Opacity = useTransform(swipeX, [0, -50, -150, -300], [1, 0, 0, 0])
+    const left2Opacity = useTransform(swipeX, [0, -50, -150, -300], [1, 0, 0, 0])
+    const right1Opacity = useTransform(swipeX, [-600, -550, -450, -300], [1, 0, 0, 0])
+    const right2Opacity = useTransform(swipeX, [-600, -550, -450, -300], [1, 0, 0, 0])
 
     const right2X = useTransform(swipeXRight, (value) => value + right1Width.get())
 
-    const sectionPicker = useTransform(swipeX, [-600, -450, -300, -150, 0], [4, 3, 2, 1, 0])
-
-    const section1X = useTransform(sectionPicker, [0, 1, 2, 3, 4], [0, -20, -20, -20, -20])
-    const section2X = useTransform(sectionPicker, [0, 1, 2, 3, 4], [-20, 0, -20, -20, -20])
-    const section3X = useTransform(sectionPicker, [0, 1, 2, 3, 4], [-20, -20, 0, -20, -20])
-    const section4X = useTransform(sectionPicker, [0, 1, 2, 3, 4], [-20, -20, -20, 0, -20])
-    const section5X = useTransform(sectionPicker, [0, 1, 2, 3, 4], [-20, -20, -20, -20, 0])
-    const section1Opacity = useTransform(sectionPicker, [0, 1, 2, 3, 4], [1, 0, 0, 0, 0])
-    const section2Opacity = useTransform(sectionPicker, [0, 1, 2, 3, 4], [0, 1, 0, 0, 0])
-    const section3Opacity = useTransform(sectionPicker, [0, 1, 2, 3, 4], [0, 0, 1, 0, 0])
-    const section4Opacity = useTransform(sectionPicker, [0, 1, 2, 3, 4], [0, 0, 0, 1, 0])
-    const section5Opacity = useTransform(sectionPicker, [0, 1, 2, 3, 4], [0, 0, 0, 0, 1])
     
+
+    
+
 
     const constraintsRef = useRef(null)
 
 
     // Function to trigger SplitText animation for a specific section
     const triggerSectionAnimation = (sectionIndex) => {
-        if (animatedSections.has(sectionIndex)) return;
-        gsap.set(`[data-section="${sectionIndex}"]`, { opacity: 1 });
+        // if (animatedSections.has(sectionIndex)) return;
+        gsap.to(`[data-section="0"]`, { opacity: 0, duration: 1, ease: "power2.out" });
+        gsap.to(`[data-section="1"]`, { opacity: 0, duration: 1, ease: "power2.out" });
+        gsap.to(`[data-section="2"]`, { opacity: 0, duration: 1, ease: "power2.out" });
+        gsap.to(`[data-section="3"]`, { opacity: 0, duration: 1, ease: "power2.out" });
+        gsap.to(`[data-section="4"]`, { opacity: 0, duration: 1, ease: "power2.out" });
+        gsap.to(`[data-section="10"]`, { backdropFilter: 'blur(10px)', duration: 1, ease: "power2.out" });
+        gsap.to(`[data-section="${sectionIndex}"]`, { opacity: 1, duration: 1, ease: "power2.out" });
         const sectionElement = document.querySelector(`[data-section="${sectionIndex}"] .split`);
         if (sectionElement) {
 
@@ -81,33 +79,79 @@ export default function seo({ pageRoute }) {
                 stagger: 0.05,
                 ease: "power2.out"
             });
-
-            setAnimatedSections(prev => new Set([...prev, sectionIndex]));
         }
+        // setAnimatedSections(prev => new Set([...prev, sectionIndex]));
+
+        // Animate swipeX from current value to -300 with reliable timing
+
+
+
     };
 
+    const handleSwipeXAnimation = () => {
+        const startValue = swipeX.get();
+        const endValue = -300;
+        const duration = 1000; // 1 second in milliseconds
+        const steps = 120; // 120 steps for smooth 120fps animation
+        const stepDuration = duration / steps;
+        let currentStep = 0;
+
+        // Clear any existing animation
+        if (window.swipeXAnimation) {
+            clearInterval(window.swipeXAnimation);
+        }
+
+        const animateCounter = () => {
+            if (currentStep <= steps) {
+                const progress = currentStep / steps;
+                const easeProgress = 1 - Math.pow(1 - progress, 3); // Ease out
+                const currentValue = startValue + (endValue - startValue) * easeProgress;
+
+                swipeX.set(currentValue);
+                currentStep++;
+            } else {
+                // Ensure we end exactly at -300
+                swipeX.set(endValue);
+                clearInterval(window.swipeXAnimation);
+                window.swipeXAnimation = null;
+            }
+        };
+
+        // Start the animation
+        window.swipeXAnimation = setInterval(animateCounter, stepDuration);
+    }
+
+
+    const handleSectionAnimation = (sectionIndex) => {
+        const swipeXValue = swipeX.get();
+        
+        if (swipeXValue === 0 || swipeXValue === -600) {
+            triggerSectionAnimation(sectionIndex);
+            handleSwipeXAnimation();
+        }
+    }
     // Listen for section changes and trigger animations
-    useMotionValueEvent(sectionPicker, "change", (latest) => {
-        const activeSection = Math.round(latest);
-        triggerSectionAnimation(activeSection);
-    });
+    // useMotionValueEvent(sectionPicker, "change", (latest) => {
+    //     const activeSection = Math.round(latest);
+    //     triggerSectionAnimation(activeSection);
+    // });
 
     useGSAP(
         () => {
             // Initial setup - no automatic splitting
+            
         }, [])
+       
 
 
     return (
         <motion.div className={styles.mainCont} animate={true} style={{ height: innerHeight ? innerHeight : "100vh" }}>
             <Curve backgroundColor="transparent" routeLabel={pageRoute}>
                 <div className={styles.mobileMain}>
-                    <motion.div className={styles.textCont} >
-                        <motion.div className={styles.textContInner} data-section="0" style={{ opacity: 0 }}>
+                    <motion.div className={styles.textCont} data-section="10" style={{ backdropFilter: 'blur(0px)' }}>
+                        <motion.div className={styles.textContInner}  data-section="0" style={{ opacity: 0 }}>
                             <motion.div className={styles.textContInnerItem}
-                                style={{ y: section1X, opacity: section1Opacity, 
-                                    // filter: useTransform(sectionBlur1, (value) => `blur(${value}px)`)
-                                 }}
+
                             >
                                 <div className={`split ${styles.sectionText}`}>
                                     <h2>On-Page SEO</h2>
@@ -119,11 +163,9 @@ export default function seo({ pageRoute }) {
                                 </div>
                             </motion.div>
                         </motion.div>
-                        <motion.div className={styles.textContInner} data-section="1" style={{ opacity: 0 }}>
+                        <motion.div className={styles.textContInner}  data-section="1" style={{ opacity: 0 }}>
                             <motion.div className={styles.textContInnerItem}
-                                style={{ y: section2X, opacity: section2Opacity, 
-                                    // filter: useTransform(sectionBlur2, (value) => `blur(${value}px)`)
-                                 }}
+
                             >
                                 <div className={`split ${styles.sectionText}`}>
                                     <h2>Technical SEO</h2>
@@ -137,12 +179,10 @@ export default function seo({ pageRoute }) {
                         </motion.div>
                         <motion.div className={styles.textContInner2} data-section="2" >
                             <motion.div className={styles.textContInnerItem}
-                                style={{ y: section3X, opacity: section3Opacity, border: '1px solid white', borderRadius: '12px',
-                                    // filter: useTransform(sectionBlur3, (value) => `blur(${value}px)`)
-                                 }}
-                                 ref={constraintsRef}
+
+                                ref={constraintsRef}
                             >
-                                
+
                                 <motion.div
                                     drag
                                     className={styles.sectionTitleCont}
@@ -154,11 +194,9 @@ export default function seo({ pageRoute }) {
                                 </motion.div>
                             </motion.div>
                         </motion.div>
-                        <motion.div className={styles.textContInner} data-section="3" style={{ opacity: 0 }}>
+                        <motion.div className={styles.textContInner}  data-section="3" style={{ opacity: 0 }}>
                             <motion.div className={styles.textContInnerItem}
-                                style={{ y: section4X, opacity: section4Opacity, 
-                                    // filter: useTransform(sectionBlur4, (value) => `blur(${value}px)`)
-                                 }}
+
                             >
                                 <div className={`split ${styles.sectionText}`}>
                                     <h2>Content Strategy</h2>
@@ -171,14 +209,12 @@ export default function seo({ pageRoute }) {
                                 </div>
                             </motion.div>
                         </motion.div>
-                        <motion.div className={styles.textContInner} data-section="4" style={{ opacity: 0 }}>
+                        <motion.div className={styles.textContInner}  data-section="4" style={{ opacity: 0 }}>
                             <motion.div className={styles.textContInnerItem}
-                                    style={{ y: section5X, opacity: section5Opacity, 
-                                    // filter: useTransform(sectionBlur5, (value) => `blur(${value}px)`)
-                                 }}
+
                             >
                                 <div className={`split ${styles.sectionText}`}>
-                                
+
                                     <h2>Local SEO Optimization</h2>
                                     <p>If you serve a local market, we&rsquo;ll make sure your business
                                         is front and center when people nearby are searching. From
@@ -197,8 +233,8 @@ export default function seo({ pageRoute }) {
                             dragConstraints={{ top: 0, right: 0, bottom: 0, left: -600 }}
                             dragTransition={{
                                 power: 0.1,
-                                timeConstant: 500,
-                                modifyTarget: target => Math.round(target / 150) * 150,
+                                timeConstant: 100,
+                                modifyTarget: target => Math.round(target / 300) * 300,
                                 // min: 0,
                                 // max: 100,
 
@@ -226,7 +262,7 @@ export default function seo({ pageRoute }) {
                                 width: left1Width
                             }}
                         >
-                            <motion.div className={styles.swipeHomeContent} style={{ opacity: left1Opacity }}>
+                            <motion.div className={styles.swipeHomeContent} style={{ opacity: left1Opacity }} onClick={() => handleSectionAnimation(1)}>
                                 Technical
                             </motion.div>
                         </motion.div>
@@ -239,7 +275,7 @@ export default function seo({ pageRoute }) {
                                 width: left2Width
                             }}
                         >
-                            <motion.div className={styles.swipeHomeContent} style={{ opacity: left2Opacity, color: "black" }}>
+                            <motion.div className={styles.swipeHomeContent} style={{ opacity: left2Opacity, color: "black" }} onClick={() => handleSectionAnimation(0)}>
                                 On-Page
                             </motion.div>
                         </motion.div>
@@ -252,7 +288,7 @@ export default function seo({ pageRoute }) {
                                 width: right1Width
                             }}
                         >
-                            <motion.div className={styles.swipeHomeContent} style={{ opacity: right1Opacity }}>
+                            <motion.div className={styles.swipeHomeContent} style={{ opacity: right1Opacity }} onClick={() => handleSectionAnimation(3)}>
                                 Content
                             </motion.div>
                         </motion.div>
@@ -265,12 +301,12 @@ export default function seo({ pageRoute }) {
                                 width: right2Width
                             }}
                         >
-                            <motion.div className={styles.swipeHomeContent} style={{ opacity: right2Opacity }}>
+                            <motion.div className={styles.swipeHomeContent} style={{ opacity: right2Opacity }} onClick={() => handleSectionAnimation(4)}>
                                 Local
                             </motion.div>
                         </motion.div>
                     </motion.div>
-
+                    <MobileShader />
                 </div>
 
             </Curve>

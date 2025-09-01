@@ -18,7 +18,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 200dvh;
+    height: 100dvh;
     background-color: tan;
     display: flex;
     justify-content: center;
@@ -26,4 +26,87 @@
     z-index: 11;
     color: white;
     
+}
+.designContOverlay{
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    height: calc(100dvh - 100px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 11;
+    background-color: transparent;
+}
+.designContDrag{
+    width: 60px;
+    height: 60px;
+    background-color: darkgoldenrod;
+    border-radius: 50%;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+}
+.designContDrag h1{
+    position: relative;
+    z-index: 10;
+    margin-bottom: 80px;
+}
+.designContOverlayItem{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    background-color: firebrick;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+.designCont{
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    height: calc(100dvh - 100px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    
+    
+    z-index: 10;
+    background-color: #1B5299;
+}
+.designContItem{
+    background-color: firebrick;
+    position: relative;
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+    overflow: hidden;
+}
+.designContItem h1{
+    position: relative;
+    z-index: 10;
+}
+.designContItemOverlay{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0px;
+    height: 0px;
+    background-color: dodgerblue;
+    border-radius: 50%;
+    z-index: 11;
 }
