@@ -7,6 +7,7 @@ import { motion } from 'motion/react';
 import { AnimatePresence, cubicBezier } from 'motion/react';
 
 import GameCards from '../../components/WebCards';
+import MobileShader from '@/components/MobileShader';
 
 
 export default function Web({ pageRoute }) {
@@ -17,9 +18,9 @@ export default function Web({ pageRoute }) {
 
         setInnerHeight(window.innerHeight);
     }, []);
-   
 
-    
+
+
     const gameScreenVariants = {
         initial: {
             opacity: 0,
@@ -41,24 +42,9 @@ export default function Web({ pageRoute }) {
             <motion.div className={styles.mainCont} animate={true} style={{ height: innerHeight ? innerHeight : "100dvh" }}>
                 <Curve backgroundColor="transparent" routeLabel={pageRoute}>
                     <div className={styles.mobileMain}>
-                        {/* <AnimatePresence mode="wait">
-                            
-                                <motion.div
-                                    key="gameScreen1"
-                                    id="gameScreen"
-                                    variants={gameScreenVariants}
-                                    initial="initial"
-                                    animate="animate"
-                                    exit="exit"
-                                > */}
-                                    <GameCards />
-                                {/* </motion.div>
-                           
-                        </AnimatePresence>
- */}
-
+                        <GameCards />
                     </div>
-
+                    <MobileShader />
                 </Curve>
             </motion.div>
         </>

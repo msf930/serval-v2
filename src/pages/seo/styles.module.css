@@ -27,32 +27,34 @@
     position: relative;
     width: 340px;
     height: 350px;
-    
-    
+
+
     z-index: 10;
-    mix-blend-mode: difference;
+    /* mix-blend-mode: difference; */
     background: transparent;
-    backdrop-filter: blur(0px);
-    
+    /* backdrop-filter: blur(0px); */
+    /* filter: blur(0px); */
     border-radius: 10px;
     /* touch-action: none; */
     /* overflow: hidden; */
 }
-.textContInner{
+
+.textContInner {
     position: absolute;
     /* inset: 0px; */
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 0;
-    
+
     width: 100%;
     height: 100%;
-    
+
     /* touch-action: none; */
-   
+
 }
-.textContInner2{
+
+.textContInner2 {
     position: absolute;
     top: 0;
     left: 0;
@@ -61,28 +63,40 @@
     align-items: center;
     justify-content: center;
     z-index: 100;
-    
+
     width: 100%;
     height: 100%;
     /* touch-action: none; */
-   
+
 }
-.textContInnerItem{
+
+.textContInnerItem {
     position: relative;
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    
+    padding: 20px;
 }
-.textContInnerItem h1{
+
+.textContInnerItem h1 {
     font-size: 24px;
     font-weight: 600;
     color: white;
-    
+
 }
-.sectionTitleCont{
+
+.textContBG {
+    width: 100%;
+    height: 100%;
+    background: #ffffff10;
+    /* filter: blur(10px); */
+    /* -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px); */
+}
+
+.sectionTitleCont {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -92,26 +106,30 @@
     width: 100px;
     height: 100px;
     z-index: 100;
-    
-    
+
+
 }
-.sectionIcon{
+
+.sectionIcon {
     font-size: 10px;
     color: white;
 }
-.sectionText{
+
+.sectionText {
     display: flex;
     flex-direction: column;
-    
+
 }
-.sectionText h2{
+
+.sectionText h2 {
     font-size: 24px;
     font-weight: 600;
     color: white;
     margin-bottom: 10px;
 }
-.sectionText p{
-    
+
+.sectionText p {
+
     font-size: 16px;
     font-weight: 400;
     color: white;
@@ -125,12 +143,14 @@
     width: 300px;
     overflow: hidden;
     background-color: transparent;
-    backdrop-filter: blur(10px);
+    /* backdrop-filter: blur(10px); */
     border-radius: 12px;
     border: 1px solid white;
     z-index: 10;
     touch-action: none;
-    mix-blend-mode: difference;
+    /* mix-blend-mode: difference; */
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
 }
 
 .swipeHome {
@@ -139,8 +159,8 @@
     height: 100%;
     width: 900px;
     background-color: transparent;
-    color:black;
-    z-index: 10;
+    color: black;
+    z-index: 11;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -150,8 +170,34 @@
 }
 
 .swipeHomeContent {
+    /* white-space: nowrap; */
+    /* overflow: hidden; */
+    text-overflow: ellipsis;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    z-index: 9;
+    text-decoration: underline;
+    /* border: 1px solid white; */
+    width: 90%;
+    height: 90%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px #000000ba;
+    z-index: 9;
+    
+}
+.swipeHomeContent2 {
     white-space: nowrap;
-    overflow: hidden;
+    /* overflow: hidden; */
     text-overflow: ellipsis;
     display: flex;
     align-items: center;
@@ -163,6 +209,71 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     text-align: center;
+    z-index: 9;
+    
+
+}
+.swipeInstructionsText {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    z-index: 10;
+}
+.swipeInstructionsTextIconLeft {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    animation: bounceLeft 1.5s ease-in-out infinite;
+}
+.swipeInstructionsTextIconRight {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    animation: bounceRight 1.5s ease-in-out infinite;
+}
+
+@keyframes bounceLeft {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(-4px);
+    }
+}
+
+@keyframes bounceRight {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(4px);
+    }
+}
+.swipeHomeContentIcon {
+   position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+.swipeContBG {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #00000010;
+    /* filter: blur(20px); */
+    /* z-index: 9; */
+    
 }
 
 .swipeLeft {
@@ -205,7 +316,7 @@
 .swipeRight2 {
     position: absolute;
     inset: 0px;
-    background-color: #331832;
+    background-color: #843e82;
     z-index: 11;
     display: flex;
     align-items: center;

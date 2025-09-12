@@ -1,80 +1,80 @@
 export const games = [
         {
-            affirmation: "More than 40% of car journeys are less than 3mi.",
+            affirmation: "The Arapahoe Warriors' website redesign brought a fresh, modern look that reflects the pride and spirit of the team while making it easier for fans, players, and families to stay connected",
           answer: "right",
           revised:
-            "It's true, 40% of car journeys are LESS than 3mi, which could be done on foot or by bike.",
+            "The Arapahoe Warriors",
           illustration: "arapahoe.png",
         },
         {
-          affirmation: "More than 40% of car journeys are less than 3mi.",
+          affirmation: "The Arapahoe Warriors' website redesign brought a fresh, modern look that reflects the pride and spirit of the team while making it easier for fans, players, and families to stay connected",
           answer: "right",
           revised:
-            "It's true, 40% of car journeys are LESS than 3mi, which could be done on foot or by bike.",
+            "The Arapahoe Warriors",
           illustration: "arapahoe.png",
         },
         {
           affirmation:
-            "On average, a French person produces more than 400kg of waste per year.",
+            "The Envision Administration Services website was built entirely from scratch, creating a tailored digital presence that perfectly aligns with the company's brand and mission.",
           answer: "left",
           revised:
-            "A bit less: a French produces on average 380kg of waste per year, which remains far too much.",
+            "Envision Admin Services",
           illustration: "envision.png",
         },
         {
           affirmation:
-            "A Paris-New York round trip emits more than 1.5 tons of CO2 per passenger.",
+            "Making the Cut debuted a completely custom-built website that captures the creativity and precision behind their landscaping services.",
           answer: "right",
           revised:
-            "It's actually higher: a Paris-New York round trip emits approximately 1.75 tonnes of CO2 per passenger, the equivalent of 3 months of heating for a French person.",
+            "Making the Cut",
           illustration: "mtc.png",
         },
         {
           affirmation:
-            "A Paris-New York round trip emits more than 1.5 tons of CO2 per passenger.",
+            "Realm Chiropractic launched a fully custom-built website designed to reflect their commitment to holistic care and patient well-being.",
           answer: "right",
           revised:
-            "It's actually higher: a Paris-New York round trip emits approximately 1.75 tonnes of CO2 per passenger, the equivalent of 3 months of heating for a French person.",
+            "Realm Chiropractic",
           illustration: "realm.png",
         },
         {
           affirmation:
-            "A Paris-New York round trip emits more than 1.5 tons of CO2 per passenger.",
+            "The website update for RECEss brought a refreshed, user-focused experience to their real estate continuing education platform.",
           answer: "right",
           revised:
-            "It's actually higher: a Paris-New York round trip emits approximately 1.75 tonnes of CO2 per passenger, the equivalent of 3 months of heating for a French person.",
+            "RECEss",
           illustration: "recess.png",
         },
         {
           affirmation:
-            "A Paris-New York round trip emits more than 1.5 tons of CO2 per passenger.",
+            "Rizzazzle Repairs now boasts a completely custom-designed website built to showcase their expertise in video and audio equipment repair.",
           answer: "right",
           revised:
-            "It's actually higher: a Paris-New York round trip emits approximately 1.75 tonnes of CO2 per passenger, the equivalent of 3 months of heating for a French person.",
+            "Rizzazzle Repairs",
           illustration: "rizzazzle.png",
         },
         {
           affirmation:
-            "A Paris-New York round trip emits more than 1.5 tons of CO2 per passenger.",
+            "Rocky Mountain Remodels unveiled a fully custom-built website designed to highlight their expertise in home renovation and remodeling.",
           answer: "right",
           revised:
-            "It's actually higher: a Paris-New York round trip emits approximately 1.75 tonnes of CO2 per passenger, the equivalent of 3 months of heating for a French person.",
+            "Rocky Mountain Remodels",
           illustration: "rmr.png",
         },
         {
           affirmation:
-            "A Paris-New York round trip emits more than 1.5 tons of CO2 per passenger.",
+            "Vibrant Pearl Acupuncture and Herbs launched a fully custom-built website designed to reflect the holistic, healing nature of their practice.",
           answer: "right",
           revised:
-            "It's actually higher: a Paris-New York round trip emits approximately 1.75 tonnes of CO2 per passenger, the equivalent of 3 months of heating for a French person.",
+            "Vibrant Pearl Acupuncture and Herbs",
           illustration: "vpa.png",
         },
         {
           affirmation:
-            "A Paris-New York round trip emits more than 1.5 tons of CO2 per passenger.",
+            "Yusha.ai's website update refreshed the company's online presence to better showcase their AI-powered animation services.",
           answer: "right",
           revised:
-            "It's actually higher: a Paris-New York round trip emits approximately 1.75 tonnes of CO2 per passenger, the equivalent of 3 months of heating for a French person.",
+            "Yusha.ai",
           illustration: "yusha.png",
         }
      

@@ -37,18 +37,18 @@ const GameCard = ({
   setIsDragOffBoundary,
   setDirection
 }) => {
-  
-  
 
-  
+
+
+
 
   const [imgLoadingComplete, setImgLoadingComplete] = useState(false);
-  
 
-  const { affirmation, illustration } = data;
+
+  const { affirmation, illustration, revised } = data;
   const x = useMotionValue(0);
 
-  
+
 
   const scoreVariants = {
     initial: {
@@ -67,7 +67,7 @@ const GameCard = ({
   const outputRotate = [-40, 0, 40];
   const outputActionScaleBadAnswer = [3, 1, 0.3];
   const outputActionScaleRightAnswer = [0.3, 1, 3];
- 
+
 
   let drivenX = useTransform(x, inputX, outputX);
   let drivenY = useTransform(x, inputX, outputY);
@@ -100,7 +100,7 @@ const GameCard = ({
     <>
       <motion.div
         id={`cardDrivenWrapper-${id}`}
-        className="absolute  bg-white p-8 rounded-lg text-center w-[80%] h-[60dvh] aspect-[100/150] pointer-events-none text-black origin-bottom shadow-card select-none"
+        className="absolute  bg-white p-8 rounded-lg text-center w-[80%] h-[70dvh] aspect-[100/150] pointer-events-none text-black origin-bottom shadow-card select-none"
         style={{
           y: drivenY,
           rotate: drivenRotation,
@@ -109,7 +109,7 @@ const GameCard = ({
           borderRadius: "10px",
         }}
       >
-        
+
         <div
           id="illustration"
           className="w-[100%] h-[50%] mx-auto relative"
@@ -121,34 +121,38 @@ const GameCard = ({
             id="imgPlaceholder"
             className="bg-gameSwipe-neutral absolute object-cover w-full h-full"
             style={{
-              
+
             }}
           ></div>
           <Image
             priority
-            className={` object-cover object-center ${
-              imgLoadingComplete ? "opacity-100" : "opacity-0"
-            } duration-500 ease-out`}
+            className={` object-cover object-center ${imgLoadingComplete ? "opacity-100" : "opacity-0"
+              } duration-500 ease-out`}
             src={`/${illustration}`}
             fill
             // sizes={`(max-width: 100%) 100vw, 300px`}
             alt="car"
             style={{
-                borderRadius: "10px",
+              borderRadius: "10px",
             }}
             onLoad={(img) => setImgLoadingComplete(true)}
           />
         </div>
-        <p id="affirmation" className="mt-2 text-[20px] leading-tight">
-          {affirmation}
-        </p>
+        <div className="w-[100%] h-[50%] pt-[20px] px-[10px] relative flex-col items-start justify-center ">
+
+          <p id="affirmation" className="text-[24px] text-center font-bold mb-[10px]">
+            {revised}
+          </p>
+          <p id="affirmation" className="text-[14px] text-center">
+            {affirmation}
+          </p>
+        </div>
       </motion.div>
 
       <motion.div
         id={`cardDriverWrapper-${id}`}
-        className={`absolute w-full aspect-[100/150] ${
-          !isDragging ? "hover:cursor-grab" : ""
-        }`}
+        className={`absolute w-full aspect-[100/150] ${!isDragging ? "hover:cursor-grab" : ""
+          }`}
         drag="x"
         dragSnapToOrigin
         dragElastic={0.2}
