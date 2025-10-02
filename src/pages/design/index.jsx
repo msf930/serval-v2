@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 
 import Curve from '@/components/Layout/Curve';
 import gsap from 'gsap/dist/gsap';
-import { motion, animate } from 'motion/react';
+import { motion, animate, useSpring, useMotionValue, useTransform    } from 'motion/react';
 
 import MobileShader from '@/components/MobileShader';
 export default function design({ pageRoute }) {
@@ -20,15 +20,23 @@ export default function design({ pageRoute }) {
     const [overlay2Radius, setOverlay2Radius] = useState(50);
     const [overlay3Radius, setOverlay3Radius] = useState(50);
     const [overlay4Radius, setOverlay4Radius] = useState(50);
+    const [dragGradinet, setDragGradinet] = useState(0);
     const [dragText, setDragText] = useState("Drag");
     const [dragBg, setDragBg] = useState("goldenrod");
     const [isDragging, setIsDragging] = useState(false);
     const designContOverlayRef = useRef(null);
-    useEffect(() => {
+    
+    let dragGradientSpring = useSpring(0, { stiffness: 80, damping: 20 });
+    
 
+    useEffect(() => {
         setInnerHeight(window.innerHeight);
         setSectionHeight((window.innerHeight - 100) / 2);
     }, []);
+
+    useEffect(() => {
+        dragGradientSpring.set(dragGradinet);
+    }, [dragGradientSpring, dragGradinet]);
 
     const onDrag = (e, info) => {
         let x = info.offset.x;
@@ -38,7 +46,7 @@ export default function design({ pageRoute }) {
             setDragBg("transparent");
 
             if (x > 0 && y < 0) {
-                setDragText("2");
+                setDragText("Visual Design");
                 animate(overlay2Width, sectionHeight, {
                     onUpdate: latest => {
                         setOverlay2Width(latest);
@@ -49,6 +57,13 @@ export default function design({ pageRoute }) {
                         setOverlay2Radius(latest);
                     }
                 });
+                animate(dragGradinet, 100, {
+                    duration: 1.0,
+                    onUpdate: latest => {
+                        setDragGradinet(latest);
+                    }
+                });
+                // dragGradientSpring.set(100);
             } else {
                 animate(overlay2Width, 0, {
                     onUpdate: latest => {
@@ -60,6 +75,7 @@ export default function design({ pageRoute }) {
                         setOverlay2Radius(latest);
                     }
                 });
+                // dragGradientSpring.set(0);
             }
             if (x < 0 && y < 0) {
                 setDragText("User Experience");
@@ -73,6 +89,14 @@ export default function design({ pageRoute }) {
                         setOverlay1Radius(latest);
                     }
                 });
+                animate(dragGradinet, 100, {
+                    duration: 1.0,
+                    onUpdate: latest => {
+                        setDragGradinet(latest);
+                    }
+                });
+                // setDragGradinet(100);
+                // dragGradientSpring.set(100);
             } else {
                 animate(overlay1Width, 0, {
                     onUpdate: latest => {
@@ -84,6 +108,12 @@ export default function design({ pageRoute }) {
                         setOverlay1Radius(latest);
                     }
                 });
+                // animate(dragGradinet, 0, {
+                //     onUpdate: latest => {
+                //         setDragGradinet(latest);
+                //     }
+                // });
+                // dragGradientSpring.set(0);
             }
             if (x < 0 && y > 0) {
                 setDragText("3");
@@ -138,6 +168,12 @@ export default function design({ pageRoute }) {
         } else {
             setDragText("Drag");
             setDragBg("goldenrod");
+            animate(dragGradinet, 0, {
+                onUpdate: latest => {
+                    setDragGradinet(latest);
+                }
+            });
+            dragGradientSpring.set(0);
             animate(overlay1Width, 0, {
                 onUpdate: latest => {
                     setOverlay1Width(latest);
@@ -184,6 +220,13 @@ export default function design({ pageRoute }) {
         setDragText("Drag");
         setDragBg("goldenrod");
         setIsDragging(false);
+        // dragGradientSpring.set(0);
+        animate(dragGradinet, 0, {
+            duration: 1.0,
+            onUpdate: latest => {
+                setDragGradinet(latest);
+            }
+        });
         animate(overlay1Width, 0, {
             onUpdate: latest => {
                 setOverlay1Width(latest);
@@ -360,7 +403,7 @@ export default function design({ pageRoute }) {
                             dragTransition={{ bounceStiffness: 100, bounceDamping: 20 }}
                             style={{ backgroundColor: dragBg }}
                         >
-                            <div className={styles.dragTextCont} style={{ background: `linear-gradient(90deg, #ff7a18, #32005e 0%, #32005e)` }}>
+                            <div className={styles.dragTextCont} style={{ background: `linear-gradient(90deg, #ff7a18, #ff7a18 ${dragGradientSpring.get()}%, #32005e ${dragGradientSpring.get()}%, #32005e)` }}>
                                 
                                 <h1 className={styles.dragText} style={{ marginBottom: isDragging ? "80px" : 0, whiteSpace: "nowrap" }}>{dragText}</h1>
                             </div>
