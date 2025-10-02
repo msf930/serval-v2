@@ -63,7 +63,7 @@ export default function Home({ pageRoute }) {
     const smoother = useRef();
 
 
-    useEffect(() => {
+    useGSAP(() => {
         if (isScrollContact) {
             gsap.set(".resizeTextH1", { opacity: 1 });
             const splitText = SplitText.create("#resizeTextH1Id", {
@@ -81,8 +81,14 @@ export default function Home({ pageRoute }) {
                 }
             });
             setTimeout(() => {
+                
+                gsap.set("#scrollToContactOverlay", { opacity: 0 });
+                
+            }, 1800);
+            setTimeout(() => {
                 setIsScrollContact(false);
             }, 2000);
+
         }
     }, [isScrollContact]);
 
@@ -1965,13 +1971,15 @@ export default function Home({ pageRoute }) {
                     </motion.div>
                 }
             </AnimatePresence>}
+            {/* SCROLL TO CONTACT OVERLAY */}
             {!isMobile && <AnimatePresence>
                 {  isScrollContact &&
                     <motion.div
                         animate={{ opacity: 1 }}
-                        transition={{ duration: 0.2, ease: 'easeInOut' }}
-                        exit={{ opacity: 0 }}
+                        // exit={{ opacity: 0 }}
+                        transition={{ duration: 0.5, ease: 'easeInOut' }}
                         className="resizeCont"
+                        id="scrollToContactOverlay"
                     >
                         {/* <motion.div className='resizeOut'></motion.div> */}
                         <h1 className="resizeTextH1" id="resizeTextH1Id">ZOOOOM</h1>

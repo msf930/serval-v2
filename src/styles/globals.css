@@ -262,7 +262,7 @@ body,
     background-color: transparent;
     mix-blend-mode: difference;
     /* background-color: #ffffffC0; */
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(30px);
     z-index: 999999;
     display: flex;
     justify-content: center;
