@@ -12,11 +12,141 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    background-color: lightblue;
+    background-color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1;
     color: white;
     mix-blend-mode: difference;
+}
+.contactFormCont {
+    position: relative;
+    height: auto;
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #0000008d;
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 2rem 1.5rem;
+}
+
+.contactForm {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.contactForm h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+
+}
+
+.contactForm p {
+    font-size: 0.8rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.contactForm input,
+.contactForm textarea {
+    background: #ffffff60;
+    width: 100%;
+}
+
+.contactFormNameCont {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.contactFormInputCont {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    background-color: #1b1b1b8d;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.contactFormInputCont input,
+.contactFormInputCont textarea {
+    background-color: transparent;
+    border-radius: 10px;
+    padding: 4px;
+    border: none;
+    outline: none;
+    font-size: 1rem !important;
+    color: #ffffff;
+}
+
+.contactFormInputCont h3 {
+    width: 100%;
+    font-size: 10px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+/* Change background color when input is focused */
+.contactFormInputCont:has(input:focus),
+.contactFormInputCont:has(textarea:focus) {
+    transition: background-color 0.2s ease-in-out;
+    background-color: #4b4b4bda;
+}
+
+/* Style Chrome autofill to match contactFormInputCont */
+.contactFormInputCont input:-webkit-autofill,
+.contactFormInputCont input:-webkit-autofill:hover,
+.contactFormInputCont input:-webkit-autofill:focus,
+.contactFormInputCont input:-webkit-autofill:active {
+    /* -webkit-box-shadow: 0 0 0 30px #1b1b1b8d inset !important; */
+    -webkit-text-fill-color: #ffffff !important;
+    background-color: transparent !important;
+    transition: background-color 5000s ease-in-out 0s;
+    font-size: 1rem !important;
+}
+
+/* Style autofill when container is focused */
+.contactFormInputCont:has(input:focus) input:-webkit-autofill,
+.contactFormInputCont:has(input:focus) input:-webkit-autofill:hover,
+.contactFormInputCont:has(input:focus) input:-webkit-autofill:focus,
+.contactFormInputCont:has(input:focus) input:-webkit-autofill:active {
+    /* -webkit-box-shadow: 0 0 0 30px #4b4b4bda inset !important; */
+    -webkit-text-fill-color: #ffffff !important;
+    background-color: transparent !important;
+    font-size: 1rem !important;
+}
+
+.contactFormButton {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+
+}
+
+.contactFormButton:hover {
+    background-color: #000000;
+    color: #ffffff;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
