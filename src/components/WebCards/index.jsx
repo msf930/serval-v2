@@ -64,7 +64,7 @@ const GameCards = () => {
       setTimeout(() => {
         
         setGame([filler, ...bufferArr]);
-      }, 310);
+      }, 350);
     }
 
     setDirection("");
