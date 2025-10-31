@@ -5,13 +5,21 @@ import styles from './styles.module.css';
 
 import Curve from '@/components/Layout/Curve';
 import gsap from 'gsap/dist/gsap';
-import { motion, animate, useSpring, useMotionValue, useTransform    } from 'motion/react';
+import { motion, animate, useSpring, useMotionValue, useTransform } from 'motion/react';
+import { useGSAP } from '@gsap/react';
+import { Flip } from "gsap/dist/Flip";
 
+import { FaTimes } from 'react-icons/fa';
 import MobileShader from '@/components/MobileShader';
+
+gsap.registerPlugin(  Flip);
+
 export default function design({ pageRoute }) {
 
     const [innerHeight, setInnerHeight] = useState(0);
     const [sectionHeight, setSectionHeight] = useState(0);
+    const [sectionWidth, setSectionWidth] = useState(0);
+    const [gridHeight, setGridHeight] = useState(0);
     const [overlay1Width, setOverlay1Width] = useState(0);
     const [overlay2Width, setOverlay2Width] = useState(0);
     const [overlay3Width, setOverlay3Width] = useState(0);
@@ -20,271 +28,595 @@ export default function design({ pageRoute }) {
     const [overlay2Radius, setOverlay2Radius] = useState(50);
     const [overlay3Radius, setOverlay3Radius] = useState(50);
     const [overlay4Radius, setOverlay4Radius] = useState(50);
-    const [dragGradinet, setDragGradinet] = useState(0);
+    const [dragGradinet1, setDragGradinet1] = useState(0);
+    const [dragGradinet2, setDragGradinet2] = useState(0);
+    const [dragGradinet3, setDragGradinet3] = useState(0);
+    const [dragGradinet4, setDragGradinet4] = useState(0);
+    const [isSelected, setIsSelected] = useState(0);
+    const [zIndex1, setZIndex1] = useState(0);
+    const [zIndex2, setZIndex2] = useState(0);
+    const [zIndex3, setZIndex3] = useState(0);
+    const [zIndex4, setZIndex4] = useState(0);
+    const [zIndexA, setZIndexA] = useState(1);
+    const [dragWidth, setDragWidth] = useState(80);
     const [dragText, setDragText] = useState("Drag");
     const [dragBg, setDragBg] = useState("goldenrod");
     const [isDragging, setIsDragging] = useState(false);
     const designContOverlayRef = useRef(null);
-    
-    let dragGradientSpring = useSpring(0, { stiffness: 80, damping: 20 });
-    
+    const selectionTimeoutRef = useRef(null);
+    const clearSelectionTimeoutRef = useRef(null);
+    const selectionTimeoutActiveRef = useRef(false);
+
+
 
     useEffect(() => {
         setInnerHeight(window.innerHeight);
         setSectionHeight((window.innerHeight - 100) / 2);
+        setGridHeight(window.innerHeight - 100);
+        setSectionWidth(window.innerWidth);
     }, []);
 
+    
+    
+
+    const isSelecting = (x, y) => {
+        let xAbs = Math.abs(x);
+        let yAbs = Math.abs(y);
+        if (xAbs > ((sectionWidth / 2) / 2) - (((sectionWidth / 100) * 20) / 2) && xAbs < ((sectionWidth / 2) / 2) + (((sectionWidth / 100) * 20) / 2)
+            &&
+            yAbs > ((gridHeight / 2) / 2) - (((gridHeight / 100) * 20) / 2) && yAbs < ((gridHeight / 2) / 2) + (((gridHeight / 100) * 20) / 2)
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    const makeSelection = (index) => {
+        // Only start timeout if not already active
+        if (selectionTimeoutActiveRef.current) {
+            return;
+        }
+        // console.log("makeSelection called");
+        selectionTimeoutActiveRef.current = true;
+        // Clear any existing timeout
+        if (selectionTimeoutRef.current) {
+            // console.log("Clearing existing timeout");
+            clearTimeout(selectionTimeoutRef.current);
+        }
+        // Set new timeout
+        // console.log("Setting new timeout");
+        selectionTimeoutRef.current = setTimeout(() => {
+            // console.log("Timeout fired, setting isSelected to true");
+            setIsSelected(index);
+            selectionTimeoutRef.current = null;
+            selectionTimeoutActiveRef.current = false;
+        }, 900);
+    }
+
+    const clearSelection = () => {
+        // console.log("clearSelection called");
+        // Clear any pending timeout
+        if (selectionTimeoutRef.current) {
+            clearTimeout(selectionTimeoutRef.current);
+            selectionTimeoutRef.current = null;
+        }
+        selectionTimeoutActiveRef.current = false;
+        setTimeout(() => {
+            setIsSelected(0);
+        }, 10);
+        
+    }
+
     useEffect(() => {
-        dragGradientSpring.set(dragGradinet);
-    }, [dragGradientSpring, dragGradinet]);
+        console.log("isSelected changed to:", isSelected);
+    }, [isSelected]);
+   
+    
+
+    useGSAP(() => {
+
+        const
+            flipItems = gsap.utils.toArray("#designItem"),
+            details = document.querySelector('#detail'),
+            detailsCont = document.querySelector('#detailCont'),
+            detailContent = document.querySelector('#detailContent'),
+            
+            detailTitle = document.querySelector('#detailTitle'),
+            
+            detailDescription = document.querySelector('#detailDescription');
+
+        let activeItem;
+        
+        function showDetails(flipItem) {
+            // if (activeItem) { // someone could click on an element behind the open details panel, in which case we should just close it.          
+            //     return hideDetails();
+            // }
+            let onLoad = () => {
+
+                gsap.set(details, { visibility: "hidden" }); // hide the details until we know where to put it
+                // position the details on top of the item (scaled down)
+                Flip.fit(
+                    details,
+                    flipItem,
+                    { scale: true }
+                );
+
+                // record the state
+                const state = Flip.getState(details);
+
+                // set the final state
+                gsap.set(details, { clearProps: true }); // wipe out all inline stuff so it's in the native state (not scaled)
+                gsap.set(details, { visibility: "visible", overflow: "hidden" });
+                gsap.set(detailsCont, { left: "50%", top: "50%", x: "-50%", y: "-50%", rotateY: 0, opacity: 1 });
+
+                Flip.from(state, {
+                    duration: 0.5,
+                    ease: "power2.inOut",
+                    scale: true,
+                    onComplete: () => gsap.set(details, { overflow: "auto" }) // to permit scrolling if necessary
+                })
+                    // Flip.from() returns a timeline, so add a tween to reveal the detail content. That way, if the flip gets interrupted and forced to completion & killed, this does too.
+                    .to(detailContent, { yPercent: 0 }, 0.2);
+
+                // detailImage.removeEventListener("load", onLoad);
+                document.querySelector('#detailCont').addEventListener('click', hideDetails);
+                document.querySelector('#detailBG').addEventListener('click', hideDetails);
+
+                // Add scroll listener to hide details when scrolling
+                
+
+            };
+
+            // Change image and text
+            const data = flipItem.dataset;
+            // detailImage.addEventListener("load", onLoad);
+            onLoad();
+            
+            detailTitle.innerText = data.title;
+            
+            detailDescription.innerText = data.text;
+
+            // stagger-fade the items out from the one that was selected in a staggered way (and kill the tween of the selected item)
+            // gsap.to(flipItems, {opacity: 0.3, stagger: { amount: 0.7, from: flipItems.indexOf(flipItem), grid: "auto"}}).kill(flipItem);
+            // gsap.to(".app", {backgroundColor: "#888", duration: 1, delay: 0.3}); // fade out the background
+            activeItem = flipItem;
+        }
+        function hideDetails() {
+            if (!activeItem) {
+                return;
+            }
+            document.querySelector('#detail').removeEventListener('click', hideDetails);
+            gsap.set(details, { overflow: "hidden" });
+            gsap.set(detailsCont, { rotateY: -20, opacity: 0 });
+
+            // record the current state of details
+            const state = Flip.getState(details);
+
+            // scale details down so that its detailImage fits exactly on top of activeItem
+            Flip.fit(details, activeItem, { scale: true });
+
+            // animate the other elements, like all fade all items back up to full opacity, slide the detailContent away, and tween the background color to white.
+            const tl = gsap.timeline();
+            tl.set(details, { overflow: "hidden" })
+                .to(detailContent, { yPercent: -100 })
+            // .to(flipItems, {opacity: 1, stagger: {amount: 0.7, from: flipItems.indexOf(activeItem), grid: "auto"}})
+            // .to(".app", {backgroundColor: "#fff"}, "<");
+
+            // animate from the original state to the current one.
+            Flip.from(state, {
+                scale: true,
+                duration: 0.5,
+                delay: 0.2, // 0.2 seconds because we want the details to slide up first, then flip.
+                onInterrupt: () => tl.kill()
+            })
+                .set(details, { visibility: "hidden" });
+            activeItem = null;
+        }
+
+        if (isSelected === 1 || isSelected === 2 || isSelected === 3 || isSelected === 4) {
+            console.log("isSelected is not 0");
+            console.log("isDragging:", isDragging);
+            if(isDragging === false) {
+                console.log("isDragging is false");
+                console.log("showDetails called");
+                const flipItem = flipItems[isSelected - 1];
+                if (flipItem && flipItem.dataset) {
+                    showDetails(flipItem);
+                }
+            } 
+        }
+        
+        gsap.utils.toArray('.designContItem');
+    }, [innerHeight, sectionWidth, gridHeight, isDragging, isSelected]);
 
     const onDrag = (e, info) => {
         let x = info.offset.x;
         let y = info.offset.y;
         setIsDragging(true);
-        if (Math.abs(x) > 50 || Math.abs(y) > 50) {
-            setDragBg("transparent");
+        setDragWidth(40);
 
+        if (Math.abs(x) > 50 || Math.abs(y) > 50) {
+            setDragBg("white");
+
+            // Reset all gradients first
+            animate(dragGradinet1, 0, { duration: 0.3 });
+            animate(dragGradinet2, 0, { duration: 0.3 });
+            animate(dragGradinet3, 0, { duration: 0.3 });
+            animate(dragGradinet4, 0, { duration: 0.3 });
+
+            // Reset all overlays first
+            animate(overlay1Width, 0, { duration: 0.3 });
+            animate(overlay2Width, 0, { duration: 0.3 });
+            animate(overlay3Width, 0, { duration: 0.3 });
+            animate(overlay4Width, 0, { duration: 0.3 });
+            animate(overlay1Radius, 50, { duration: 0.3 });
+            animate(overlay2Radius, 50, { duration: 0.3 });
+            animate(overlay3Radius, 50, { duration: 0.3 });
+            animate(overlay4Radius, 50, { duration: 0.3 });
+
+            // Then activate the appropriate quadrant
             if (x > 0 && y < 0) {
+                setOverlay1Radius(50);
+                setOverlay3Radius(50);
+                setOverlay4Radius(50);
+                setOverlay1Width(0);
+                setOverlay3Width(0);
+                setOverlay4Width(0);
+                setDragGradinet1(0);
+                setDragGradinet3(0);
+                setDragGradinet4(0);
+                setZIndex1(0);
+                setZIndex2(1);
+                setZIndex3(0);
+                setZIndex4(0);
+                setZIndexA(0);
+                // Top Right - Visual Design
                 setDragText("Visual Design");
                 animate(overlay2Width, sectionHeight, {
+                    duration: 0.5,
                     onUpdate: latest => {
                         setOverlay2Width(latest);
                     }
                 });
                 animate(overlay2Radius, 0, {
+                    duration: 0.5,
                     onUpdate: latest => {
                         setOverlay2Radius(latest);
                     }
                 });
-                animate(dragGradinet, 100, {
-                    duration: 1.0,
-                    onUpdate: latest => {
-                        setDragGradinet(latest);
-                    }
-                });
-                // dragGradientSpring.set(100);
-            } else {
-                animate(overlay2Width, 0, {
-                    onUpdate: latest => {
-                        setOverlay2Width(latest);
-                    }
-                });
-                animate(overlay2Radius, 50, {
-                    onUpdate: latest => {
-                        setOverlay2Radius(latest);
-                    }
-                });
-                // dragGradientSpring.set(0);
-            }
-            if (x < 0 && y < 0) {
+                if (isSelecting(x, y)) {
+                    makeSelection(2);
+                    animate(dragGradinet2, 100, {
+                        duration: 1.0,
+                        onUpdate: latest => {
+                            setDragGradinet2(latest);
+                        }
+                    });
+
+                } else {
+                    clearSelection();
+                    setDragGradinet2(0);
+                }
+
+            } else if (x < 0 && y < 0) {
+                setOverlay2Radius(50);
+                setOverlay3Radius(50);
+                setOverlay4Radius(50);
+                setOverlay2Width(0);
+                setOverlay3Width(0);
+                setOverlay4Width(0);
+                setDragGradinet2(0);
+                setDragGradinet3(0);
+                setDragGradinet4(0);
+                setZIndex1(1);
+                setZIndex2(0);
+                setZIndex3(0);
+                setZIndex4(0);
+                setZIndexA(0);
+                // Top Left - User Experience
                 setDragText("User Experience");
                 animate(overlay1Width, sectionHeight, {
+                    duration: 0.5,
                     onUpdate: latest => {
                         setOverlay1Width(latest);
                     }
                 });
                 animate(overlay1Radius, 0, {
+                    duration: 0.5,
                     onUpdate: latest => {
                         setOverlay1Radius(latest);
                     }
                 });
-                animate(dragGradinet, 100, {
-                    duration: 1.0,
-                    onUpdate: latest => {
-                        setDragGradinet(latest);
-                    }
-                });
-                // setDragGradinet(100);
-                // dragGradientSpring.set(100);
-            } else {
-                animate(overlay1Width, 0, {
-                    onUpdate: latest => {
-                        setOverlay1Width(latest);
-                    }
-                });
-                animate(overlay1Radius, 50, {
-                    onUpdate: latest => {
-                        setOverlay1Radius(latest);
-                    }
-                });
-                // animate(dragGradinet, 0, {
-                //     onUpdate: latest => {
-                //         setDragGradinet(latest);
-                //     }
-                // });
-                // dragGradientSpring.set(0);
-            }
-            if (x < 0 && y > 0) {
-                setDragText("3");
+                if (isSelecting(x, y)) {
+                    makeSelection(1);
+                    animate(dragGradinet1, 100, {
+                        duration: 1.0,
+                        onUpdate: latest => {
+                            setDragGradinet1(latest);
+                        }
+                    });
+                } else {
+                    setDragGradinet1(0);
+                    clearSelection();
+                }
+
+            } else if (x < 0 && y > 0) {
+                setOverlay2Radius(50);
+                setOverlay1Radius(50);
+                setOverlay4Radius(50);
+                setOverlay2Width(0);
+                setOverlay1Width(0);
+                setOverlay4Width(0);
+                setDragGradinet2(0);
+                setDragGradinet1(0);
+                setDragGradinet4(0);
+                setZIndex1(0);
+                setZIndex2(0);
+                setZIndex3(1);
+                setZIndex4(0);
+                setZIndexA(0);
+                // Bottom Left
+                setDragText("Responsive Design");
                 animate(overlay3Width, sectionHeight, {
+                    duration: 0.5,
                     onUpdate: latest => {
                         setOverlay3Width(latest);
                     }
                 });
                 animate(overlay3Radius, 0, {
+                    duration: 0.5,
                     onUpdate: latest => {
                         setOverlay3Radius(latest);
                     }
                 });
+                if (isSelecting(x, y)) {
+                    animate(dragGradinet3, 100, {
+                        duration: 1.0,
+                        onUpdate: latest => {
+                            setDragGradinet3(latest);
+                        }
+                    });
+                    makeSelection(3);
+                } else {
+                    setDragGradinet3(0);
+                    clearSelection();
+                }
 
-            } else {
-                animate(overlay3Width, 0, {
-                    onUpdate: latest => {
-                        setOverlay3Width(latest);
-                    }
-                });
-                animate(overlay3Radius, 50, {
-                    onUpdate: latest => {
-                        setOverlay3Radius(latest);
-                    }
-                });
-            }
-            if (x > 0 && y > 0) {
-                setDragText("4");
+            } else if (x > 0 && y > 0) {
+                setOverlay2Radius(50);
+                setOverlay1Radius(50);
+                setOverlay3Radius(50);
+                setOverlay2Width(0);
+                setOverlay1Width(0);
+                setOverlay3Width(0);
+                setDragGradinet2(0);
+                setDragGradinet1(0);
+                setDragGradinet3(0);
+                setZIndex1(0);
+                setZIndex2(0);
+                setZIndex3(0);
+                setZIndex4(1);
+                setZIndexA(0);
+                // Bottom Right
+                setDragText("User Interface");
                 animate(overlay4Width, sectionHeight, {
+                    duration: 0.5,
                     onUpdate: latest => {
                         setOverlay4Width(latest);
                     }
                 });
                 animate(overlay4Radius, 0, {
+                    duration: 0.5,
                     onUpdate: latest => {
                         setOverlay4Radius(latest);
                     }
                 });
+                if (isSelecting(x, y)) {
+                    animate(dragGradinet4, 100, {
+                        duration: 1.0,
+                        onUpdate: latest => {
+                            setDragGradinet4(latest);
+                        }
+                    });
+                    makeSelection(4);
+                } else {
+                    setDragGradinet4(0);
+                    clearSelection();
+                }
 
-            } else {
-                animate(overlay4Width, 0, {
-                    onUpdate: latest => {
-                        setOverlay4Width(latest);
-                    }
-                });
-                animate(overlay4Radius, 50, {
-                    onUpdate: latest => {
-                        setOverlay4Radius(latest);
-                    }
-                });
             }
         } else {
             setDragText("Drag");
             setDragBg("goldenrod");
-            animate(dragGradinet, 0, {
+            animate(dragGradinet1, 0, {
+                duration: 0.3,
                 onUpdate: latest => {
-                    setDragGradinet(latest);
+                    setDragGradinet1(latest);
                 }
             });
-            dragGradientSpring.set(0);
-            animate(overlay1Width, 0, {
+            animate(dragGradinet2, 0, {
+                duration: 0.3,
                 onUpdate: latest => {
-                    setOverlay1Width(latest);
+                    setDragGradinet2(latest);
                 }
             });
-            animate(overlay1Radius, 50, {
+            animate(dragGradinet3, 0, {
+                duration: 0.3,
                 onUpdate: latest => {
-                    setOverlay1Radius(latest);
+                    setDragGradinet3(latest);
                 }
             });
-            animate(overlay2Width, 0, {
+            animate(dragGradinet4, 0, {
+                duration: 0.3,
                 onUpdate: latest => {
-                    setOverlay2Width(latest);
+                    setDragGradinet4(latest);
                 }
             });
-            animate(overlay2Radius, 50, {
-                onUpdate: latest => {
-                    setOverlay2Radius(latest);
-                }
-            });
-            animate(overlay3Width, 0, {
-                onUpdate: latest => {
-                    setOverlay3Width(latest);
-                }
-            });
-            animate(overlay3Radius, 50, {
-                onUpdate: latest => {
-                    setOverlay3Radius(latest);
-                }
-            });
-            animate(overlay4Width, 0, {
-                onUpdate: latest => {
-                    setOverlay4Width(latest);
-                }
-            });
-            animate(overlay4Radius, 50, {
-                onUpdate: latest => {
-                    setOverlay4Radius(latest);
-                }
-            });
+
         }
     }
     const onDragEnd = (e, info) => {
         setDragText("Drag");
         setDragBg("goldenrod");
+        setDragWidth(80);
         setIsDragging(false);
-        // dragGradientSpring.set(0);
-        animate(dragGradinet, 0, {
-            duration: 1.0,
+
+        // Reset all gradients
+        animate(dragGradinet1, 0, {
+            duration: 0.5,
             onUpdate: latest => {
-                setDragGradinet(latest);
+                setDragGradinet1(latest);
             }
         });
+        animate(dragGradinet2, 0, {
+            duration: 0.5,
+            onUpdate: latest => {
+                setDragGradinet2(latest);
+            }
+        });
+        animate(dragGradinet3, 0, {
+            duration: 0.5,
+            onUpdate: latest => {
+                setDragGradinet3(latest);
+            }
+        });
+        animate(dragGradinet4, 0, {
+            duration: 0.5,
+            onUpdate: latest => {
+                setDragGradinet4(latest);
+            }
+        });
+
+        // Reset all overlays
         animate(overlay1Width, 0, {
+            duration: 0.5,
             onUpdate: latest => {
                 setOverlay1Width(latest);
             }
         });
         animate(overlay1Radius, 50, {
+            duration: 0.5,
             onUpdate: latest => {
                 setOverlay1Radius(latest);
             }
         });
         animate(overlay2Width, 0, {
+            duration: 0.5,
             onUpdate: latest => {
                 setOverlay2Width(latest);
             }
         });
         animate(overlay2Radius, 50, {
+            duration: 0.5,
             onUpdate: latest => {
                 setOverlay2Radius(latest);
             }
         });
         animate(overlay3Width, 0, {
+            duration: 0.5,
             onUpdate: latest => {
                 setOverlay3Width(latest);
             }
         });
         animate(overlay3Radius, 50, {
+            duration: 0.5,
             onUpdate: latest => {
                 setOverlay3Radius(latest);
             }
         });
         animate(overlay4Width, 0, {
+            duration: 0.5,
             onUpdate: latest => {
                 setOverlay4Width(latest);
             }
         });
         animate(overlay4Radius, 50, {
+            duration: 0.5,
             onUpdate: latest => {
                 setOverlay4Radius(latest);
             }
         });
+        setZIndex1(0);
+        setZIndex2(0);
+        setZIndex3(0);
+        setZIndex4(0);
+        setZIndexA(1);
+        clearSelection();
     }
 
     useEffect(() => {
         const scrollingText = gsap.utils.toArray('.UE1 h1');
-
-        const tl = horizontalLoop(scrollingText, {
-            repeat: -1,
-            paddingRight: 0,
-            reversed: false,
-        });
+        if (scrollingText && scrollingText.length) {
+            horizontalLoop(scrollingText, {
+                repeat: -1,
+                paddingRight: 0,
+                reversed: false,
+            });
+        }
 
         const scrollingText2 = gsap.utils.toArray('.UE2 h1');
+        if (scrollingText2 && scrollingText2.length) {
+            horizontalLoop(scrollingText2, {
+                repeat: -1,
+                paddingRight: 0,
+                reversed: true,
+            });
+        }
 
-        const tl2 = horizontalLoop(scrollingText2, {
-            repeat: -1,
-            paddingRight: 0,
-            reversed: true,
-        });
+        const scrollingTextVD1 = gsap.utils.toArray('.VD1 h1');
+        if (scrollingTextVD1 && scrollingTextVD1.length) {
+            horizontalLoop(scrollingTextVD1, {
+                repeat: -1,
+                paddingRight: 0,
+                reversed: false,
+            });
+        }
+
+        const scrollingTextVD2 = gsap.utils.toArray('.VD2 h1');
+        if (scrollingTextVD2 && scrollingTextVD2.length) {
+            horizontalLoop(scrollingTextVD2, {
+                repeat: -1,
+                paddingRight: 0,
+                reversed: true,
+            });
+        }
+
+        const scrollingTextRD1 = gsap.utils.toArray('.RD1 h1');
+        if (scrollingTextRD1 && scrollingTextRD1.length) {
+            horizontalLoop(scrollingTextRD1, {
+                repeat: -1,
+                paddingRight: 0,
+                reversed: false,
+            });
+        }
+
+        const scrollingTextRD2 = gsap.utils.toArray('.RD2 h1');
+        if (scrollingTextRD2 && scrollingTextRD2.length) {
+            horizontalLoop(scrollingTextRD2, {
+                repeat: -1,
+                paddingRight: 0,
+                reversed: true,
+            });
+        }
+
+        const scrollingTextUI1 = gsap.utils.toArray('.UI1 h1');
+        if (scrollingTextUI1 && scrollingTextUI1.length) {
+            horizontalLoop(scrollingTextUI1, {
+                repeat: -1,
+                paddingRight: 0,
+                reversed: false,
+            });
+        }
+
+        const scrollingTextUI2 = gsap.utils.toArray('.UI2 h1');
+        if (scrollingTextUI2 && scrollingTextUI2.length) {
+            horizontalLoop(scrollingTextUI2, {
+                repeat: -1,
+                paddingRight: 0,
+                reversed: true,
+            });
+        }
 
 
         /*
@@ -304,6 +636,9 @@ export default function design({ pageRoute }) {
         function horizontalLoop(items, config) {
             items = gsap.utils.toArray(items);
             config = config || {};
+            if (!items || !items.length) {
+                return gsap.timeline({ paused: true });
+            }
             let tl = gsap.timeline({ repeat: config.repeat, paused: config.paused, defaults: { ease: "none" }, onReverseComplete: () => tl.totalTime(tl.rawTime() + tl.duration() * 100) }),
                 length = items.length,
                 startX = items[0].offsetLeft,
@@ -401,10 +736,29 @@ export default function design({ pageRoute }) {
                             onDragEnd={onDragEnd}
                             dragConstraints={designContOverlayRef}
                             dragTransition={{ bounceStiffness: 100, bounceDamping: 20 }}
-                            style={{ backgroundColor: dragBg }}
+                            style={{ backgroundColor: dragBg, width: `${dragWidth}px`, height: `${dragWidth}px` }}
                         >
-                            <div className={styles.dragTextCont} style={{ background: `linear-gradient(90deg, #ff7a18, #ff7a18 ${dragGradientSpring.get()}%, #32005e ${dragGradientSpring.get()}%, #32005e)` }}>
-                                
+                            <div className={styles.dragTextCont} style={{ background: `linear-gradient(90deg, #ffffff, #ffffff 100%, #32005e00 100%, #32005e00)`, zIndex: `${zIndexA}` }}>
+
+                                <h1 className={styles.dragText} style={{ marginBottom: isDragging ? "80px" : 0, whiteSpace: "nowrap" }}>{dragText}</h1>
+                            </div>
+                            <div className={styles.dragTextCont} style={{ background: `linear-gradient(90deg, #ff7a18, #ff7a18 ${dragGradinet1}%, #32005e00 ${dragGradinet1}%, #32005e00)`, zIndex: `${zIndex1}` }}>
+
+                                <h1 className={styles.dragText} style={{ marginBottom: isDragging ? "80px" : 0, whiteSpace: "nowrap" }}>{dragText}</h1>
+                            </div>
+
+                            <div className={styles.dragTextCont} style={{ background: `linear-gradient(90deg, #4f9ce4, #4f9ce4 ${dragGradinet2}%, #32005e00 ${dragGradinet2}%, #32005e00)`, zIndex: `${zIndex2}` }}>
+
+
+                                <h1 className={styles.dragText} style={{ marginBottom: isDragging ? "80px" : 0, whiteSpace: "nowrap" }}>{dragText}</h1>
+
+                            </div>
+                            <div className={styles.dragTextCont} style={{ background: `linear-gradient(90deg, #7678ed, #7678ed ${dragGradinet3}%, #32005e00 ${dragGradinet3}%, #32005e00)`, zIndex: `${zIndex3}` }}>
+
+                                <h1 className={styles.dragText} style={{ marginBottom: isDragging ? "80px" : 0, whiteSpace: "nowrap" }}>{dragText}</h1>
+                            </div>
+                            <div className={styles.dragTextCont} style={{ background: `linear-gradient(90deg, #f7b801, #f7b801 ${dragGradinet4}%, #32005e00 ${dragGradinet4}%, #32005e00)`, zIndex: `${zIndex4}` }}>
+
                                 <h1 className={styles.dragText} style={{ marginBottom: isDragging ? "80px" : 0, whiteSpace: "nowrap" }}>{dragText}</h1>
                             </div>
                         </motion.div>
@@ -413,7 +767,7 @@ export default function design({ pageRoute }) {
                         </div>
                     </div>
                     <div className={styles.designCont}>
-                        <div className={styles.designContItem}>
+                        <div className={styles.designContItem} id="designItem" data-title="User Experience" data-text="Our User Experience (UX) services ensure your website is intuitive, engaging, and user-focused. We design seamless digital experiences that enhance satisfaction, boost conversions, and strengthen your brand.">
                             <h1>User Experience</h1>
                             <div className={styles.designContItemOverlay} style={{ width: overlay1Width, height: overlay1Width, borderRadius: overlay1Radius }}>
                                 {Array.from({ length: 4 }, (_, index) => (
@@ -432,23 +786,99 @@ export default function design({ pageRoute }) {
                                         </div>
                                     </React.Fragment>
                                 ))}
-
+                                <div className={styles.designContItemOverlayItem}></div>
                             </div>
                         </div>
-                        <div className={styles.designContItem}>
-                            <h1>2</h1>
-                            <div className={styles.designContItemOverlay} style={{ width: overlay2Width, height: overlay2Width, borderRadius: overlay2Radius }}></div>
+                        <div className={styles.designContItem} id="designItem" data-title="Visual Design" data-text="Our Visual Design services bring your brand to life with clean, modern, and impactful visuals. We craft cohesive designs that capture attention, enhance usability, and create a lasting impression across all digital touchpoints.">
+                            <h1>Visual Design</h1>
+                            <div className={styles.designContItemOverlay} style={{ width: overlay2Width, height: overlay2Width, borderRadius: overlay2Radius }}>
+                                {Array.from({ length: 4 }, (_, index) => (
+                                    <React.Fragment key={index}>
+                                        <div className={`VD1 ${styles.scrollerText}`}>
+                                            <h1>Visual Design &nbsp;</h1>
+                                            <h1>Visual Design &nbsp;</h1>
+                                            <h1>Visual Design &nbsp;</h1>
+                                            <h1>Visual Design &nbsp;</h1>
+
+                                        </div>
+                                        <div className={`VD2 ${styles.scrollerText}`}>
+                                            <h1>Visual Design &nbsp;</h1>
+                                            <h1>Visual Design &nbsp;</h1>
+                                            <h1>Visual Design &nbsp;</h1>
+                                            <h1>Visual Design &nbsp;</h1>
+                                        </div>
+                                    </React.Fragment>
+                                ))}
+                                <div className={styles.designContItemOverlayItem}></div>
+                            </div>
+                            {/* <div className={styles.designContItemOverlay} style={{ width: overlay2Width, height: overlay2Width, borderRadius: overlay2Radius }}></div> */}
                         </div>
 
-                        <div className={styles.designContItem}>
-                            <h1>3</h1>
-                            <div className={styles.designContItemOverlay} style={{ width: overlay3Width, height: overlay3Width, borderRadius: overlay3Radius }}></div>
+                        <div className={styles.designContItem} id="designItem" data-title="Responsive Design" data-text="Our Responsive Design services ensure your website looks and performs flawlessly on any device. We create flexible layouts that adapt seamlessly to different screen sizes, delivering a consistent and engaging user experience everywhere.">
+                            <h1>Responsive Design</h1>
+                            <div className={styles.designContItemOverlay} style={{ width: overlay3Width, height: overlay3Width, borderRadius: overlay3Radius }}>
+                                {Array.from({ length: 4 }, (_, index) => (
+                                    <React.Fragment key={index}>
+                                        <div className={`RD1 ${styles.scrollerText}`}>
+
+                                            <h1>Responsive Design &nbsp;</h1>
+                                            <h1>Responsive Design &nbsp;</h1>
+                                            <h1>Responsive Design &nbsp;</h1>
+                                            <h1>Responsive Design &nbsp;</h1>
+
+                                        </div>
+                                        <div className={`RD2 ${styles.scrollerText}`}>
+                                            <h1>Responsive Design &nbsp;</h1>
+                                            <h1>Responsive Design &nbsp;</h1>
+                                            <h1>Responsive Design &nbsp;</h1>
+                                            <h1>Responsive Design &nbsp;</h1>
+                                        </div>
+                                    </React.Fragment>
+                                ))}
+                                <div className={styles.designContItemOverlayItem}></div>
+                            </div>
                         </div>
-                        <div className={styles.designContItem}>
-                            <h1>4</h1>
-                            <div className={styles.designContItemOverlay} style={{ width: overlay4Width, height: overlay4Width, borderRadius: overlay4Radius }}></div>
+                        <div className={styles.designContItem} id="designItem" data-title="User Interface" data-text="Our User Interface (UI) services focus on creating visually appealing, intuitive interfaces that make navigation effortless. We design with clarity and consistency to ensure every interaction feels seamless and engaging.">
+                            <h1>User Interface</h1>
+                            <div className={styles.designContItemOverlay} style={{ width: overlay4Width, height: overlay4Width, borderRadius: overlay4Radius }}>
+                                {Array.from({ length: 4 }, (_, index) => (
+                                    <React.Fragment key={index}>
+                                        <div className={`UI1 ${styles.scrollerText}`}>
+
+                                            <h1>User Interface &nbsp;</h1>
+                                            <h1>User Interface &nbsp;</h1>
+                                            <h1>User Interface &nbsp;</h1>
+                                            <h1>User Interface &nbsp;</h1>
+
+                                        </div>
+                                        <div className={`UI2 ${styles.scrollerText}`}>
+                                            <h1>User Interface &nbsp;</h1>
+                                            <h1>User Interface &nbsp;</h1>
+                                            <h1>User Interface &nbsp;</h1>
+                                            <h1>User Interface &nbsp;</h1>
+                                        </div>
+                                    </React.Fragment>
+                                ))}
+                                <div className={styles.designContItemOverlayItem}></div>
+                            </div>
                         </div>
                     </div>
+                </div>
+                <div className={styles.detail} id="detail">
+                    <div className={styles.detailCont} id="detailCont">
+                        {/* <button className={styles.closeBtn} id="closeBtn">
+                            <FaTimes size={'10px'} color="white" className={styles.closeBtnIcon}/>
+                        </button> */}
+                        <div className={styles.content} id="detailContent">
+                            <div className={styles.title} id="detailTitle">Placeholder title</div>
+                            
+                            <div className={styles.detailDescription} id="detailDescription">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure cum, est
+                                amet delectus, blanditiis voluptatem laborum pariatur consequatur quae voluptate, nisi. Laborum
+                                adipisci iste earum distinctio, fugit, quas ipsa impedit.
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.detailBG} id="detailBG"></div>
                 </div>
                 <div className={styles.designCard}></div>
                 <MobileShader />

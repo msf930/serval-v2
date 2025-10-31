@@ -30,7 +30,7 @@ import { ScrambleTextPlugin } from 'gsap/dist/ScrambleTextPlugin';
 import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin';
 import { useGSAP } from '@gsap/react';
 
-
+import MobileShader from '@/components/MobileShader';
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText, ScrambleTextPlugin, Observer, ScrollToPlugin);
 
@@ -81,9 +81,9 @@ export default function Home({ pageRoute }) {
                 }
             });
             setTimeout(() => {
-                
+
                 gsap.set("#scrollToContactOverlay", { opacity: 0 });
-                
+
             }, 1800);
             setTimeout(() => {
                 setIsScrollContact(false);
@@ -157,7 +157,7 @@ export default function Home({ pageRoute }) {
 
     useEffect(() => {
         const handleResize = () => {
-            
+
             setIsResize(true);
             setTimeout(() => {
                 if (window.innerWidth > 766) {
@@ -1246,7 +1246,12 @@ export default function Home({ pageRoute }) {
                                         </div>
                                         <h3 className="">info@servaldesigns.com</h3>
                                     </motion.div>
+                                    <div className="canvasCont z-[-1]">
+                                         <MobileShader bg1b={0.0} bg1={0.9} bg2b={0.0} bg2={0.7} bg3b={0.0} bg3={0.4} />
+                                    </div>
+                                    
                                 </div>
+                                
                             </Curve>
                         </motion.div>
                         :
@@ -1274,25 +1279,25 @@ export default function Home({ pageRoute }) {
                             <AnimatePresence>
 
                                 {loadTransition && (
-                            <motion.div className="logoText" >
-                                <motion.div 
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ duration: 0.5, ease: 'easeInOut', delay: 2.0 }}
-                                className=" mt-[-20px] flex flex-row justify-center items-center gap-1 cursor-pointer">
-                                    <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent" }, ease: "power2" }); }}>WEB</a>
-                                    <h3>&#8226;</h3>
-                                    <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent2" }, ease: "power2" }); }}>SEO</a>
-                                    <h3>&#8226;</h3>
-                                    <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent3" }, ease: "power2" }); }}>DESIGN</a>
-                                </motion.div>
-                                <motion.h3 
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ duration: 0.5, ease: 'easeInOut', delay: 2.2 }}
-                                className="">info@servaldesigns.com</motion.h3>
-                            </motion.div>
-                            )}
+                                    <motion.div className="logoText" >
+                                        <motion.div
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            transition={{ duration: 0.5, ease: 'easeInOut', delay: 2.0 }}
+                                            className=" mt-[-20px] flex flex-row justify-center items-center gap-1 cursor-pointer">
+                                            <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent" }, ease: "power2" }); }}>WEB</a>
+                                            <h3>&#8226;</h3>
+                                            <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent2" }, ease: "power2" }); }}>SEO</a>
+                                            <h3>&#8226;</h3>
+                                            <a onClick={() => { gsap.to(window, { duration: 0.5, scrollTo: { y: "#stickyContent3" }, ease: "power2" }); }}>DESIGN</a>
+                                        </motion.div>
+                                        <motion.h3
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            transition={{ duration: 0.5, ease: 'easeInOut', delay: 2.2 }}
+                                            className="">info@servaldesigns.com</motion.h3>
+                                    </motion.div>
+                                )}
                             </AnimatePresence>
                         </div>
                     }
@@ -1318,8 +1323,8 @@ export default function Home({ pageRoute }) {
                                     <motion.a
                                         className="webCardButton"
                                         style={{ opacity: webCardButtonSpring }}
-                                        onClick={() => { 
-                                            gsap.to(window, { duration: 2.0, scrollTo: { y: "#contact" }, ease: "power2" }); 
+                                        onClick={() => {
+                                            gsap.to(window, { duration: 2.0, scrollTo: { y: "#contact" }, ease: "power2" });
                                             setIsScrollContact(true);
                                         }}
                                     >
@@ -1419,12 +1424,12 @@ export default function Home({ pageRoute }) {
                                                 strategic updates
                                             </p>
 
-                                            <motion.a 
-                                            className="seoBackButton"
-                                            onClick={() => { 
-                                                gsap.to(window, { duration: 2.0, scrollTo: { y: "#contact" }, ease: "power2" }); 
-                                                setIsScrollContact(true);
-                                            }}
+                                            <motion.a
+                                                className="seoBackButton"
+                                                onClick={() => {
+                                                    gsap.to(window, { duration: 2.0, scrollTo: { y: "#contact" }, ease: "power2" });
+                                                    setIsScrollContact(true);
+                                                }}
                                             >Contact</motion.a>
                                         </motion.div>
                                     </div>
@@ -1973,7 +1978,7 @@ export default function Home({ pageRoute }) {
             </AnimatePresence>}
             {/* SCROLL TO CONTACT OVERLAY */}
             {!isMobile && <AnimatePresence>
-                {  isScrollContact &&
+                {isScrollContact &&
                     <motion.div
                         animate={{ opacity: 1 }}
                         // exit={{ opacity: 0 }}

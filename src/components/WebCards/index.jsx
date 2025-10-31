@@ -64,7 +64,7 @@ const GameCards = () => {
       setTimeout(() => {
         
         setGame([filler, ...bufferArr]);
-      }, 350);
+      }, 310);
     }
 
     setDirection("");
@@ -84,7 +84,7 @@ const GameCards = () => {
       transition: { duration: 0.3, ease: easeOutExpo, delay: 0 },
     },
     remainings: {
-      opacity: 0,
+      opacity: 0.0,
       y: 50,
       scale: 0.9,
     },
@@ -108,12 +108,12 @@ const GameCards = () => {
 
       <div
         id="gameUIWrapper"
-        className="flex flex-col gap-6 w-full h-[100dvh] items-center justify-center relative  bg-red-500"
+        className="flex flex-col gap-6 w-full h-[100dvh] mt-[100dvh] items-center justify-center relative  bg-red-500"
         
       >
         <div
           id="cardsWrapper"
-          className="w-[100vw]  h-[100dvh] max-w-xs mt-[300px] relative "
+          className="w-[100vw]  h-[100dvh] max-w-xs relative"
         >
           <AnimatePresence>
             {game.map((card, i) => {

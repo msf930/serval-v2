@@ -35,7 +35,7 @@ body,
         justify-content: center;
         align-items: center;
         overflow: hidden !important;
-        background-color: #1B5299;
+        background-color: transparent;
 
 
     }

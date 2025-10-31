@@ -100,7 +100,7 @@ const GameCard = ({
     <>
       <motion.div
         id={`cardDrivenWrapper-${id}`}
-        className="absolute  bg-white p-8 rounded-lg text-center w-[80%] h-[70dvh] aspect-[100/150] pointer-events-none text-black origin-bottom shadow-card select-none"
+        className="absolute bg-white  p-8 rounded-lg text-center w-[80%] h-[60dvh] aspect-[100/150]  pointer-events-none text-black origin-bottom shadow-card select-none"
         style={{
           y: drivenY,
           rotate: drivenRotation,
