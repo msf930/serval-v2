@@ -256,20 +256,28 @@
     color: black;
 }
 
-.closeBtn {
+.detailClose {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 40px;
+    bottom: 0;
+    right: 0;
+    width: 100%;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: black;
+    background: #ffffff60;
     padding: 0;
-    border-radius: 50%;
+    
     border: none;
     cursor: pointer;
     z-index: 100;
+    color: black;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    text-decoration: none;
+   
 }
 

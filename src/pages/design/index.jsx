@@ -877,6 +877,7 @@ export default function design({ pageRoute }) {
                                 adipisci iste earum distinctio, fugit, quas ipsa impedit.
                             </div>
                         </div>
+                        <div className={styles.detailClose}>Close</div>
                     </div>
                     <div className={styles.detailBG} id="detailBG"></div>
                 </div>
